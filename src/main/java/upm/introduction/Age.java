@@ -5,9 +5,7 @@ public class Age {
     private int years;
 
     public Age(int years) {
-        if (years >= 0) {
             this.years = years;
-        }
     }
 
     public boolean isAdult() {
@@ -23,13 +21,11 @@ public class Age {
     }
 
     public int getYears() {
-        return this.years;
+        return years;
     }
 
     public void setYears(int years) {
-        if (years >= 0) {
-            this.years = years;
-        }
+        if (years >= 0) this.years = years;
     }
 
 }
