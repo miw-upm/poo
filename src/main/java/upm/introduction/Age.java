@@ -1,15 +1,27 @@
 package upm.introduction;
 
 public class Age {
-    //TODO No cumple estandares de calidad!!!
+    private static final int MINIMO = 0;
+    private static final int ADULTO = 18;
     private int years;
 
     public Age(int years) {
-            this.years = years;
+        this.setYears(years);
+    }
+
+    public Age() {
+        this(0);
     }
 
     public boolean isAdult() {
-        return this.years >= 18; //A partir de 18 se considera adulto
+        return this.years >= ADULTO;
+    }
+
+    public void setYears(int years) {
+        if (years < MINIMO) {
+            years = MINIMO;
+        }
+        this.years = years;
     }
 
     public boolean isChild() {
@@ -24,9 +36,11 @@ public class Age {
         return years;
     }
 
-    public void setYears(int years) {
-        if (years >= 0) this.years = years;
+    @Override
+    public String toString() {
+        return "Age{" +
+                "years=" + years +
+                '}';
     }
-
 }
 

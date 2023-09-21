@@ -6,6 +6,7 @@ public class Car {
     private final int year;
     private final int horsepower;
 
+
     public Car(String model, int year, int horsepower) {
         this.model = model;
         this.year = year;
@@ -17,15 +18,15 @@ public class Car {
     }
 
     public String getModel() {
-        return this.model;
+        return model;
     }
 
     public int getYear() {
-        return this.year;
+        return year;
     }
 
     public int getHorsepower() {
-        return this.horsepower;
+        return horsepower;
     }
 
     @Override
