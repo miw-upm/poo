@@ -1,9 +1,8 @@
-package upm.relations;
+package upm.app.data.models;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Tag {
     private Integer id;

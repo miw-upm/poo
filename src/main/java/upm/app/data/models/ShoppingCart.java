@@ -1,4 +1,4 @@
-package upm.relations;
+package upm.app.data.models;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
