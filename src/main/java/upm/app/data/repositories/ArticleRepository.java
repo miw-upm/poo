@@ -2,16 +2,8 @@ package upm.app.data.repositories;
 
 import upm.app.data.models.Article;
 
-public class ArticleRepository extends GenericRepository<Article> {
+import java.util.Optional;
 
-    @Override
-    public Integer getId(Article entity) {
-        return entity.getId();
-    }
-
-    @Override
-    public void setId(Article entity, Integer id) {
-        entity.setId(id);
-    }
-
+public interface ArticleRepository extends GenericRepository<Article> {
+    Optional<Article> findByBarcode(String barcode);
 }

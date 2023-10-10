@@ -5,11 +5,12 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Article {
+    private static final int EUROPEAN_ARTICLE_NUMBER = 13;
+    private final LocalDate registrationDate;
     private Integer id;
     private String barcode;
     private String summary;
     private BigDecimal price;
-    private final LocalDate registrationDate;
     private String provider;
 
     public Article(String barcode, String summary, BigDecimal price, LocalDate registrationDate, String provider) {
@@ -25,6 +26,9 @@ public class Article {
     }
 
     public void setBarcode(String barcode) {
+        if (barcode.length() != EUROPEAN_ARTICLE_NUMBER) {
+            throw new IllegalArgumentException("La longitud del código de barras para un artículo es incorrecto: " + barcode);
+        }
         this.barcode = barcode;
     }
 

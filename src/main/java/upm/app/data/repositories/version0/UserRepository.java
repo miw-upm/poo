@@ -2,10 +2,7 @@ package upm.app.data.repositories.version0;
 
 import upm.app.data.models.User;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UserRepository {
 
@@ -17,19 +14,21 @@ public class UserRepository {
         this.id = 1;
     }
 
-    public void create(User entity) {
+    public User create(User entity) {
         entity.setId(this.id++);
         this.map.put(id, entity);
+        return entity;
     }
 
-    public void update(User entity) {
+    public User update(User entity) {
         if (this.map.containsKey(entity.getId())) {
             this.map.put(entity.getId(), entity);
         }
+        return entity;
     }
 
-    public User read(Integer id) {
-        return this.map.get(id);
+    public Optional<User> read(Integer id) {
+        return Optional.of(this.map.get(id));
     }
 
     public void deleteById(Integer id) {

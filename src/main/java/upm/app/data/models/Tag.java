@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class Tag {
+    private final List<Article> articles;
     private Integer id;
     private String name;
     private String description;
-    private List<Article> articles;
 
     public Tag(String name, String description) {
         this.name = name;
@@ -44,7 +44,7 @@ public class Tag {
         return this.articles;
     }
 
-    public void addArticle( Article article){
+    public void addArticle(Article article) {
         this.articles.add(article);
     }
 

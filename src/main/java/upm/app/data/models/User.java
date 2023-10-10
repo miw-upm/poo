@@ -55,6 +55,7 @@ public class User {
                 ", address='" + address + '\'' +
                 '}';
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(id);

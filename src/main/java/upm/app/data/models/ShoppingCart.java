@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class ShoppingCart {
-    private Integer id;
     private final User user;
     private final LocalDateTime creationDate;
-    private List<ArticleItem> articleItems;
+    private final List<ArticleItem> articleItems;
+    private Integer id;
 
     public ShoppingCart(User user, LocalDateTime creationDate) {
         this.user = user;
@@ -20,7 +20,7 @@ public class ShoppingCart {
 
     public BigDecimal total() {
         BigDecimal total = BigDecimal.ZERO;
-        for (ArticleItem articleItem: this.articleItems) {
+        for (ArticleItem articleItem : this.articleItems) {
             total = total.add(articleItem.totalUnit());
         }
         return total;

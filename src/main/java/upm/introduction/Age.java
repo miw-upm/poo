@@ -17,13 +17,6 @@ public class Age {
         return this.years >= ADULTO;
     }
 
-    public void setYears(int years) {
-        if (years < MINIMO) {
-            years = MINIMO;
-        }
-        this.years = years;
-    }
-
     public boolean isChild() {
         return this.years < 13;
     }
@@ -34,6 +27,13 @@ public class Age {
 
     public int getYears() {
         return years;
+    }
+
+    public void setYears(int years) {
+        if (years < MINIMO) {
+            years = MINIMO;
+        }
+        this.years = years;
     }
 
     @Override
