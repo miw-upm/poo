@@ -34,7 +34,7 @@ public abstract class GenericRepositoryMap<T> implements GenericRepository<T> {
 
     @Override
     public Optional<T> read(Integer id) {
-        return Optional.of(this.map.get(id));
+        return Optional.ofNullable(this.map.get(id));
     }
 
     @Override
