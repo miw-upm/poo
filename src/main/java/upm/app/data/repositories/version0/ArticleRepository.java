@@ -15,8 +15,9 @@ public class ArticleRepository {
     }
 
     public Article create(Article entity) {
-        entity.setId(this.id++);
+        entity.setId(this.id);
         this.map.put(id, entity);
+        this.id++;
         return entity;
     }
 
