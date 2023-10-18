@@ -11,6 +11,10 @@ public class OptionalSnippets {
             System.out.println("Esta presente:" + pointOptional.get());
         }
         pointOptional.orElse(new Point());
+        if (pointOptional.isEmpty()) {
+            System.out.println("Esta vacio");
+        }
+        pointOptional.orElseThrow(); //Throws: NoSuchElementException
         pointOptional.orElseThrow(() -> new RuntimeException());
     }
 
