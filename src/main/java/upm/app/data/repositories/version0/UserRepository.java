@@ -29,7 +29,7 @@ public class UserRepository {
     }
 
     public Optional<User> read(Integer id) {
-        return Optional.of(this.map.get(id));
+        return Optional.ofNullable(this.map.get(id));
     }
 
     public void deleteById(Integer id) {

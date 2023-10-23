@@ -12,7 +12,7 @@ public class RuntimeExceptionSnippets {
         //app.throwRuntimeExceptionByInputError();
         //app.throwRuntimeExceptionByInputErrorWithTryCatch();
         //app.catchException();
-        //app.throwsException();
+        app.throwsException();
         //app.throwRuntimeException();
         //app.throwException();
 
