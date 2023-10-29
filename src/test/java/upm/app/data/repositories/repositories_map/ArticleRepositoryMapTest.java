@@ -38,15 +38,14 @@ class ArticleRepositoryMapTest {
 
     @Test
     public void testFindByBarcodeNotFound() {
-        Optional<Article> notFoundArticle = articleRepository.findByBarcode("0000000000000");
-        assertFalse(notFoundArticle.isPresent());
+        assertFalse(articleRepository.findByBarcode("0000000000000").isPresent());
     }
 
     @Test
     public void testUpdate() {
         Article article = this.articleRepository.read(2).get();
         article.setSummary("Updated Product B");
-        Article updatedArticle = articleRepository.update(article);
+        articleRepository.update(article);
 
         Optional<Article> retrievedArticle = articleRepository.read(2);
         assertTrue(retrievedArticle.isPresent());
@@ -55,9 +54,9 @@ class ArticleRepositoryMapTest {
 
     @Test
     public void testDelete() {
-        Article createdArticle = this.articleRepository.create(new Article("6665554443332", "Not", new BigDecimal("15.99"), LocalDate.now(), "Not"));
+        Article createdArticle = this.articleRepository.create(
+                new Article("6665554443332", "Not", new BigDecimal("15.99"), LocalDate.now(), "Not"));
         this.articleRepository.deleteById(createdArticle.getId());
-        Optional<Article> retrievedArticle = this.articleRepository.read(createdArticle.getId());
-        assertFalse(retrievedArticle.isPresent());
+        assertFalse(this.articleRepository.read(createdArticle.getId()).isPresent());
     }
 }
