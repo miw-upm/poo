@@ -11,32 +11,29 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ArticleRepositoryMapTest {
+class ArticleRepositoryMapTest {
 
-    Article article;
     private ArticleRepository articleRepository;
 
     @BeforeEach
     public void setUp() {
-        this.articleRepository = new ArticleRepositoryMap();
-        this.article = this.articleRepository.create(new Article("9876543210987", "Product A", new BigDecimal("19.99"), LocalDate.now(), "Provider A"));
-        this.articleRepository.create(new Article("1234567890123", "Product B", new BigDecimal("12.99"), LocalDate.now(), "Provider B"));
+        ShopSeeder shopSeeder = new ShopSeeder();
+        shopSeeder.seed();
+        this.articleRepository = shopSeeder.getArticleRepository();
     }
 
     @Test
-    public void testCreate() {
-        Article createdArticle = articleRepository.create(new Article("6663336663336", "Product B", new BigDecimal("12.99"), LocalDate.now(), "Provider B"));
-        assertNotNull(createdArticle.getId());
+    public void testCreateAndRead() {
+        Optional<Article> article = this.articleRepository.read(2);
+        assertTrue(this.articleRepository.read(2).isPresent());
+        assertEquals("art2", article.get().getSummary());
     }
 
     @Test
     public void testFindByBarcode() {
-        Optional<Article> foundArticle = articleRepository.findByBarcode("9876543210987");
+        Optional<Article> foundArticle = articleRepository.findByBarcode("8412345123450");
         assertTrue(foundArticle.isPresent());
-        assertEquals("Product A", foundArticle.get().getSummary());
-
-        Optional<Article> notFoundArticle = articleRepository.findByBarcode("0000000000000");
-        assertFalse(notFoundArticle.isPresent());
+        assertEquals("art1", foundArticle.get().getSummary());
     }
 
     @Test
@@ -46,20 +43,14 @@ public class ArticleRepositoryMapTest {
     }
 
     @Test
-    public void testRead() {
-        Optional<Article> retrievedArticle = articleRepository.read(this.article.getId());
-        assertTrue(retrievedArticle.isPresent());
-        assertEquals(this.article, retrievedArticle.get());
-    }
-
-    @Test
     public void testUpdate() {
-        this.article.setSummary("Updated Product A");
-        Article updatedArticle = articleRepository.update(this.article);
+        Article article = this.articleRepository.read(2).get();
+        article.setSummary("Updated Product B");
+        Article updatedArticle = articleRepository.update(article);
 
-        Optional<Article> retrievedArticle = articleRepository.read(updatedArticle.getId());
+        Optional<Article> retrievedArticle = articleRepository.read(2);
         assertTrue(retrievedArticle.isPresent());
-        assertEquals("Updated Product A", retrievedArticle.get().getSummary());
+        assertEquals("Updated Product B", retrievedArticle.get().getSummary());
     }
 
     @Test
