@@ -17,10 +17,10 @@ public class CommandLineInterface {
         System.out.print("gps>");
         Scanner scanner = new Scanner(System.in).useDelimiter("[:,\\r\\n]");
         String command = scanner.next();
-        if (CREATE_USER.equals(command)) { //create-user:666000666;Ana g.;Calle...
-            String[] values = scanner.next().split(";");
-            User user = this.userService.create(new User(Integer.valueOf(values[0]), values[1], values[2]));
-            System.out.println(user);
+        if (CREATE_USER.equals(command)) { //create-user:666000666;Ana G.;Calle...
+            String[] values = scanner.next().split(";"); // debieran aparecer 3 parametros
+            User createdUser = this.userService.create(new User(Integer.valueOf(values[0]), values[1], values[2]));
+            System.out.println(createdUser);
         }
 
     }
