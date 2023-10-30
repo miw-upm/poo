@@ -1,4 +1,4 @@
 package upm.exam;
 
-public class Hija extends Padre{
+public class Hija extends Padre {
 }

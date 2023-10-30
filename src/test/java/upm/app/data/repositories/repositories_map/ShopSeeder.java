@@ -11,10 +11,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ShopSeeder {
-    private ArticleRepository articleRepository;
-    private ShoppingCartRepository shoppingCartRepository;
-    private TagRepository tagRepository;
-    private UserRepository userRepository;
+    private final ArticleRepository articleRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
+    private final TagRepository tagRepository;
+    private final UserRepository userRepository;
 
     public ShopSeeder() {
         this.articleRepository = new ArticleRepositoryMap();
@@ -47,7 +47,7 @@ public class ShopSeeder {
         tags[1].addArticle(articles[0]);
         tags[1].addArticle(articles[2]);
         tags[3].addArticle(articles[3]);
-        tags[3].addArticle(articles[3]);
+        tags[3].addArticle(articles[4]);
         for (Tag tag : tags) {
             this.tagRepository.create(tag);
         }
@@ -76,7 +76,7 @@ public class ShopSeeder {
         carts[0].add(articleItems[1]);
         carts[1].add(articleItems[2]);
         carts[1].add(articleItems[3]);
-        for (ShoppingCart cart:carts) {
+        for (ShoppingCart cart : carts) {
             this.shoppingCartRepository.create(cart);
         }
     }

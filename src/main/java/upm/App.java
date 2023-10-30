@@ -1,6 +1,6 @@
 package upm;
 
-import upm.app.console.CommandLineInterface;
+import upm.app.console.version0.CommandLineInterface;
 import upm.app.data.repositories.repositories_map.UserRepositoryMap;
 import upm.app.services.UserService;
 

@@ -2,18 +2,18 @@ package upm.exam;
 
 public class Padre {
 
-    private int pri;
     protected int pro;
+    private int pri;
 
     public int getPri() {
         return pri;
     }
 
-    public int getPro() {
-        return pro;
-    }
-
     public void setPri(int pri) {
         this.pri = pri;
+    }
+
+    public int getPro() {
+        return pro;
     }
 }

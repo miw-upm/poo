@@ -2,12 +2,9 @@ package upm.app.data.repositories.repositories_map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import upm.app.data.models.Article;
 import upm.app.data.models.User;
 import upm.app.data.repositories.UserRepository;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,7 +23,7 @@ class UserRepositoryMapTest {
     @Test
     public void testCreateAndRead() {
         Optional<User> user = this.userRepository.read(1);
-        assertTrue(this.userRepository.read(1).isPresent());
+        assertTrue(user.isPresent());
         assertEquals("user1", user.get().getName());
     }
 
@@ -57,6 +54,6 @@ class UserRepositoryMapTest {
     public void testDelete() {
         User createdUser = this.userRepository.create(new User(666555666, "Not", "Not"));
         this.userRepository.deleteById(createdUser.getId());
-        assertFalse( this.userRepository.read(createdUser.getId()).isPresent());
+        assertFalse(this.userRepository.read(createdUser.getId()).isPresent());
     }
 }

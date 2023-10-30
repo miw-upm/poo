@@ -1,7 +1,6 @@
 package upm.app.data.repositories.repositories_map;
 
 
-import upm.app.data.models.Article;
 import upm.app.data.models.User;
 import upm.app.data.repositories.UserRepository;
 

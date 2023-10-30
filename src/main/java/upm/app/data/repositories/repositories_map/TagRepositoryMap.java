@@ -2,7 +2,6 @@ package upm.app.data.repositories.repositories_map;
 
 
 import upm.app.data.models.Tag;
-import upm.app.data.models.User;
 import upm.app.data.repositories.TagRepository;
 
 import java.util.Optional;

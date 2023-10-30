@@ -25,7 +25,7 @@ class ArticleRepositoryMapTest {
     @Test
     public void testCreateAndRead() {
         Optional<Article> article = this.articleRepository.read(2);
-        assertTrue(this.articleRepository.read(2).isPresent());
+        assertTrue(article.isPresent());
         assertEquals("art2", article.get().getSummary());
     }
 

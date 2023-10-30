@@ -1,7 +1,7 @@
 package upm.exam;
 
 public class Base {
-    private int valor;
+    private final int valor;
 
     public Base() {
         this.valor = 3;
