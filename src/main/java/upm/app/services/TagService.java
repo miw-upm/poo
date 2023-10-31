@@ -5,12 +5,16 @@ import upm.app.data.models.Tag;
 import upm.app.data.repositories.ArticleRepository;
 import upm.app.data.repositories.TagRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TagService {
     private final TagRepository tagRepository;
-    private ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
 
-    public TagService(TagRepository tagRepository) {
+    public TagService(TagRepository tagRepository, ArticleRepository articleRepository) {
         this.tagRepository = tagRepository;
+        this.articleRepository = articleRepository;
     }
 
     public Tag create(Tag tag) {
@@ -25,5 +29,19 @@ public class TagService {
         Article article = this.articleRepository.read(articleId).orElseThrow(() -> new IllegalArgumentException("El articleId no existe: " + articleId));
         tag.addArticle(article);
         this.tagRepository.update(tag);
+    }
+
+    public List<Tag> findByArticleBarcode(String articleBarcode) {
+        List<Tag> tagsResult = new ArrayList<>();
+        List<Tag> tags = this.tagRepository.findAll();
+        for (Tag tag : tags) {
+            for (Article article : tag.getArticles()) {
+                if (articleBarcode.equals(article.getBarcode())) {
+                    tagsResult.add(tag);
+                    break;
+                }
+            }
+        }
+        return tagsResult;
     }
 }

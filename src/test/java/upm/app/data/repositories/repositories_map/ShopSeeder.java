@@ -5,6 +5,10 @@ import upm.app.data.repositories.ArticleRepository;
 import upm.app.data.repositories.ShoppingCartRepository;
 import upm.app.data.repositories.TagRepository;
 import upm.app.data.repositories.UserRepository;
+import upm.app.data.repositories.repositories_map.ArticleRepositoryMap;
+import upm.app.data.repositories.repositories_map.ShoppingCartRepositoryMap;
+import upm.app.data.repositories.repositories_map.TagRepositoryMap;
+import upm.app.data.repositories.repositories_map.UserRepositoryMap;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
