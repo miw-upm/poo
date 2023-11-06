@@ -21,8 +21,20 @@ public class App {
 
         UserService userService = new UserService(userRepository);
         TagService tagService = new TagService(tagRepository, articleRepository);
-        ArticleService articleService = new ArticleService(tagRepository);
+        ArticleService articleService = new ArticleService(articleRepository, tagRepository);
 
-        new CommandLineInterface(userService, tagService, articleService).runCommand();
+        CommandLineInterface commandLineInterface = new CommandLineInterface(userService, tagService, articleService);
+
+        boolean exit = false;
+        while (!exit) {
+            try {
+                exit = commandLineInterface.runCommands();
+            } catch (Exception e) {
+                System.out.println(">>> ERROR (" + e.getClass().getSimpleName() + ") >>> " + e.getMessage());
+            }
+        }
+        System.out.println("Hasta pronto!");
     }
+
 }
+

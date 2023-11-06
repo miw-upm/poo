@@ -6,18 +6,17 @@ import java.util.Objects;
 
 public class Article {
     private static final int EUROPEAN_ARTICLE_NUMBER = 13;
-    private final LocalDate registrationDate;
+    private LocalDate registrationDate;
     private Integer id;
     private String barcode;
     private String summary;
     private BigDecimal price;
     private String provider;
 
-    public Article(String barcode, String summary, BigDecimal price, LocalDate registrationDate, String provider) {
-        this.barcode = barcode;
+    public Article(String barcode, String summary, BigDecimal price, String provider) {
+        this.setBarcode(barcode);
         this.summary = summary;
         this.price = price;
-        this.registrationDate = registrationDate;
         this.provider = provider;
     }
 
@@ -42,6 +41,10 @@ public class Article {
 
     public LocalDate getRegistrationDate() {
         return registrationDate;
+    }
+
+    public void setRegistrationDate(LocalDate registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
     public BigDecimal getPrice() {
