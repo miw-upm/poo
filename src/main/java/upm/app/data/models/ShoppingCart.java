@@ -67,6 +67,6 @@ public class ShoppingCart {
 
     @Override
     public boolean equals(Object shoppingCart) {
-        return this == shoppingCart || shoppingCart != null && getClass() == shoppingCart.getClass() && (this.equals(((ShoppingCart) shoppingCart).id));
+        return this == shoppingCart || shoppingCart != null && getClass() == shoppingCart.getClass() && (this.id.equals(((ShoppingCart) shoppingCart).id));
     }
 }

@@ -65,6 +65,6 @@ public class Tag {
 
     @Override
     public boolean equals(Object tag) {
-        return this == tag || tag != null && getClass() == tag.getClass() && (this.equals(((Tag) tag).id));
+        return this == tag || tag != null && getClass() == tag.getClass() && (this.id.equals(((Tag) tag).id));
     }
 }

@@ -16,6 +16,7 @@ public class CommandLineInterface {
     private static final String FIND_TAGS_BY_ARTICLE_BARCODE = "find-tags-by-article-barcode";
     private static final String HELP = "help";
     private static final String EXIT = "exit";
+
     private final UserService userService;
     private final TagService tagService;
     private final ArticleService articleService;

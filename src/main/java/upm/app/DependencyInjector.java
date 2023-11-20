@@ -3,10 +3,9 @@ package upm.app;
 import upm.app.console.CommandLineInterface;
 import upm.app.console.ErrorHandler;
 import upm.app.console.View;
-import upm.app.data.repositories.ArticleRepository;
-import upm.app.data.repositories.TagRepository;
-import upm.app.data.repositories.UserRepository;
+import upm.app.data.repositories.*;
 import upm.app.data.repositories.repositories_map.ArticleRepositoryMap;
+import upm.app.data.repositories.repositories_map.ShoppingCartRepositoryMap;
 import upm.app.data.repositories.repositories_map.TagRepositoryMap;
 import upm.app.data.repositories.repositories_map.UserRepositoryMap;
 import upm.app.services.ArticleService;
@@ -14,6 +13,7 @@ import upm.app.services.TagService;
 import upm.app.services.UserService;
 
 public class DependencyInjector {
+    private static final DependencyInjector dependencyInjector = new DependencyInjector();
     private final ErrorHandler errorHandler;
     private final View view;
     private final CommandLineInterface commandLineInterface;
@@ -24,12 +24,17 @@ public class DependencyInjector {
     private final TagService tagService;
     private final ArticleService articleService;
 
-    public DependencyInjector() {
+    private final ShoppingCartRepository shoppingCartRepository;
+
+    private final ShopSeeder shopSeeder;
+
+    private DependencyInjector() {
         this.view = new View();
 
         this.userRepository = new UserRepositoryMap();
         this.tagRepository = new TagRepositoryMap();
         this.articleRepository = new ArticleRepositoryMap();
+        this.shoppingCartRepository = new ShoppingCartRepositoryMap();
 
         this.userService = new UserService(this.userRepository);
         this.tagService = new TagService(this.tagRepository, this.articleRepository);
@@ -38,6 +43,14 @@ public class DependencyInjector {
         this.commandLineInterface = new CommandLineInterface(this.view, this.userService, this.tagService, this.articleService);
 
         this.errorHandler = new ErrorHandler(this.commandLineInterface, this.view);
+
+        this.shopSeeder = new ShopSeeder(this.articleRepository, this.shoppingCartRepository, this.tagRepository, this.userRepository);
+
+        this.shopSeeder.seed(); //TODO only develop
+    }
+
+    public static DependencyInjector getDependencyInjector() {
+        return dependencyInjector;
     }
 
     public void run() {
@@ -68,6 +81,10 @@ public class DependencyInjector {
         return this.articleRepository;
     }
 
+    public ShoppingCartRepository getShoppingCartRepository() {
+        return this.shoppingCartRepository;
+    }
+
     public UserService getUserService() {
         return this.userService;
     }
@@ -78,5 +95,9 @@ public class DependencyInjector {
 
     public ArticleService getArticleService() {
         return this.articleService;
+    }
+
+    public ShopSeeder getShopSeeder() {
+        return shopSeeder;
     }
 }

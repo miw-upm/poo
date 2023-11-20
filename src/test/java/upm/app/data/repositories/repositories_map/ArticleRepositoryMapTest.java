@@ -1,61 +1,57 @@
 package upm.app.data.repositories.repositories_map;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import upm.app.DependencyInjector;
 import upm.app.data.models.Article;
 import upm.app.data.repositories.ArticleRepository;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArticleRepositoryMapTest {
 
-    private ArticleRepository articleRepository;
-
-    @BeforeEach
-    public void setUp() {
-        ShopSeeder shopSeeder = new ShopSeeder();
-        shopSeeder.seed();
-        this.articleRepository = shopSeeder.getArticleRepository();
-    }
+    private final ArticleRepository articleRepository = DependencyInjector.getDependencyInjector().getArticleRepository();
 
     @Test
-    public void testCreateAndRead() {
+    void testCreateAndRead() {
         Optional<Article> article = this.articleRepository.read(2);
         assertTrue(article.isPresent());
         assertEquals("art2", article.get().getSummary());
     }
 
     @Test
-    public void testFindByBarcode() {
+    void testFindByBarcode() {
         Optional<Article> foundArticle = articleRepository.findByBarcode("8412345123450");
         assertTrue(foundArticle.isPresent());
         assertEquals("art1", foundArticle.get().getSummary());
     }
 
     @Test
-    public void testFindByBarcodeNotFound() {
+    void testFindByBarcodeNotFound() {
         assertFalse(articleRepository.findByBarcode("0000000000000").isPresent());
     }
 
     @Test
-    public void testUpdate() {
+    void testUpdate() {
         Article article = this.articleRepository.read(2).get();
+        String oldSummary = article.getSummary();
         article.setSummary("Updated Product B");
         articleRepository.update(article);
 
         Optional<Article> retrievedArticle = articleRepository.read(2);
         assertTrue(retrievedArticle.isPresent());
         assertEquals("Updated Product B", retrievedArticle.get().getSummary());
+
+        article.setSummary(oldSummary);
+        articleRepository.update(article);
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         Article createdArticle = this.articleRepository.create(
-                new Article("6665554443332", "Not", new BigDecimal("15.99"), LocalDate.now(), "Not"));
+                new Article("6665554443332", "Not", new BigDecimal("15.99"), "Not"));
         this.articleRepository.deleteById(createdArticle.getId());
         assertFalse(this.articleRepository.read(createdArticle.getId()).isPresent());
     }

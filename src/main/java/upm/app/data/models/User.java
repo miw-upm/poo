@@ -63,6 +63,6 @@ public class User {
 
     @Override
     public boolean equals(Object user) {
-        return this == user || user != null && getClass() == user.getClass() && (this.equals(((User) user).id));
+        return this == user || user != null && getClass() == user.getClass() && (this.id.equals(((User) user).id));
     }
 }
