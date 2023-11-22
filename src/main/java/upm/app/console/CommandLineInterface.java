@@ -90,7 +90,7 @@ public class CommandLineInterface {
         if (values.length != 1) {
             throw new IllegalArgumentException(CommandNames.FIND_ARTICLES_BY_TAG_NAME.getHelp());
         }
-        List<Tag> tags = this.tagService.findByArticleBarcode(values[0]);
+        List<Tag> tags = this.tagService.findByArticleBarcodeFunctional(values[0]);
         this.view.show(tags.toString());
     }
 

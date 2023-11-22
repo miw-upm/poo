@@ -44,4 +44,11 @@ public class TagService {
         }
         return tagsResult;
     }
+
+    public List<Tag> findByArticleBarcodeFunctional(String articleBarcode) {
+        return this.tagRepository.findAll().stream()
+                .filter(tag -> tag.getArticles().stream()
+                        .anyMatch(article -> articleBarcode.equals(article.getBarcode())))
+                .toList();
+    }
 }
