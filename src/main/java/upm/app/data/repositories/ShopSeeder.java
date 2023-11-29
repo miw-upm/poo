@@ -3,6 +3,7 @@ package upm.app.data.repositories;
 import upm.app.data.models.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ShopSeeder {
@@ -19,7 +20,7 @@ public class ShopSeeder {
     }
 
     public void seed() {
-        User[] users = {
+        /*User[] users = {
                 new User(666000660, "user1", "Calle 1"),
                 new User(666000661, "user2", "Calle 2"),
                 new User(666000662, "user3", "Calle 3"),
@@ -28,6 +29,8 @@ public class ShopSeeder {
         for (User user : users) {
             this.userRepository.create(user);
         }
+        */
+
 
         Article[] articles = {
                 new Article("8412345123450", "art1", BigDecimal.TEN, "prov1"),
@@ -37,8 +40,11 @@ public class ShopSeeder {
                 new Article("8412345123490", "art5", BigDecimal.TEN, "prov3"),
         };
         for (Article article : articles) {
+            article.setRegistrationDate(LocalDate.now());
             this.articleRepository.create(article);
         }
+
+        /*
 
         Tag[] tags = {
                 new Tag("tag1", "tag 1"),
@@ -73,7 +79,7 @@ public class ShopSeeder {
         carts[1].add(articleItems[3]);
         for (ShoppingCart cart : carts) {
             this.shoppingCartRepository.create(cart);
-        }
+        } */
     }
 
 }

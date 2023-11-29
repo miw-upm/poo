@@ -6,17 +6,27 @@ import java.util.Objects;
 
 public class Article {
     private static final int EUROPEAN_ARTICLE_NUMBER = 13;
-    private LocalDate registrationDate;
     private Integer id;
     private String barcode;
     private String summary;
     private BigDecimal price;
+    private LocalDate registrationDate;
     private String provider;
+
 
     public Article(String barcode, String summary, BigDecimal price, String provider) {
         this.setBarcode(barcode);
         this.summary = summary;
         this.price = price;
+        this.provider = provider;
+    }
+
+    public Article(Integer id, String barcode, String summary, BigDecimal price, LocalDate registrationDate, String provider) {
+        this.id = id;
+        this.barcode = barcode;
+        this.summary = summary;
+        this.price = price;
+        this.registrationDate = registrationDate;
         this.provider = provider;
     }
 

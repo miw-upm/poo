@@ -4,13 +4,15 @@ import upm.app.console.CommandLineInterface;
 import upm.app.console.ErrorHandler;
 import upm.app.console.View;
 import upm.app.data.repositories.*;
-import upm.app.data.repositories.repositories_map.ArticleRepositoryMap;
 import upm.app.data.repositories.repositories_map.ShoppingCartRepositoryMap;
 import upm.app.data.repositories.repositories_map.TagRepositoryMap;
 import upm.app.data.repositories.repositories_map.UserRepositoryMap;
+import upm.app.data.repositories.repositories_mysql.ArticleRepositoryMysql;
 import upm.app.services.ArticleService;
 import upm.app.services.TagService;
 import upm.app.services.UserService;
+
+import java.sql.Statement;
 
 public class DependencyInjector {
     private static final DependencyInjector dependencyInjector = new DependencyInjector();
@@ -33,7 +35,7 @@ public class DependencyInjector {
 
         this.userRepository = new UserRepositoryMap();
         this.tagRepository = new TagRepositoryMap();
-        this.articleRepository = new ArticleRepositoryMap();
+        this.articleRepository = new ArticleRepositoryMysql();
         this.shoppingCartRepository = new ShoppingCartRepositoryMap();
 
         this.userService = new UserService(this.userRepository);
