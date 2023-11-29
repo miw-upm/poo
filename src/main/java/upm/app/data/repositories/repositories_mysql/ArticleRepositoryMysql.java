@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ArticleRepositoryMysql extends GenericRepositoryMysql<Article> implements ArticleRepository {
+    private static final String TABLE = "article";
     private static final String FIELDS = "barcode,summary,price,registrationDate,provider";
     private static final String KEY_FIELDS = "id," + FIELDS;
 
@@ -18,8 +19,8 @@ public class ArticleRepositoryMysql extends GenericRepositoryMysql<Article> impl
     }
 
     private void initializeTable() {
-        this.executeUpdate("DROP TABLE IF EXISTS article"); // Only in develop
-        this.executeUpdate("CREATE TABLE IF NOT EXISTS article(" +
+        this.executeUpdate("DROP TABLE IF EXISTS " + TABLE); // Only in develop
+        this.executeUpdate("CREATE TABLE IF NOT EXISTS " + TABLE + "(" +
                 KEY_FIELDS.split(",")[0] + " SERIAL PRIMARY KEY," + //id auto increment
                 KEY_FIELDS.split(",")[1] + " VARCHAR(20) NOT NULL," +
                 KEY_FIELDS.split(",")[2] + " VARCHAR(20)," +
@@ -29,48 +30,50 @@ public class ArticleRepositoryMysql extends GenericRepositoryMysql<Article> impl
     }
 
     @Override
-    public Article create(Article article) {
-        String sql = String.format("INSERT INTO article (%s) VALUES ('%s','%s',%s,DATE '%s','%s')", FIELDS,
-                article.getBarcode(), article.getSummary(), article.getPrice(),
-                Date.valueOf(article.getRegistrationDate()), article.getProvider());
+    public Article create(Article entity) {
+        String sql = String.format("INSERT INTO %s (%s) VALUES ('%s', '%s', %s, DATE '%s', '%s')", TABLE, FIELDS,
+                entity.getBarcode(), entity.getSummary(), entity.getPrice(),Date.valueOf(entity.getRegistrationDate()),
+                entity.getProvider());
         this.executeUpdate(sql);
-        return this.findByBarcode(article.getBarcode()).orElseThrow();
+        return this.findByBarcode(entity.getBarcode()).orElseThrow();
     }
 
     @Override
     public Optional<Article> read(Integer id) {
-        return this.executeQuery(String.format("SELECT %s FROM article WHERE id = %d", KEY_FIELDS, id)).stream()
+        return this.executeQuery(String.format("SELECT %s FROM %s WHERE id = %d", KEY_FIELDS, TABLE, id)).stream()
                 .findFirst();
     }
 
     @Override
-    public Article update(Article article) {
-        String sql = String.format("UPDATE article SET %s = '%s',%s = '%s',%s = %s,%s = DATE '%s',%s = '%s' " +
+    public Article update(Article entity) {
+        String sql = String.format("UPDATE %s SET " +
+                        "%s = '%s', %s = '%s', %s = %s, %s = DATE '%s', %s = '%s' " +
                         "WHERE %s = %d",
-                KEY_FIELDS.split(",")[1], article.getBarcode(),
-                KEY_FIELDS.split(",")[2], article.getSummary(),
-                KEY_FIELDS.split(",")[3], article.getPrice(),
-                KEY_FIELDS.split(",")[4], Date.valueOf(article.getRegistrationDate()),
-                KEY_FIELDS.split(",")[1], article.getProvider(),
-                KEY_FIELDS.split(",")[0], article.getId());
+                TABLE,
+                KEY_FIELDS.split(",")[1], entity.getBarcode(),
+                KEY_FIELDS.split(",")[2], entity.getSummary(),
+                KEY_FIELDS.split(",")[3], entity.getPrice(),
+                KEY_FIELDS.split(",")[4], Date.valueOf(entity.getRegistrationDate()),
+                KEY_FIELDS.split(",")[1], entity.getProvider(),
+                KEY_FIELDS.split(",")[0], entity.getId());
         this.executeUpdate(sql);
-        return this.read(article.getId())
+        return this.read(entity.getId())
                 .orElseThrow();
     }
 
     @Override
     public void deleteById(Integer id) {
-        this.executeUpdate(String.format("DELETE FROM article WHERE id = %d", id));
+        this.executeUpdate(String.format("DELETE FROM %s WHERE id = %d", TABLE, id));
     }
 
     @Override
     public List<Article> findAll() {
-        return this.executeQuery(String.format("SELECT %s FROM article", KEY_FIELDS));
+        return this.executeQuery(String.format("SELECT %s FROM %s", KEY_FIELDS, TABLE));
     }
 
     @Override
     public Optional<Article> findByBarcode(String barcode) {
-        return this.executeQuery(String.format("SELECT %s FROM article WHERE barcode like %s", KEY_FIELDS, barcode)).stream()
+        return this.executeQuery(String.format("SELECT %s FROM %s WHERE %s like %s", KEY_FIELDS, TABLE, KEY_FIELDS.split(",")[1], barcode)).stream()
                 .findFirst();
     }
 

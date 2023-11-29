@@ -15,12 +15,20 @@ public abstract class GenericRepositoryMysql<T> implements GenericRepository<T> 
 
     private final Statement statement;
 
-    public GenericRepositoryMysql() {
+    protected GenericRepositoryMysql() {
         this.statement = this.createStatement();
     }
 
-    protected Statement getStatement() {
-        return this.statement;
+    private Statement createStatement() {
+        try {
+            Class.forName(DRIVER);
+            Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            return connection.createStatement();
+        } catch (ClassNotFoundException e) {
+            throw new UnsupportedOperationException("Driver error: '" + DRIVER + "'. " + e.getMessage());
+        } catch (SQLException e) {
+            throw new UnsupportedOperationException("Connection error with '" + URL + "'. " + e.getMessage());
+        }
     }
 
     protected void executeUpdate(String sql) {
@@ -48,15 +56,4 @@ public abstract class GenericRepositoryMysql<T> implements GenericRepository<T> 
 
     protected abstract T retriever(ResultSet resulSet);
 
-    protected Statement createStatement() {
-        try {
-            Class.forName(DRIVER);
-            Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            return connection.createStatement();
-        } catch (ClassNotFoundException e) {
-            throw new UnsupportedOperationException("Driver error: '" + DRIVER + "'. " + e.getMessage());
-        } catch (SQLException e) {
-            throw new UnsupportedOperationException("Connection error with '" + URL + "'. " + e.getMessage());
-        }
-    }
 }
