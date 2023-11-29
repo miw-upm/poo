@@ -5,15 +5,21 @@ import java.util.List;
 import java.util.Objects;
 
 public class Tag {
-    private final List<Article> articles;
     private Integer id;
     private String name;
     private String description;
+    private final List<Article> articles;
 
-    public Tag(String name, String description) {
+    public Tag(Integer id, String name, String description) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.articles = new ArrayList<>();
+    }
+
+    public Tag(String name, String description) {
+        this(null, name, description);
+
     }
 
     public Integer getId() {

@@ -42,8 +42,6 @@ public class ShopSeeder {
             this.articleRepository.create(article);
         }
 
-        /*
-
         Tag[] tags = {
                 new Tag("tag1", "tag 1"),
                 new Tag("tag2", "tag 2"),
@@ -51,16 +49,17 @@ public class ShopSeeder {
                 new Tag("tag4", "tag 4"),
                 new Tag("tag5", "tag 5")
         };
-        tags[0].addArticle(articles[0]);
+        /*tags[0].addArticle(articles[0]);
         tags[0].addArticle(articles[1]);
         tags[1].addArticle(articles[0]);
         tags[1].addArticle(articles[2]);
         tags[3].addArticle(articles[3]);
-        tags[3].addArticle(articles[4]);
+        tags[3].addArticle(articles[4]);*/
         for (Tag tag : tags) {
             this.tagRepository.create(tag);
         }
 
+        /*
         ArticleItem[] articleItems = {
                 new ArticleItem(articles[0], 1, BigDecimal.ZERO),
                 new ArticleItem(articles[1], 2, BigDecimal.TEN),
