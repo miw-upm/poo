@@ -14,6 +14,11 @@ public class ShoppingCart {
 
 
     public ShoppingCart(User user, LocalDateTime creationDate) {
+        this(null,user,creationDate);
+    }
+
+    public ShoppingCart(Integer id, User user, LocalDateTime creationDate) {
+        this.id = id;
         this.user = user;
         this.creationDate = creationDate;
         this.articleItems = new ArrayList<>();

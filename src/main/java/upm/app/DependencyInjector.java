@@ -5,10 +5,7 @@ import upm.app.console.ErrorHandler;
 import upm.app.console.View;
 import upm.app.data.repositories.*;
 import upm.app.data.repositories.repositories_map.ShoppingCartRepositoryMap;
-import upm.app.data.repositories.repositories_mysql.ArticleRepositoryMysql;
-import upm.app.data.repositories.repositories_mysql.RepositoryMysql;
-import upm.app.data.repositories.repositories_mysql.TagRepositoryMysql;
-import upm.app.data.repositories.repositories_mysql.UserRepositoryMysql;
+import upm.app.data.repositories.repositories_mysql.*;
 import upm.app.services.ArticleService;
 import upm.app.services.TagService;
 import upm.app.services.UserService;
@@ -37,7 +34,8 @@ public class DependencyInjector {
         this.articleRepository = new ArticleRepositoryMysql();
         this.tagRepository = new TagRepositoryMysql((ArticleRepositoryMysql) this.articleRepository);
 
-        this.shoppingCartRepository = new ShoppingCartRepositoryMap(); //TODO
+        this.shoppingCartRepository = new ShoppingCartRepositoryMysql((UserRepositoryMysql)this.userRepository,
+                (ArticleRepositoryMysql) this.articleRepository);
 
         this.userService = new UserService(this.userRepository);
         this.tagService = new TagService(this.tagRepository, this.articleRepository);

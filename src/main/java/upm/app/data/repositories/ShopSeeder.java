@@ -26,8 +26,8 @@ public class ShopSeeder {
                 new User(666000662, "user3", "Calle 3"),
                 new User(666000663, "user4", "Calle 4")
         };
-        for (User user : users) {
-            this.userRepository.create(user);
+        for (int i = 0; i < users.length; i++) {
+            users[i] = this.userRepository.create(users[i]);
         }
 
         Article[] articles = {
@@ -37,9 +37,9 @@ public class ShopSeeder {
                 new Article("8412345123480", "art4", BigDecimal.valueOf(10.2), "prov2"),
                 new Article("8412345123490", "art5", BigDecimal.TEN, "prov3"),
         };
-        for (Article article : articles) {
-            article.setRegistrationDate(LocalDate.now());
-            this.articleRepository.create(article);
+        for (int i = 0; i < articles.length; i++) {
+            articles[i].setRegistrationDate(LocalDate.now());
+            articles[i] = this.articleRepository.create(articles[i]);
         }
 
         Tag[] tags = {
@@ -59,7 +59,7 @@ public class ShopSeeder {
             this.tagRepository.create(tag);
         }
 
-        /*
+
         ArticleItem[] articleItems = {
                 new ArticleItem(articles[0], 1, BigDecimal.ZERO),
                 new ArticleItem(articles[1], 2, BigDecimal.TEN),
@@ -76,7 +76,7 @@ public class ShopSeeder {
         carts[1].add(articleItems[3]);
         for (ShoppingCart cart : carts) {
             this.shoppingCartRepository.create(cart);
-        } */
+        }
     }
 
 }
