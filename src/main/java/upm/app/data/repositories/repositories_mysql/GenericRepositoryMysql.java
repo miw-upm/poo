@@ -56,4 +56,6 @@ public abstract class GenericRepositoryMysql<T> implements GenericRepository<T> 
 
     protected abstract T retriever(ResultSet resulSet);
 
+
+
 }

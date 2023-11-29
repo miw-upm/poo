@@ -1,10 +1,9 @@
-package upm.app.data.repositories.repositories_mysql;
+package upm.app.data.repositories;
 
 import org.apache.logging.log4j.LogManager;
 import org.junit.jupiter.api.Test;
 import upm.app.DependencyInjector;
 import upm.app.data.models.Article;
-import upm.app.data.repositories.ArticleRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,7 +11,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ArticleRepositoryMysqlTest {
+class ArticleRepositoryTest {
 
     private final ArticleRepository articleRepository = DependencyInjector.getDependencyInjector().getArticleRepository();
 

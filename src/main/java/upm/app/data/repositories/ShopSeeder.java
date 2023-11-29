@@ -20,7 +20,7 @@ public class ShopSeeder {
     }
 
     public void seed() {
-        /*User[] users = {
+        User[] users = {
                 new User(666000660, "user1", "Calle 1"),
                 new User(666000661, "user2", "Calle 2"),
                 new User(666000662, "user3", "Calle 3"),
@@ -29,8 +29,6 @@ public class ShopSeeder {
         for (User user : users) {
             this.userRepository.create(user);
         }
-        */
-
 
         Article[] articles = {
                 new Article("8412345123450", "art1", BigDecimal.TEN, "prov1"),
