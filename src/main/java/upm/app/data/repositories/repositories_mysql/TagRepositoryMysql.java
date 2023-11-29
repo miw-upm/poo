@@ -38,10 +38,9 @@ public class TagRepositoryMysql extends GenericRepositoryMysql<Tag> implements T
 
     @Override
     public Tag create(Tag tag) {
-        this.executeUpdate(String.format(
+        int id = this.executeInsertGeneratedKey(String.format(
                 "INSERT INTO %s (%s) VALUES ('%s','%s')", TABLE, FIELDS, tag.getName(), tag.getDescription()));
-        Tag retrieveTag = this.findByName(tag.getName()).orElseThrow();
-        createRelations(retrieveTag.getId(), tag.getArticles());
+        createRelations(id, tag.getArticles());
         return this.findByName(tag.getName()).orElseThrow();
     }
 

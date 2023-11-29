@@ -17,7 +17,8 @@ public abstract class GenericRepositoryMysql<T> implements GenericRepository<T> 
     private Statement createStatement() {
         try {
             Class.forName(RepositoryMysql.DRIVER);
-            Connection connection = DriverManager.getConnection(RepositoryMysql.URL, RepositoryMysql.USER, RepositoryMysql.PASSWORD);
+            Connection connection = DriverManager.getConnection(
+                    RepositoryMysql.URL + RepositoryMysql.DATABASE, RepositoryMysql.USER, RepositoryMysql.PASSWORD);
             return connection.createStatement();
         } catch (ClassNotFoundException e) {
             throw new UnsupportedOperationException("Driver error: '" + RepositoryMysql.DRIVER + "'. " + e.getMessage());
@@ -26,6 +27,22 @@ public abstract class GenericRepositoryMysql<T> implements GenericRepository<T> 
         }
     }
 
+    protected Integer executeInsertGeneratedKey(String sql){
+        LogManager.getLogger(this.getClass()).debug(() -> "Sql: " + sql);
+        try {
+            int rows = this.statement.executeUpdate(sql,Statement.RETURN_GENERATED_KEYS);
+            if (rows > 0) {
+                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        return generatedKeys.getInt(1);
+                    }
+                }
+            }
+            throw new UnsupportedOperationException("SQL: " + sql + " ===>>> No se ha podido generar la id");
+        } catch (SQLException e) {
+            throw new UnsupportedOperationException("SQL: " + sql + " ===>>> " + e);
+        }
+    }
     protected void executeUpdate(String sql) {
         LogManager.getLogger(this.getClass()).debug(() -> "Sql: " + sql);
         try {

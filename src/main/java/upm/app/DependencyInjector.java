@@ -18,7 +18,6 @@ public class DependencyInjector {
     private final ErrorHandler errorHandler;
     private final View view;
     private final CommandLineInterface commandLineInterface;
-    private final RepositoryMysql repositoryMysql;
     private final UserRepository userRepository;
     private final TagRepository tagRepository;
     private final ArticleRepository articleRepository;
@@ -33,9 +32,7 @@ public class DependencyInjector {
     private DependencyInjector() {
         this.view = new View();
 
-        this.repositoryMysql = new RepositoryMysql();
-        this.repositoryMysql.dropDatabase(); //TODO Only develop
-        this.repositoryMysql.createDatabase();
+        new RepositoryMysql().dropAndCreateDatabase();
         this.userRepository = new UserRepositoryMysql();
         this.articleRepository = new ArticleRepositoryMysql();
         this.tagRepository = new TagRepositoryMysql((ArticleRepositoryMysql) this.articleRepository);

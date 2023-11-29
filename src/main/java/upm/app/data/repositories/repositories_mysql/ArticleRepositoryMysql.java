@@ -6,7 +6,6 @@ import upm.app.data.repositories.ArticleRepository;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,10 +31,9 @@ public class ArticleRepositoryMysql extends GenericRepositoryMysql<Article> impl
     @Override
     public Article create(Article entity) {
         String sql = String.format("INSERT INTO %s (%s) VALUES ('%s', '%s', %s, DATE '%s', '%s')", TABLE, FIELDS,
-                entity.getBarcode(), entity.getSummary(), entity.getPrice(),Date.valueOf(entity.getRegistrationDate()),
+                entity.getBarcode(), entity.getSummary(), entity.getPrice(), Date.valueOf(entity.getRegistrationDate()),
                 entity.getProvider());
-        this.executeUpdate(sql);
-        return this.findByBarcode(entity.getBarcode()).orElseThrow();
+        return this.read(this.executeInsertGeneratedKey(sql)).orElseThrow();
     }
 
     @Override
@@ -88,7 +86,7 @@ public class ArticleRepositoryMysql extends GenericRepositoryMysql<Article> impl
                     resultSet.getDate(KEY_FIELDS.split(",")[4]).toLocalDate(),
                     resultSet.getString(KEY_FIELDS.split(",")[5]));
         } catch (SQLException e) {
-            throw new RuntimeException("Retriever article error:" + e.getMessage());
+            throw new RuntimeException("Convert article error:" + e.getMessage());
         }
     }
 

@@ -20,17 +20,16 @@ public class UserRepositoryMysql extends GenericRepositoryMysql<User> implements
     private void initializeTable() {
         this.executeUpdate("CREATE TABLE IF NOT EXISTS " + TABLE + "(" +
                 KEY_FIELDS.split(",")[0] + " SERIAL PRIMARY KEY," + //id auto increment
-                KEY_FIELDS.split(",")[1] + " INT UNIQUE NOT NULL," +
+                KEY_FIELDS.split(",")[1] + " INT," +
                 KEY_FIELDS.split(",")[2] + " VARCHAR(20)," +
                 KEY_FIELDS.split(",")[3] + " VARCHAR(20))");
     }
 
     @Override
     public User create(User entity) {
-        String sql = String.format("INSERT INTO %s (%s) VALUES (%d,'%s','%s')", TABLE, FIELDS,
-                entity.getMobile(), entity.getName(), entity.getAddress());
-        this.executeUpdate(sql);
-        return this.findByMobile(entity.getMobile()).orElseThrow();
+        int id = this.executeInsertGeneratedKey(String.format("INSERT INTO %s (%s) VALUES (%d,'%s','%s')", TABLE, FIELDS,
+                entity.getMobile(), entity.getName(), entity.getAddress()));
+        return this.read(id).orElseThrow();
     }
 
     @Override
