@@ -54,7 +54,7 @@ public class ArticleRepositoryMysql extends GenericRepositoryMysql<Article> impl
                 KEY_FIELDS.split(",")[2], entity.getSummary(),
                 KEY_FIELDS.split(",")[3], entity.getPrice(),
                 KEY_FIELDS.split(",")[4], Date.valueOf(entity.getRegistrationDate()),
-                KEY_FIELDS.split(",")[1], entity.getProvider(),
+                KEY_FIELDS.split(",")[5], entity.getProvider(),
                 KEY_FIELDS.split(",")[0], entity.getId());
         this.executeUpdate(sql);
         return this.read(entity.getId())

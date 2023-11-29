@@ -8,18 +8,17 @@ public class User {
     private String name;
     private String address;
 
-    public User(Integer mobile, String name, String address) {
-        this.mobile = mobile;
-        this.name = name;
-        this.address = address;
-    }
-
     public User(Integer id, Integer mobile, String name, String address) {
         this.id = id;
         this.mobile = mobile;
         this.name = name;
         this.address = address;
     }
+    public User(Integer mobile, String name, String address) {
+        this(null,mobile,name,address);
+    }
+
+
 
     public Integer getId() {
         return id;

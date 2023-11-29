@@ -27,11 +27,11 @@ public class UserRepositoryMysql extends GenericRepositoryMysql<User> implements
     }
 
     @Override
-    public User create(User user) {
+    public User create(User entity) {
         String sql = String.format("INSERT INTO %s (%s) VALUES (%d,'%s','%s')", TABLE, FIELDS,
-                user.getMobile(), user.getName(), user.getAddress());
+                entity.getMobile(), entity.getName(), entity.getAddress());
         this.executeUpdate(sql);
-        return this.findByMobile(user.getMobile()).orElseThrow();
+        return this.findByMobile(entity.getMobile()).orElseThrow();
     }
 
     @Override
