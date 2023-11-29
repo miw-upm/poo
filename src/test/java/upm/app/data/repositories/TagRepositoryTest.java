@@ -24,6 +24,7 @@ class TagRepositoryTest {
         Optional<Tag> tag = this.tagRepository.read(1);
         assertTrue(tag.isPresent());
         assertEquals("tag1", tag.get().getName());
+        assertFalse(tag.get().getArticles().isEmpty());
     }
 
     @Test

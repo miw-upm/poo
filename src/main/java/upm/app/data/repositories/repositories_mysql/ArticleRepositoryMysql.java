@@ -6,6 +6,7 @@ import upm.app.data.repositories.ArticleRepository;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,11 +19,10 @@ public class ArticleRepositoryMysql extends GenericRepositoryMysql<Article> impl
         this.initializeTable();
     }
 
-    private void initializeTable() {
-        this.executeUpdate("DROP TABLE IF EXISTS " + TABLE); // Only in develop
+    public void initializeTable() {
         this.executeUpdate("CREATE TABLE IF NOT EXISTS " + TABLE + "(" +
                 KEY_FIELDS.split(",")[0] + " SERIAL PRIMARY KEY," + //id auto increment
-                KEY_FIELDS.split(",")[1] + " VARCHAR(20) NOT NULL," +
+                KEY_FIELDS.split(",")[1] + " VARCHAR(20) UNIQUE NOT NULL," +
                 KEY_FIELDS.split(",")[2] + " VARCHAR(20)," +
                 KEY_FIELDS.split(",")[3] + " DECIMAL," +
                 KEY_FIELDS.split(",")[4] + " DATE," +
@@ -40,7 +40,7 @@ public class ArticleRepositoryMysql extends GenericRepositoryMysql<Article> impl
 
     @Override
     public Optional<Article> read(Integer id) {
-        return this.executeQuery(String.format("SELECT %s FROM %s WHERE id = %d", KEY_FIELDS, TABLE, id)).stream()
+        return this.executeQueryConvert(String.format("SELECT %s FROM %s WHERE id = %d", KEY_FIELDS, TABLE, id)).stream()
                 .findFirst();
     }
 
@@ -68,17 +68,17 @@ public class ArticleRepositoryMysql extends GenericRepositoryMysql<Article> impl
 
     @Override
     public List<Article> findAll() {
-        return this.executeQuery(String.format("SELECT %s FROM %s", KEY_FIELDS, TABLE));
+        return this.executeQueryConvert(String.format("SELECT %s FROM %s", KEY_FIELDS, TABLE));
     }
 
     @Override
     public Optional<Article> findByBarcode(String barcode) {
-        return this.executeQuery(String.format("SELECT %s FROM %s WHERE %s like %s", KEY_FIELDS, TABLE, KEY_FIELDS.split(",")[1], barcode)).stream()
+        return this.executeQueryConvert(String.format("SELECT %s FROM %s WHERE %s like %s", KEY_FIELDS, TABLE, KEY_FIELDS.split(",")[1], barcode)).stream()
                 .findFirst();
     }
 
     @Override
-    protected Article retriever(ResultSet resultSet) {
+    protected Article convertToEntity(ResultSet resultSet) {
         try {
             return new Article(
                     resultSet.getInt(KEY_FIELDS.split(",")[0]),

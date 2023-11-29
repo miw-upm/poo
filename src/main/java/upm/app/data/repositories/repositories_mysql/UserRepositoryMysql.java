@@ -18,10 +18,9 @@ public class UserRepositoryMysql extends GenericRepositoryMysql<User> implements
     }
 
     private void initializeTable() {
-        this.executeUpdate("DROP TABLE IF EXISTS " + TABLE); // Only in develop
         this.executeUpdate("CREATE TABLE IF NOT EXISTS " + TABLE + "(" +
                 KEY_FIELDS.split(",")[0] + " SERIAL PRIMARY KEY," + //id auto increment
-                KEY_FIELDS.split(",")[1] + " INT NOT NULL," +
+                KEY_FIELDS.split(",")[1] + " INT UNIQUE NOT NULL," +
                 KEY_FIELDS.split(",")[2] + " VARCHAR(20)," +
                 KEY_FIELDS.split(",")[3] + " VARCHAR(20))");
     }
@@ -36,7 +35,7 @@ public class UserRepositoryMysql extends GenericRepositoryMysql<User> implements
 
     @Override
     public Optional<User> read(Integer id) {
-        return this.executeQuery(String.format("SELECT %s FROM %s WHERE id = %d", KEY_FIELDS, TABLE, id)).stream()
+        return this.executeQueryConvert(String.format("SELECT %s FROM %s WHERE id = %d", KEY_FIELDS, TABLE, id)).stream()
                 .findFirst();
     }
 
@@ -62,11 +61,11 @@ public class UserRepositoryMysql extends GenericRepositoryMysql<User> implements
 
     @Override
     public List<User> findAll() {
-        return this.executeQuery(String.format("SELECT %s FROM %s", KEY_FIELDS, TABLE));
+        return this.executeQueryConvert(String.format("SELECT %s FROM %s", KEY_FIELDS, TABLE));
     }
 
     @Override
-    protected User retriever(ResultSet resultSet) {
+    protected User convertToEntity(ResultSet resultSet) {
         try {
             return new User(
                     resultSet.getInt(KEY_FIELDS.split(",")[0]),
@@ -80,7 +79,7 @@ public class UserRepositoryMysql extends GenericRepositoryMysql<User> implements
 
     @Override
     public Optional<User> findByMobile(Integer mobile) {
-        return this.executeQuery(String.format("SELECT %s FROM %s WHERE %s = %d", KEY_FIELDS, TABLE, KEY_FIELDS.split(",")[1], mobile)).stream()
+        return this.executeQueryConvert(String.format("SELECT %s FROM %s WHERE %s = %d", KEY_FIELDS, TABLE, KEY_FIELDS.split(",")[1], mobile)).stream()
                 .findFirst();
     }
 

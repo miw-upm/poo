@@ -8,11 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class GenericRepositoryMysql<T> implements GenericRepository<T> {
-    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/poo";
-    private static final String USER = "root";
-    private static final String PASSWORD = "";
-
     private final Statement statement;
 
     protected GenericRepositoryMysql() {
@@ -21,13 +16,13 @@ public abstract class GenericRepositoryMysql<T> implements GenericRepository<T> 
 
     private Statement createStatement() {
         try {
-            Class.forName(DRIVER);
-            Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            Class.forName(RepositoryMysql.DRIVER);
+            Connection connection = DriverManager.getConnection(RepositoryMysql.URL, RepositoryMysql.USER, RepositoryMysql.PASSWORD);
             return connection.createStatement();
         } catch (ClassNotFoundException e) {
-            throw new UnsupportedOperationException("Driver error: '" + DRIVER + "'. " + e.getMessage());
+            throw new UnsupportedOperationException("Driver error: '" + RepositoryMysql.DRIVER + "'. " + e.getMessage());
         } catch (SQLException e) {
-            throw new UnsupportedOperationException("Connection error with '" + URL + "'. " + e.getMessage());
+            throw new UnsupportedOperationException("Connection error with '" + RepositoryMysql.URL + "'. " + e.getMessage());
         }
     }
 
@@ -40,13 +35,21 @@ public abstract class GenericRepositoryMysql<T> implements GenericRepository<T> 
         }
     }
 
-    protected List<T> executeQuery(String sql) {
+    protected ResultSet executeQuery(String sql) {
         LogManager.getLogger(this.getClass()).debug(() -> ("Sql: " + sql));
-        List<T> entities = new ArrayList<>();
         try {
-            ResultSet resultSet = this.statement.executeQuery(sql);
+            return this.statement.executeQuery(sql);
+        } catch (SQLException e) {
+            throw new UnsupportedOperationException("SQL: " + sql + " ===>>> " + e);
+        }
+    }
+
+    protected List<T> executeQueryConvert(String sql) {
+        List<T> entities = new ArrayList<>();
+        ResultSet resultSet = this.executeQuery(sql);
+        try {
             while (resultSet.next()) {
-                entities.add(this.retriever(resultSet));
+                entities.add(this.convertToEntity(resultSet));
             }
             return entities;
         } catch (SQLException e) {
@@ -54,7 +57,7 @@ public abstract class GenericRepositoryMysql<T> implements GenericRepository<T> 
         }
     }
 
-    protected abstract T retriever(ResultSet resulSet);
+    protected abstract T convertToEntity(ResultSet resulSet);
 
 
 

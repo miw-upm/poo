@@ -49,12 +49,12 @@ public class ShopSeeder {
                 new Tag("tag4", "tag 4"),
                 new Tag("tag5", "tag 5")
         };
-        /*tags[0].addArticle(articles[0]);
+        tags[0].addArticle(articles[0]);
         tags[0].addArticle(articles[1]);
         tags[1].addArticle(articles[0]);
         tags[1].addArticle(articles[2]);
         tags[3].addArticle(articles[3]);
-        tags[3].addArticle(articles[4]);*/
+        tags[3].addArticle(articles[4]);
         for (Tag tag : tags) {
             this.tagRepository.create(tag);
         }
