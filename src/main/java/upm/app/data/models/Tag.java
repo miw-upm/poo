@@ -8,7 +8,7 @@ public class Tag {
     private Integer id;
     private String name;
     private String description;
-    private final List<Article> articles;
+    private List<Article> articles;
 
     public Tag(Integer id, String name, String description) {
         this.id = id;
@@ -48,6 +48,10 @@ public class Tag {
 
     public List<Article> getArticles() {
         return this.articles;
+    }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
     }
 
     public void addArticle(Article article) {

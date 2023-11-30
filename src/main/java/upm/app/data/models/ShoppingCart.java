@@ -10,7 +10,7 @@ public class ShoppingCart {
     private Integer id;
     private final User user;
     private final LocalDateTime creationDate;
-    private final List<ArticleItem> articleItems;
+    private List<ArticleItem> articleItems;
 
 
     public ShoppingCart(User user, LocalDateTime creationDate) {
@@ -46,6 +46,10 @@ public class ShoppingCart {
 
     public List<ArticleItem> getArticleItems() {
         return articleItems;
+    }
+
+    public void setArticleItems(List<ArticleItem> articleItems) {
+        this.articleItems = articleItems;
     }
 
     public void add(ArticleItem articleItem) {

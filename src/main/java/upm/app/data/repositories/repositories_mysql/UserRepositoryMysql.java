@@ -9,77 +9,62 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserRepositoryMysql extends GenericRepositoryMysql<User> implements UserRepository {
-    private static final String TABLE = "user";
-    private static final String FIELDS = "mobile,name,address";
-    private static final String KEY_FIELDS = "id," + FIELDS;
 
     public UserRepositoryMysql() {
         this.initializeTable();
     }
 
     private void initializeTable() {
-        this.executeUpdate("CREATE TABLE IF NOT EXISTS " + TABLE + "(" +
-                KEY_FIELDS.split(",")[0] + " SERIAL PRIMARY KEY," + //id auto increment
-                KEY_FIELDS.split(",")[1] + " INT," +
-                KEY_FIELDS.split(",")[2] + " VARCHAR(20)," +
-                KEY_FIELDS.split(",")[3] + " VARCHAR(20))");
+        this.executeUpdate("CREATE TABLE IF NOT EXISTS user(" +
+                "id SERIAL PRIMARY KEY," + //id auto increment
+                "mobile INT," +
+                "name VARCHAR(20)," +
+                "address VARCHAR(20))");
     }
 
     @Override
     public User create(User entity) {
-        int id = this.executeInsertGeneratedKey(String.format("INSERT INTO %s (%s) VALUES (%d,'%s','%s')", TABLE, FIELDS,
-                entity.getMobile(), entity.getName(), entity.getAddress()));
+        int id = this.executeInsertGeneratedKey("INSERT INTO user (mobile, name, address) VALUES (?,?,?)",
+                entity.getMobile(), entity.getName(), entity.getAddress());
         return this.read(id).orElseThrow();
     }
 
     @Override
     public Optional<User> read(Integer id) {
-        return this.executeQueryConvert(String.format("SELECT %s FROM %s WHERE id = %d", KEY_FIELDS, TABLE, id)).stream()
+        return this.executeQueryConvert("SELECT id, mobile, name, address FROM user WHERE id = ?", id).stream()
                 .findFirst();
     }
 
     @Override
     public User update(User entity) {
-        String sql = String.format("UPDATE %s SET " +
-                        "%s = %d, %s = '%s', %s = '%s' " +
-                        "WHERE %s = %d",
-                TABLE,
-                KEY_FIELDS.split(",")[1], entity.getMobile(),
-                KEY_FIELDS.split(",")[2], entity.getName(),
-                KEY_FIELDS.split(",")[3], entity.getAddress(),
-                KEY_FIELDS.split(",")[0], entity.getId());
-        this.executeUpdate(sql);
-        return this.read(entity.getId())
-                .orElseThrow();
+        this.executeUpdate("UPDATE user SET mobile = ?, name = ?, address = ? WHERE id = ?",
+                entity.getMobile(), entity.getName(), entity.getAddress(), entity.getId());
+        return this.read(entity.getId()).orElseThrow();
     }
 
     @Override
     public void deleteById(Integer id) {
-        this.executeUpdate(String.format("DELETE FROM %s WHERE id = %d", TABLE, id));
+        this.executeUpdate("DELETE FROM user WHERE id = ?", id);
     }
 
     @Override
     public List<User> findAll() {
-        return this.executeQueryConvert(String.format("SELECT %s FROM %s", KEY_FIELDS, TABLE));
+        return this.executeQueryConvert("SELECT id, mobile, name, address FROM user");
     }
 
     @Override
     protected User convertToEntity(ResultSet resultSet) {
         try {
-            return new User(
-                    resultSet.getInt(KEY_FIELDS.split(",")[0]),
-                    resultSet.getInt(KEY_FIELDS.split(",")[1]),
-                    resultSet.getString(KEY_FIELDS.split(",")[2]),
-                    resultSet.getString(KEY_FIELDS.split(",")[3]));
+            return new User(resultSet.getInt("id"), resultSet.getInt("mobile"),
+                    resultSet.getString("name"), resultSet.getString("address"));
         } catch (SQLException e) {
-            throw new RuntimeException("Retriever " + TABLE + " error: " + e.getMessage());
+            throw new RuntimeException("Retriever user error: " + e.getMessage());
         }
     }
 
     @Override
     public Optional<User> findByMobile(Integer mobile) {
-        return this.executeQueryConvert(String.format("SELECT %s FROM %s WHERE %s = %d", KEY_FIELDS, TABLE, KEY_FIELDS.split(",")[1], mobile)).stream()
+        return this.executeQueryConvert("SELECT id, mobile, name, address FROM user WHERE mobile = ?", mobile).stream()
                 .findFirst();
     }
-
 }

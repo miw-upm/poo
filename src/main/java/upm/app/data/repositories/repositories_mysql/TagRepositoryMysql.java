@@ -10,11 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class TagRepositoryMysql extends GenericRepositoryMysql<Tag> implements TagRepository {
-    private static final String TABLE = "tag";
-    private static final String RELATION = "tag_article";
-    private static final String FIELDS = "name,description";
-    private static final String KEY_FIELDS = "id," + FIELDS;
-
     private final ArticleRepositoryMysql articleRepositoryMysql;
 
     public TagRepositoryMysql(ArticleRepositoryMysql articleRepositoryMysql) {
@@ -23,23 +18,22 @@ public class TagRepositoryMysql extends GenericRepositoryMysql<Tag> implements T
     }
 
     private void initializeTable() {
-        this.executeUpdate("CREATE TABLE IF NOT EXISTS " + TABLE + "(" +
-                KEY_FIELDS.split(",")[0] + " SERIAL PRIMARY KEY," + //id auto increment
-                KEY_FIELDS.split(",")[1] + " VARCHAR(20) UNIQUE NOT NULL," +
-                KEY_FIELDS.split(",")[2] + " VARCHAR(20))");
+        this.executeUpdate("CREATE TABLE IF NOT EXISTS tag(" +
+                "id SERIAL PRIMARY KEY," + //id auto increment
+                "name VARCHAR(20) UNIQUE NOT NULL," +
+                "description VARCHAR(20))");
 
-        this.executeUpdate("CREATE TABLE IF NOT EXISTS " + RELATION + "(" +
+        this.executeUpdate("CREATE TABLE IF NOT EXISTS tag_article(" +
                 "tag_id BIGINT UNSIGNED," +
                 "article_id BIGINT UNSIGNED," +
                 "PRIMARY KEY (tag_id, article_id)," +
                 "FOREIGN KEY (tag_id) REFERENCES tag(id)," +
-                "FOREIGN KEY (article_id) REFERENCES article(id) )");
+                "FOREIGN KEY (article_id) REFERENCES article(id))");
     }
 
     @Override
     public Tag create(Tag tag) {
-        int id = this.executeInsertGeneratedKey(String.format(
-                "INSERT INTO %s (%s) VALUES ('%s','%s')", TABLE, FIELDS, tag.getName(), tag.getDescription()));
+        int id = this.executeInsertGeneratedKey("INSERT INTO tag (name, description) VALUES (?,?)", tag.getName(), tag.getDescription());
         createRelations(id, tag.getArticles());
         return this.findByName(tag.getName()).orElseThrow();
     }
@@ -47,40 +41,35 @@ public class TagRepositoryMysql extends GenericRepositoryMysql<Tag> implements T
     private void createRelations(Integer tagId, List<Article> articles) {
         for (Article article : articles) {
             Article retrieverArticle = this.articleRepositoryMysql.findByBarcode(article.getBarcode()).orElseThrow();
-            this.executeUpdate(String.format(
-                    "INSERT INTO %s (tag_id, article_id) VALUES (%d,%d)", RELATION, tagId, retrieverArticle.getId()));
+            this.executeUpdate("INSERT INTO tag_article (tag_id, article_id) VALUES (?,?)", tagId, retrieverArticle.getId());
         }
     }
 
     @Override
     public Optional<Tag> read(Integer id) {
-        Optional<Tag> tag = this.executeQueryConvert(String.format("SELECT %s FROM %s WHERE id = %d", KEY_FIELDS, TABLE, id)).stream()
+        Optional<Tag> tag = this.executeQueryConvert("SELECT id, name, description FROM tag WHERE id = ?", id).stream()
                 .findFirst();
         if (tag.isPresent()) {
-            this.readTagArticles(tag.get());
+            tag.get().setArticles(this.readTagArticles(tag.get()));
         }
         return tag;
     }
 
-    private void readTagArticles(Tag tag) {
-        ResultSet resultSet = this.executeQuery(String.format(
-                "SELECT article_id FROM %s WHERE tag_id = %d", RELATION, tag.getId()));
-        try {
-            while (resultSet.next()) {
-                tag.addArticle(this.articleRepositoryMysql.read(resultSet.getInt("article_id")).orElseThrow());
+    private List<Article> readTagArticles(Tag tag) {
+        String sql = "SELECT article_id FROM tag_article WHERE tag_id = ?";
+        return this.executeQueryFunctional(sql, resultSet -> {
+            try {
+                return this.articleRepositoryMysql.read(resultSet.getInt("article_id")).orElseThrow();
+            } catch (SQLException e) {
+                throw new UnsupportedOperationException("SQL: " + sql + " ===>>> " + e);
             }
-        } catch (SQLException e) {
-            throw new UnsupportedOperationException("Read article " + TABLE + " error: " + e.getMessage());
-        }
+        }, tag.getId());
     }
 
     @Override
     public Tag update(Tag entity) {
-        this.executeUpdate(String.format("UPDATE %s SET %s = '%s', %s = '%s' WHERE %s = %d",
-                TABLE,
-                KEY_FIELDS.split(",")[1], entity.getName(),
-                KEY_FIELDS.split(",")[2], entity.getDescription(),
-                KEY_FIELDS.split(",")[0], entity.getId()));
+        this.executeUpdate("UPDATE tag SET name = ?, description = ? WHERE id = ?",
+                entity.getName(), entity.getDescription(), entity.getId());
         this.deleteArticlesByTagId(entity.getId());
         this.createRelations(entity.getId(), entity.getArticles());
         return this.read(entity.getId())
@@ -88,18 +77,18 @@ public class TagRepositoryMysql extends GenericRepositoryMysql<Tag> implements T
     }
 
     private void deleteArticlesByTagId(Integer tagId) {
-        this.executeUpdate(String.format("DELETE FROM %s WHERE tag_id = %d", RELATION, tagId));
+        this.executeUpdate("DELETE FROM tag_article WHERE tag_id = ?", tagId);
     }
 
     @Override
     public void deleteById(Integer id) {
         this.deleteArticlesByTagId(id);
-        this.executeUpdate(String.format("DELETE FROM %s WHERE id = %d", TABLE, id));
+        this.executeUpdate("DELETE FROM tag WHERE id = ?", id);
     }
 
     @Override
     public List<Tag> findAll() {
-        List<Tag> tags = this.executeQueryConvert(String.format("SELECT %s FROM %s", KEY_FIELDS, TABLE));
+        List<Tag> tags = this.executeQueryConvert("SELECT id, name, description FROM tag");
         for (Tag tag : tags) {
             this.readTagArticles(tag);
         }
@@ -109,24 +98,20 @@ public class TagRepositoryMysql extends GenericRepositoryMysql<Tag> implements T
     @Override
     protected Tag convertToEntity(ResultSet resultSet) {
         try {
-            return new Tag(
-                    resultSet.getInt(KEY_FIELDS.split(",")[0]),
-                    resultSet.getString(KEY_FIELDS.split(",")[1]),
-                    resultSet.getString(KEY_FIELDS.split(",")[2]));
+            return new Tag(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("description"));
         } catch (SQLException e) {
-            throw new RuntimeException("convertToTag " + TABLE + " error: " + e.getMessage());
+            throw new RuntimeException("convertToTag error: " + e.getMessage());
         }
     }
 
     @Override
     public Optional<Tag> findByName(String name) {
-        Optional<Tag> retrieverTag = this.executeQueryConvert(String.format(
-                "SELECT %s FROM %s WHERE %s = '%s'", KEY_FIELDS, TABLE, KEY_FIELDS.split(",")[1], name)).stream()
+        Optional<Tag> retrieverTag = this.executeQueryConvert(
+                        "SELECT id, name, description FROM tag WHERE name = ?", name).stream()
                 .findFirst();
         if (retrieverTag.isPresent()) {
             this.readTagArticles(retrieverTag.get());
         }
         return retrieverTag;
     }
-
 }
