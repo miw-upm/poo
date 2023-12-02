@@ -16,49 +16,50 @@ public class ArticleRepositoryMysql extends GenericRepositoryMysql<Article> impl
     }
 
     public void initializeTable() {
-        this.executeUpdate("CREATE TABLE IF NOT EXISTS article(" +
+        this.executeUpdate("CREATE TABLE IF NOT EXISTS Article(" +
                 "id SERIAL PRIMARY KEY," + //id auto increment
                 "barcode VARCHAR(20) UNIQUE NOT NULL," +
                 "summary VARCHAR(20)," +
-                "price DECIMAL," +
+                "price DECIMAL(5,2)," +
                 "registrationDate DATE," +
                 "provider VARCHAR(20))");
     }
 
     @Override
     public Article create(Article entity) {
-        int id = this.executeInsertGeneratedKey("INSERT INTO article (barcode, summary, price, registrationDate, provider) " +
+        int id = this.executeInsertGeneratedKey("INSERT INTO Article (barcode, summary, price, registrationDate, provider) " +
                         "VALUES (?, ?, ?, DATE ?, ?)",
                 entity.getBarcode(), entity.getSummary(), entity.getPrice(), Date.valueOf(entity.getRegistrationDate()),
                 entity.getProvider());
-        return this.read(id).orElseThrow();
+        return this.read(id).orElseThrow(
+                () -> new RuntimeException("Unexpected database error due to entity not found: " + id));
     }
 
     @Override
     public Optional<Article> read(Integer id) {
         return this.executeQueryConvert(
-                        "SELECT id, barcode, summary, price, registrationDate, provider FROM article WHERE id =?", id).stream()
+                        "SELECT id, barcode, summary, price, registrationDate, provider FROM Article WHERE id = ?", id).stream()
                 .findFirst();
     }
 
     @Override
     public Article update(Article entity) {
         this.executeUpdate(
-                "UPDATE article SET barcode = ?, summary = ?, price = ?, registrationDate = DATE ?, provider = ? WHERE id = ?",
+                "UPDATE Article SET barcode = ?, summary = ?, price = ?, registrationDate = DATE ?, provider = ? WHERE id = ?",
                 entity.getBarcode(), entity.getSummary(), entity.getPrice(), Date.valueOf(entity.getRegistrationDate()),
                 entity.getProvider(), entity.getId());
         return this.read(entity.getId())
-                .orElseThrow();
+                .orElseThrow( () -> new RuntimeException("Unexpected database error due to entity not found: " + entity.getId()));
     }
 
     @Override
     public void deleteById(Integer id) {
-        this.executeUpdate("DELETE FROM article WHERE id = ?", id);
+        this.executeUpdate("DELETE FROM Article WHERE id = ?", id);
     }
 
     @Override
     public List<Article> findAll() {
-        return this.executeQueryConvert("SELECT id, barcode, summary, price, registrationDate, provider FROM article");
+        return this.executeQueryConvert("SELECT id, barcode, summary, price, registrationDate, provider FROM Article");
     }
 
     @Override
@@ -74,7 +75,8 @@ public class ArticleRepositoryMysql extends GenericRepositoryMysql<Article> impl
 
     @Override
     public Optional<Article> findByBarcode(String barcode) {
-        return this.executeQueryConvert("SELECT id, barcode, summary, price, registrationDate, provider FROM article WHERE barcode LIKE ?",
+        return this.executeQueryConvert(
+                        "SELECT id, barcode, summary, price, registrationDate, provider FROM Article WHERE barcode LIKE ?",
                         barcode).stream()
                 .findFirst();
     }

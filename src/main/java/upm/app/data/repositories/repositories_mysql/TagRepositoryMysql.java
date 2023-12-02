@@ -18,7 +18,7 @@ public class TagRepositoryMysql extends GenericRepositoryMysql<Tag> implements T
     }
 
     private void initializeTable() {
-        this.executeUpdate("CREATE TABLE IF NOT EXISTS tag(" +
+        this.executeUpdate("CREATE TABLE IF NOT EXISTS Tag(" +
                 "id SERIAL PRIMARY KEY," + //id auto increment
                 "name VARCHAR(20) UNIQUE NOT NULL," +
                 "description VARCHAR(20))");
@@ -27,27 +27,29 @@ public class TagRepositoryMysql extends GenericRepositoryMysql<Tag> implements T
                 "tag_id BIGINT UNSIGNED," +
                 "article_id BIGINT UNSIGNED," +
                 "PRIMARY KEY (tag_id, article_id)," +
-                "FOREIGN KEY (tag_id) REFERENCES tag(id)," +
-                "FOREIGN KEY (article_id) REFERENCES article(id))");
+                "FOREIGN KEY (tag_id) REFERENCES Tag(id)," +
+                "FOREIGN KEY (article_id) REFERENCES Article(id))");
     }
 
     @Override
     public Tag create(Tag tag) {
-        int id = this.executeInsertGeneratedKey("INSERT INTO tag (name, description) VALUES (?,?)", tag.getName(), tag.getDescription());
+        int id = this.executeInsertGeneratedKey("INSERT INTO Tag (name, description) VALUES (?,?)", tag.getName(), tag.getDescription());
         createRelations(id, tag.getArticles());
-        return this.findByName(tag.getName()).orElseThrow();
+        return this.findByName(tag.getName()).orElseThrow(() -> new RuntimeException("Unexpected database error due to entity not found: " + id));
     }
 
-    private void createRelations(Integer tagId, List<Article> articles) {
+    private void createRelations(int tagId, List<Article> articles) {
         for (Article article : articles) {
-            Article retrieverArticle = this.articleRepositoryMysql.findByBarcode(article.getBarcode()).orElseThrow();
+            Article retrieverArticle = this.articleRepositoryMysql.findByBarcode(article.getBarcode()).orElseThrow(
+                    () -> new RuntimeException("Article not found: " + article.getBarcode())
+            );
             this.executeUpdate("INSERT INTO tag_article (tag_id, article_id) VALUES (?,?)", tagId, retrieverArticle.getId());
         }
     }
 
     @Override
     public Optional<Tag> read(Integer id) {
-        Optional<Tag> tag = this.executeQueryConvert("SELECT id, name, description FROM tag WHERE id = ?", id).stream()
+        Optional<Tag> tag = this.executeQueryConvert("SELECT id, name, description FROM Tag WHERE id = ?", id).stream()
                 .findFirst();
         if (tag.isPresent()) {
             tag.get().setArticles(this.readTagArticles(tag.get()));
@@ -68,12 +70,12 @@ public class TagRepositoryMysql extends GenericRepositoryMysql<Tag> implements T
 
     @Override
     public Tag update(Tag entity) {
-        this.executeUpdate("UPDATE tag SET name = ?, description = ? WHERE id = ?",
+        this.executeUpdate("UPDATE Tag SET name = ?, description = ? WHERE id = ?",
                 entity.getName(), entity.getDescription(), entity.getId());
         this.deleteArticlesByTagId(entity.getId());
         this.createRelations(entity.getId(), entity.getArticles());
         return this.read(entity.getId())
-                .orElseThrow();
+                .orElseThrow(() -> new RuntimeException("Unexpected database error due to entity not found: " + entity.getId()));
     }
 
     private void deleteArticlesByTagId(Integer tagId) {
@@ -83,12 +85,12 @@ public class TagRepositoryMysql extends GenericRepositoryMysql<Tag> implements T
     @Override
     public void deleteById(Integer id) {
         this.deleteArticlesByTagId(id);
-        this.executeUpdate("DELETE FROM tag WHERE id = ?", id);
+        this.executeUpdate("DELETE FROM Tag WHERE id = ?", id);
     }
 
     @Override
     public List<Tag> findAll() {
-        List<Tag> tags = this.executeQueryConvert("SELECT id, name, description FROM tag");
+        List<Tag> tags = this.executeQueryConvert("SELECT id, name, description FROM Tag");
         for (Tag tag : tags) {
             this.readTagArticles(tag);
         }
@@ -107,10 +109,10 @@ public class TagRepositoryMysql extends GenericRepositoryMysql<Tag> implements T
     @Override
     public Optional<Tag> findByName(String name) {
         Optional<Tag> retrieverTag = this.executeQueryConvert(
-                        "SELECT id, name, description FROM tag WHERE name = ?", name).stream()
+                        "SELECT id, name, description FROM Tag WHERE name = ?", name).stream()
                 .findFirst();
         if (retrieverTag.isPresent()) {
-            this.readTagArticles(retrieverTag.get());
+           retrieverTag.get().setArticles(this.readTagArticles(retrieverTag.get()));
         }
         return retrieverTag;
     }

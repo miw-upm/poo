@@ -15,7 +15,7 @@ class TagRepositoryTest {
     private final ArticleRepository articleRepository = DependencyInjector.getDependencyInjector().getArticleRepository();
 
     @Test
-    void testFindAll (){
+    void testFindAll() {
         LogManager.getLogger(this.getClass()).debug("findAll: " + this.tagRepository.findAll());
     }
 
@@ -29,9 +29,10 @@ class TagRepositoryTest {
 
     @Test
     void testFindByName() {
-        Optional<Tag> foundTag = tagRepository.findByName("tag2");
-        assertTrue(foundTag.isPresent());
-        assertEquals("tag 2", foundTag.get().getDescription());
+        Optional<Tag> retrieveTag = tagRepository.findByName("tag1");
+        assertTrue(retrieveTag.isPresent());
+        assertEquals("tag 1", retrieveTag.get().getDescription());
+        assertEquals(2, retrieveTag.get().getArticles().size());
     }
 
     @Test

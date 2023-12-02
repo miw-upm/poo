@@ -61,7 +61,7 @@ public class ShopSeeder {
 
 
         ArticleItem[] articleItems = {
-                new ArticleItem(articles[0], 1, BigDecimal.ZERO),
+                new ArticleItem(articles[0], 1, new BigDecimal("11.346")),
                 new ArticleItem(articles[1], 2, BigDecimal.TEN),
                 new ArticleItem(articles[1], 3, BigDecimal.ZERO),
                 new ArticleItem(articles[2], 4, BigDecimal.ONE)

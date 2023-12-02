@@ -15,7 +15,7 @@ public class UserRepositoryMysql extends GenericRepositoryMysql<User> implements
     }
 
     private void initializeTable() {
-        this.executeUpdate("CREATE TABLE IF NOT EXISTS user(" +
+        this.executeUpdate("CREATE TABLE IF NOT EXISTS User(" +
                 "id SERIAL PRIMARY KEY," + //id auto increment
                 "mobile INT," +
                 "name VARCHAR(20)," +
@@ -24,32 +24,34 @@ public class UserRepositoryMysql extends GenericRepositoryMysql<User> implements
 
     @Override
     public User create(User entity) {
-        int id = this.executeInsertGeneratedKey("INSERT INTO user (mobile, name, address) VALUES (?,?,?)",
+        int id = this.executeInsertGeneratedKey("INSERT INTO User (mobile, name, address) VALUES (?,?,?)",
                 entity.getMobile(), entity.getName(), entity.getAddress());
-        return this.read(id).orElseThrow();
+        return this.read(id).orElseThrow(
+                () -> new RuntimeException("Unexpected database error due to entity not found: " + id));
     }
 
     @Override
     public Optional<User> read(Integer id) {
-        return this.executeQueryConvert("SELECT id, mobile, name, address FROM user WHERE id = ?", id).stream()
+        return this.executeQueryConvert("SELECT id, mobile, name, address FROM User WHERE id = ?", id).stream()
                 .findFirst();
     }
 
     @Override
     public User update(User entity) {
-        this.executeUpdate("UPDATE user SET mobile = ?, name = ?, address = ? WHERE id = ?",
+        this.executeUpdate("UPDATE User SET mobile = ?, name = ?, address = ? WHERE id = ?",
                 entity.getMobile(), entity.getName(), entity.getAddress(), entity.getId());
-        return this.read(entity.getId()).orElseThrow();
+        return this.read(entity.getId()).orElseThrow(
+                () -> new RuntimeException("Unexpected database error due to entity not found: " + entity.getId()));
     }
 
     @Override
     public void deleteById(Integer id) {
-        this.executeUpdate("DELETE FROM user WHERE id = ?", id);
+        this.executeUpdate("DELETE FROM User WHERE id = ?", id);
     }
 
     @Override
     public List<User> findAll() {
-        return this.executeQueryConvert("SELECT id, mobile, name, address FROM user");
+        return this.executeQueryConvert("SELECT id, mobile, name, address FROM User");
     }
 
     @Override
@@ -64,7 +66,7 @@ public class UserRepositoryMysql extends GenericRepositoryMysql<User> implements
 
     @Override
     public Optional<User> findByMobile(Integer mobile) {
-        return this.executeQueryConvert("SELECT id, mobile, name, address FROM user WHERE mobile = ?", mobile).stream()
+        return this.executeQueryConvert("SELECT id, mobile, name, address FROM User WHERE mobile = ?", mobile).stream()
                 .findFirst();
     }
 }

@@ -31,9 +31,7 @@ public abstract class GenericRepositoryMysql<T> implements GenericRepository<T> 
     protected Integer executeInsertGeneratedKey(String sql, Object... values) {
         LogManager.getLogger(this.getClass()).debug(() -> "Sql: " + sql);
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            for (int i = 0; i < values.length; i++) {
-                preparedStatement.setObject(i + 1, values[i]);
-            }
+            this.assignValues(preparedStatement, values);
             int rows = preparedStatement.executeUpdate();
             if (rows > 0) {
                 try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
@@ -51,9 +49,7 @@ public abstract class GenericRepositoryMysql<T> implements GenericRepository<T> 
     protected void executeUpdate(String sql, Object... values) {
         LogManager.getLogger(this.getClass()).debug(() -> "Sql: " + sql);
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql)) {
-            for (int i = 0; i < values.length; i++) {
-                preparedStatement.setObject(i + 1, values[i]);
-            }
+            this.assignValues(preparedStatement, values);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new UnsupportedOperationException("SQL: " + sql + " ===>>> " + e);
@@ -64,9 +60,7 @@ public abstract class GenericRepositoryMysql<T> implements GenericRepository<T> 
         LogManager.getLogger(this.getClass()).debug(() -> ("Sql: " + sql));
         List<S> entities = new ArrayList<>();
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql)) {
-            for (int i = 0; i < values.length; i++) {
-                preparedStatement.setObject(i + 1, values[i]);
-            }
+            this.assignValues(preparedStatement, values);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 entities.add(convert.apply(resultSet));
@@ -77,13 +71,17 @@ public abstract class GenericRepositoryMysql<T> implements GenericRepository<T> 
         return entities;
     }
 
+    private void assignValues(PreparedStatement preparedStatement, Object[] values) throws SQLException {
+        for (int i = 0; i < values.length; i++) {
+            preparedStatement.setObject(i + 1, values[i]);
+        }
+    }
+
     protected List<T> executeQueryConvert(String sql, Object... values) {
         LogManager.getLogger(this.getClass()).debug(() -> ("Sql: " + sql));
         List<T> entities = new ArrayList<>();
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql)) {
-            for (int i = 0; i < values.length; i++) {
-                preparedStatement.setObject(i + 1, values[i]);
-            }
+            this.assignValues(preparedStatement, values);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 entities.add(this.convertToEntity(resultSet));
