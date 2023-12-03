@@ -8,24 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public abstract class GenericRepositoryMysql<T> implements GenericRepository<T> {
+public abstract class GenericRepositorySql<T> implements GenericRepository<T> {
 
-    private Connection connection;
+    private final Connection connection;
 
-    protected GenericRepositoryMysql() {
-        this.prepareConnection();
-    }
-
-    private void prepareConnection() {
-        try {
-            Class.forName(RepositoryMysql.DRIVER);
-            this.connection = DriverManager.getConnection(
-                    RepositoryMysql.URL + RepositoryMysql.DATABASE, RepositoryMysql.USER, RepositoryMysql.PASSWORD);
-        } catch (ClassNotFoundException e) {
-            throw new UnsupportedOperationException("Driver error: '" + RepositoryMysql.DRIVER + "'. " + e.getMessage());
-        } catch (SQLException e) {
-            throw new UnsupportedOperationException("Connection error with '" + RepositoryMysql.URL + "'. " + e.getMessage());
-        }
+    public GenericRepositorySql(Connection connection) {
+        this.connection = connection;
     }
 
     protected Integer executeInsertGeneratedKey(String sql, Object... values) {

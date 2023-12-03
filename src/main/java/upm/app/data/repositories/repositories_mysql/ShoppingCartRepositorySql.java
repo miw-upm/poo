@@ -4,32 +4,34 @@ import upm.app.data.models.ArticleItem;
 import upm.app.data.models.ShoppingCart;
 import upm.app.data.repositories.ShoppingCartRepository;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
-public class ShoppingCartRepositoryMysql extends GenericRepositoryMysql<ShoppingCart> implements ShoppingCartRepository {
-    private final UserRepositoryMysql userRepositoryMysql;
-    private final ArticleRepositoryMysql articleRepositoryMysql;
+public class ShoppingCartRepositorySql extends GenericRepositorySql<ShoppingCart> implements ShoppingCartRepository {
+    private final UserRepositorySql userRepositorySql;
+    private final ArticleRepositorySql articleRepositoryMysql;
 
-    public ShoppingCartRepositoryMysql(UserRepositoryMysql userRepositoryMysql, ArticleRepositoryMysql articleRepositoryMysql) {
-        this.userRepositoryMysql = userRepositoryMysql;
-        this.articleRepositoryMysql = articleRepositoryMysql;
+    public ShoppingCartRepositorySql(Connection connection, UserRepositorySql userRepositorySql, ArticleRepositorySql articleRepositorySql) {
+        super(connection);
+        this.userRepositorySql = userRepositorySql;
+        this.articleRepositoryMysql = articleRepositorySql;
         this.initializeTable();
     }
 
     private void initializeTable() {
-        this.executeUpdate("CREATE TABLE IF NOT EXISTS ShoppingCart(" +
-                "id SERIAL PRIMARY KEY," + //id auto increment
+        this.executeUpdate("CREATE TABLE IF NOT EXISTS ShoppingCart (" +
+                "id INT PRIMARY KEY NOT NULL AUTO_INCREMENT," + //id auto increment
                 "user_id INT NOT NULL," +
                 "creationDate TIMESTAMP)");
 
-        this.executeUpdate("CREATE TABLE IF NOT EXISTS ArticleItem(" +
-                "id SERIAL PRIMARY KEY," +
-                "shoppingCart_id BIGINT UNSIGNED," +
-                "article_id BIGINT UNSIGNED," +
+        this.executeUpdate("CREATE TABLE IF NOT EXISTS ArticleItem (" +
+                "id INT PRIMARY KEY NOT NULL AUTO_INCREMENT," +
+                "shoppingCart_id INT," +
+                "article_id INT," +
                 "amount INT," +
                 "discount DECIMAL(4,2)," +
                 "FOREIGN KEY (shoppingCart_id) REFERENCES shoppingCart(id)," +
@@ -39,7 +41,7 @@ public class ShoppingCartRepositoryMysql extends GenericRepositoryMysql<Shopping
     @Override
     public ShoppingCart create(ShoppingCart entity) {
         int id = this.executeInsertGeneratedKey(
-                "INSERT INTO ShoppingCart (user_id, creationDate) VALUES (?, TIMESTAMP ?)", entity.getUser().getId(),
+                "INSERT INTO ShoppingCart (user_id, creationDate) VALUES (?, ?)", entity.getUser().getId(),
                 Timestamp.valueOf(entity.getCreationDate()));
         this.createRelations(id, entity.getArticleItems());
         return this.read(id).orElseThrow(
@@ -56,7 +58,7 @@ public class ShoppingCartRepositoryMysql extends GenericRepositoryMysql<Shopping
 
     @Override
     public ShoppingCart update(ShoppingCart entity) {
-        this.executeUpdate("UPDATE ShoppingCart SET user_id = ?, creationDate = TIMESTAMP ? WHERE id = ?",
+        this.executeUpdate("UPDATE ShoppingCart SET user_id = ?, creationDate = ? WHERE id = ?",
                 entity.getUser().getId(), Timestamp.valueOf(entity.getCreationDate()), entity.getId());
         this.deleteArticleItemsByShoppingCartId(entity.getId());
         this.createRelations(entity.getId(), entity.getArticleItems());
@@ -67,7 +69,7 @@ public class ShoppingCartRepositoryMysql extends GenericRepositoryMysql<Shopping
     @Override
     public Optional<ShoppingCart> read(Integer id) {
         Optional<ShoppingCart> shoppingCart = this.executeQueryConvert(
-                "SELECT id, user_id, creationDate FROM ShoppingCart WHERE id = ?", id).stream()
+                        "SELECT id, user_id, creationDate FROM ShoppingCart WHERE id = ?", id).stream()
                 .findFirst();
         if (shoppingCart.isPresent()) {
             shoppingCart.get().setArticleItems(this.readArticleItems(shoppingCart.get()));
@@ -111,7 +113,7 @@ public class ShoppingCartRepositoryMysql extends GenericRepositoryMysql<Shopping
         try {
             return new ShoppingCart(
                     resultSet.getInt("id"),
-                    this.userRepositoryMysql.read(resultSet.getInt("user_id")).orElseThrow(),
+                    this.userRepositorySql.read(resultSet.getInt("user_id")).orElseThrow(),
                     resultSet.getTimestamp("creationDate").toLocalDateTime());
         } catch (SQLException e) {
             throw new RuntimeException("convert To ShoppingCart error: " + e.getMessage());

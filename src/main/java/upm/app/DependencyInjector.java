@@ -4,11 +4,12 @@ import upm.app.console.CommandLineInterface;
 import upm.app.console.ErrorHandler;
 import upm.app.console.View;
 import upm.app.data.repositories.*;
-import upm.app.data.repositories.repositories_map.ShoppingCartRepositoryMap;
 import upm.app.data.repositories.repositories_mysql.*;
 import upm.app.services.ArticleService;
 import upm.app.services.TagService;
 import upm.app.services.UserService;
+
+import java.sql.Connection;
 
 public class DependencyInjector {
     private static final DependencyInjector dependencyInjector = new DependencyInjector();
@@ -29,13 +30,14 @@ public class DependencyInjector {
     private DependencyInjector() {
         this.view = new View();
 
-        new RepositoryMysql().dropAndCreateDatabase();
-        this.userRepository = new UserRepositoryMysql();
-        this.articleRepository = new ArticleRepositoryMysql();
-        this.tagRepository = new TagRepositoryMysql((ArticleRepositoryMysql) this.articleRepository);
+        Connection connection = new RepositoryMysql().createConnection();
 
-        this.shoppingCartRepository = new ShoppingCartRepositoryMysql((UserRepositoryMysql)this.userRepository,
-                (ArticleRepositoryMysql) this.articleRepository);
+        this.userRepository = new UserRepositorySql(connection);
+        this.articleRepository = new ArticleRepositorySql(connection);
+        this.tagRepository = new TagRepositorySql(connection, (ArticleRepositorySql) this.articleRepository);
+
+        this.shoppingCartRepository = new ShoppingCartRepositorySql(connection, (UserRepositorySql) this.userRepository,
+                (ArticleRepositorySql) this.articleRepository);
 
         this.userService = new UserService(this.userRepository);
         this.tagService = new TagService(this.tagRepository, this.articleRepository);

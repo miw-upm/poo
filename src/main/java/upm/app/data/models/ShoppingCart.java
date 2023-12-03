@@ -7,14 +7,14 @@ import java.util.List;
 import java.util.Objects;
 
 public class ShoppingCart {
-    private Integer id;
     private final User user;
     private final LocalDateTime creationDate;
+    private Integer id;
     private List<ArticleItem> articleItems;
 
 
     public ShoppingCart(User user, LocalDateTime creationDate) {
-        this(null,user,creationDate);
+        this(null, user, creationDate);
     }
 
     public ShoppingCart(Integer id, User user, LocalDateTime creationDate) {

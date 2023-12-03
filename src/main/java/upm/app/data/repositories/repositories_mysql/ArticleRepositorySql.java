@@ -3,21 +3,23 @@ package upm.app.data.repositories.repositories_mysql;
 import upm.app.data.models.Article;
 import upm.app.data.repositories.ArticleRepository;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class ArticleRepositoryMysql extends GenericRepositoryMysql<Article> implements ArticleRepository {
+public class ArticleRepositorySql extends GenericRepositorySql<Article> implements ArticleRepository {
 
-    public ArticleRepositoryMysql() {
+    public ArticleRepositorySql(Connection connection) {
+        super(connection);
         this.initializeTable();
     }
 
     public void initializeTable() {
-        this.executeUpdate("CREATE TABLE IF NOT EXISTS Article(" +
-                "id SERIAL PRIMARY KEY," + //id auto increment
+        this.executeUpdate("CREATE TABLE IF NOT EXISTS Article (" +
+                "id INT PRIMARY KEY NOT NULL AUTO_INCREMENT," + //id auto increment
                 "barcode VARCHAR(20) UNIQUE NOT NULL," +
                 "summary VARCHAR(20)," +
                 "price DECIMAL(5,2)," +
@@ -28,7 +30,7 @@ public class ArticleRepositoryMysql extends GenericRepositoryMysql<Article> impl
     @Override
     public Article create(Article entity) {
         int id = this.executeInsertGeneratedKey("INSERT INTO Article (barcode, summary, price, registrationDate, provider) " +
-                        "VALUES (?, ?, ?, DATE ?, ?)",
+                        "VALUES (?, ?, ?, ?, ?)",
                 entity.getBarcode(), entity.getSummary(), entity.getPrice(), Date.valueOf(entity.getRegistrationDate()),
                 entity.getProvider());
         return this.read(id).orElseThrow(
@@ -45,11 +47,11 @@ public class ArticleRepositoryMysql extends GenericRepositoryMysql<Article> impl
     @Override
     public Article update(Article entity) {
         this.executeUpdate(
-                "UPDATE Article SET barcode = ?, summary = ?, price = ?, registrationDate = DATE ?, provider = ? WHERE id = ?",
+                "UPDATE Article SET barcode = ?, summary = ?, price = ?, registrationDate =  ?, provider = ? WHERE id = ?",
                 entity.getBarcode(), entity.getSummary(), entity.getPrice(), Date.valueOf(entity.getRegistrationDate()),
                 entity.getProvider(), entity.getId());
         return this.read(entity.getId())
-                .orElseThrow( () -> new RuntimeException("Unexpected database error due to entity not found: " + entity.getId()));
+                .orElseThrow(() -> new RuntimeException("Unexpected database error due to entity not found: " + entity.getId()));
     }
 
     @Override

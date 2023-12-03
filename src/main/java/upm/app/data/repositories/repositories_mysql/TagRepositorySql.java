@@ -4,28 +4,30 @@ import upm.app.data.models.Article;
 import upm.app.data.models.Tag;
 import upm.app.data.repositories.TagRepository;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class TagRepositoryMysql extends GenericRepositoryMysql<Tag> implements TagRepository {
-    private final ArticleRepositoryMysql articleRepositoryMysql;
+public class TagRepositorySql extends GenericRepositorySql<Tag> implements TagRepository {
+    private final ArticleRepositorySql articleRepositorySql;
 
-    public TagRepositoryMysql(ArticleRepositoryMysql articleRepositoryMysql) {
-        this.articleRepositoryMysql = articleRepositoryMysql;
+    public TagRepositorySql(Connection connection, ArticleRepositorySql articleRepositorySql) {
+        super(connection);
+        this.articleRepositorySql = articleRepositorySql;
         this.initializeTable();
     }
 
     private void initializeTable() {
-        this.executeUpdate("CREATE TABLE IF NOT EXISTS Tag(" +
-                "id SERIAL PRIMARY KEY," + //id auto increment
+        this.executeUpdate("CREATE TABLE IF NOT EXISTS Tag (" +
+                "id INT PRIMARY KEY NOT NULL AUTO_INCREMENT," + //id auto increment
                 "name VARCHAR(20) UNIQUE NOT NULL," +
                 "description VARCHAR(20))");
 
-        this.executeUpdate("CREATE TABLE IF NOT EXISTS tag_article(" +
-                "tag_id BIGINT UNSIGNED," +
-                "article_id BIGINT UNSIGNED," +
+        this.executeUpdate("CREATE TABLE IF NOT EXISTS Tag_Article (" +
+                "tag_id INT NOT NULL," +
+                "article_id INT NOT NULL," +
                 "PRIMARY KEY (tag_id, article_id)," +
                 "FOREIGN KEY (tag_id) REFERENCES Tag(id)," +
                 "FOREIGN KEY (article_id) REFERENCES Article(id))");
@@ -40,10 +42,10 @@ public class TagRepositoryMysql extends GenericRepositoryMysql<Tag> implements T
 
     private void createRelations(int tagId, List<Article> articles) {
         for (Article article : articles) {
-            Article retrieverArticle = this.articleRepositoryMysql.findByBarcode(article.getBarcode()).orElseThrow(
+            Article retrieverArticle = this.articleRepositorySql.findByBarcode(article.getBarcode()).orElseThrow(
                     () -> new RuntimeException("Article not found: " + article.getBarcode())
             );
-            this.executeUpdate("INSERT INTO tag_article (tag_id, article_id) VALUES (?,?)", tagId, retrieverArticle.getId());
+            this.executeUpdate("INSERT INTO Tag_Article (tag_id, article_id) VALUES (?,?)", tagId, retrieverArticle.getId());
         }
     }
 
@@ -58,10 +60,10 @@ public class TagRepositoryMysql extends GenericRepositoryMysql<Tag> implements T
     }
 
     private List<Article> readTagArticles(Tag tag) {
-        String sql = "SELECT article_id FROM tag_article WHERE tag_id = ?";
+        String sql = "SELECT article_id FROM Tag_Article WHERE tag_id = ?";
         return this.executeQueryFunctional(sql, resultSet -> {
             try {
-                return this.articleRepositoryMysql.read(resultSet.getInt("article_id")).orElseThrow();
+                return this.articleRepositorySql.read(resultSet.getInt("article_id")).orElseThrow();
             } catch (SQLException e) {
                 throw new UnsupportedOperationException("SQL: " + sql + " ===>>> " + e);
             }
@@ -79,7 +81,7 @@ public class TagRepositoryMysql extends GenericRepositoryMysql<Tag> implements T
     }
 
     private void deleteArticlesByTagId(Integer tagId) {
-        this.executeUpdate("DELETE FROM tag_article WHERE tag_id = ?", tagId);
+        this.executeUpdate("DELETE FROM Tag_Article WHERE tag_id = ?", tagId);
     }
 
     @Override
@@ -112,7 +114,7 @@ public class TagRepositoryMysql extends GenericRepositoryMysql<Tag> implements T
                         "SELECT id, name, description FROM Tag WHERE name = ?", name).stream()
                 .findFirst();
         if (retrieverTag.isPresent()) {
-           retrieverTag.get().setArticles(this.readTagArticles(retrieverTag.get()));
+            retrieverTag.get().setArticles(this.readTagArticles(retrieverTag.get()));
         }
         return retrieverTag;
     }

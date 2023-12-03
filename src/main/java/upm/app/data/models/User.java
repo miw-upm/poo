@@ -14,10 +14,10 @@ public class User {
         this.name = name;
         this.address = address;
     }
-    public User(Integer mobile, String name, String address) {
-        this(null,mobile,name,address);
-    }
 
+    public User(Integer mobile, String name, String address) {
+        this(null, mobile, name, address);
+    }
 
 
     public Integer getId() {
