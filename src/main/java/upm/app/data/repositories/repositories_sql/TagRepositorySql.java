@@ -1,4 +1,4 @@
-package upm.app.data.repositories.repositories_mysql;
+package upm.app.data.repositories.repositories_sql;
 
 import upm.app.data.models.Article;
 import upm.app.data.models.Tag;
@@ -70,6 +70,16 @@ public class TagRepositorySql extends GenericRepositorySql<Tag> implements TagRe
         }, tag.getId());
     }
 
+
+    @Override
+    protected Tag convertToEntity(ResultSet resultSet) {
+        try {
+            return new Tag(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("description"));
+        } catch (SQLException e) {
+            throw new UnsupportedOperationException("convertToTag error: " + e.getMessage());
+        }
+    }
+
     @Override
     public Tag update(Tag entity) {
         this.executeUpdate("UPDATE Tag SET name = ?, description = ? WHERE id = ?",
@@ -99,14 +109,6 @@ public class TagRepositorySql extends GenericRepositorySql<Tag> implements TagRe
         return tags;
     }
 
-    @Override
-    protected Tag convertToEntity(ResultSet resultSet) {
-        try {
-            return new Tag(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("description"));
-        } catch (SQLException e) {
-            throw new RuntimeException("convertToTag error: " + e.getMessage());
-        }
-    }
 
     @Override
     public Optional<Tag> findByName(String name) {

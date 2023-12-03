@@ -1,4 +1,4 @@
-package upm.app.data.repositories.repositories_mysql;
+package upm.app.data.repositories.repositories_sql;
 
 import upm.app.data.models.User;
 import upm.app.data.repositories.UserRepository;
@@ -39,6 +39,15 @@ public class UserRepositorySql extends GenericRepositorySql<User> implements Use
     }
 
     @Override
+    protected User convertToEntity(ResultSet resultSet) {
+        try {
+            return new User(resultSet.getInt("id"), resultSet.getInt("mobile"),
+                    resultSet.getString("name"), resultSet.getString("address"));
+        } catch (SQLException e) {
+            throw new UnsupportedOperationException("Retriever user error: " + e.getMessage());
+        }
+    }
+    @Override
     public User update(User entity) {
         this.executeUpdate("UPDATE UserApp SET mobile = ?, name = ?, address = ? WHERE id = ?",
                 entity.getMobile(), entity.getName(), entity.getAddress(), entity.getId());
@@ -54,16 +63,6 @@ public class UserRepositorySql extends GenericRepositorySql<User> implements Use
     @Override
     public List<User> findAll() {
         return this.executeQueryConvert("SELECT id, mobile, name, address FROM UserApp");
-    }
-
-    @Override
-    protected User convertToEntity(ResultSet resultSet) {
-        try {
-            return new User(resultSet.getInt("id"), resultSet.getInt("mobile"),
-                    resultSet.getString("name"), resultSet.getString("address"));
-        } catch (SQLException e) {
-            throw new RuntimeException("Retriever user error: " + e.getMessage());
-        }
     }
 
     @Override

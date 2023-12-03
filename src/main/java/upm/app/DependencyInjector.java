@@ -4,7 +4,7 @@ import upm.app.console.CommandLineInterface;
 import upm.app.console.ErrorHandler;
 import upm.app.console.View;
 import upm.app.data.repositories.*;
-import upm.app.data.repositories.repositories_mysql.*;
+import upm.app.data.repositories.repositories_sql.*;
 import upm.app.services.ArticleService;
 import upm.app.services.TagService;
 import upm.app.services.UserService;
@@ -30,7 +30,7 @@ public class DependencyInjector {
     private DependencyInjector() {
         this.view = new View();
 
-        Connection connection = new RepositoryMysql().createConnection();
+        Connection connection = new RepositoryMysql().createConnection(); // new RepositoryH2().createConnection();
 
         this.userRepository = new UserRepositorySql(connection);
         this.articleRepository = new ArticleRepositorySql(connection);

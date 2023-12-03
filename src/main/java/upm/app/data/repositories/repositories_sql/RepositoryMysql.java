@@ -1,4 +1,4 @@
-package upm.app.data.repositories.repositories_mysql;
+package upm.app.data.repositories.repositories_sql;
 
 import org.apache.logging.log4j.LogManager;
 
@@ -33,7 +33,7 @@ public class RepositoryMysql {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement statement = connection.createStatement()) {
             statement.executeUpdate("USE mysql;");
-            statement.executeUpdate("CREATE DATABASE " + DATABASE + ";");
+            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS " + DATABASE + ";");
         } catch (SQLException e) {
             LogManager.getLogger(this.getClass()).debug(e);
         }

@@ -1,4 +1,4 @@
-package upm.app.data.repositories.repositories_mysql;
+package upm.app.data.repositories.repositories_sql;
 
 import org.apache.logging.log4j.LogManager;
 import upm.app.data.repositories.GenericRepository;
@@ -12,7 +12,7 @@ public abstract class GenericRepositorySql<T> implements GenericRepository<T> {
 
     private final Connection connection;
 
-    public GenericRepositorySql(Connection connection) {
+    protected GenericRepositorySql(Connection connection) {
         this.connection = connection;
     }
 
@@ -34,6 +34,12 @@ public abstract class GenericRepositorySql<T> implements GenericRepository<T> {
         }
     }
 
+    private void assignValues(PreparedStatement preparedStatement, Object[] values) throws SQLException {
+        for (int i = 0; i < values.length; i++) {
+            preparedStatement.setObject(i + 1, values[i]);
+        }
+    }
+
     protected void executeUpdate(String sql, Object... values) {
         LogManager.getLogger(this.getClass()).debug(() -> "Sql: " + sql);
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql)) {
@@ -41,27 +47,6 @@ public abstract class GenericRepositorySql<T> implements GenericRepository<T> {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new UnsupportedOperationException("SQL: " + sql + " ===>>> " + e);
-        }
-    }
-
-    protected <S> List<S> executeQueryFunctional(String sql, Function<ResultSet, S> convert, Object... values) {
-        LogManager.getLogger(this.getClass()).debug(() -> ("Sql: " + sql));
-        List<S> entities = new ArrayList<>();
-        try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql)) {
-            this.assignValues(preparedStatement, values);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                entities.add(convert.apply(resultSet));
-            }
-        } catch (SQLException e) {
-            throw new UnsupportedOperationException("SQL: " + sql + " ===>>> " + e);
-        }
-        return entities;
-    }
-
-    private void assignValues(PreparedStatement preparedStatement, Object[] values) throws SQLException {
-        for (int i = 0; i < values.length; i++) {
-            preparedStatement.setObject(i + 1, values[i]);
         }
     }
 
@@ -82,5 +67,19 @@ public abstract class GenericRepositorySql<T> implements GenericRepository<T> {
 
     protected abstract T convertToEntity(ResultSet resulSet);
 
+    protected <S> List<S> executeQueryFunctional(String sql, Function<ResultSet, S> convert, Object... values) {
+        LogManager.getLogger(this.getClass()).debug(() -> ("Sql: " + sql));
+        List<S> entities = new ArrayList<>();
+        try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql)) {
+            this.assignValues(preparedStatement, values);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                entities.add(convert.apply(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new UnsupportedOperationException("SQL: " + sql + " ===>>> " + e);
+        }
+        return entities;
+    }
 
 }

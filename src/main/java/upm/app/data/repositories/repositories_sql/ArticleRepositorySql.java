@@ -1,4 +1,4 @@
-package upm.app.data.repositories.repositories_mysql;
+package upm.app.data.repositories.repositories_sql;
 
 import upm.app.data.models.Article;
 import upm.app.data.repositories.ArticleRepository;
@@ -43,6 +43,16 @@ public class ArticleRepositorySql extends GenericRepositorySql<Article> implemen
                         "SELECT id, barcode, summary, price, registrationDate, provider FROM Article WHERE id = ?", id).stream()
                 .findFirst();
     }
+    @Override
+    protected Article convertToEntity(ResultSet resultSet) {
+        try {
+            return new Article(resultSet.getInt("id"), resultSet.getString("barcode"),
+                    resultSet.getString("summary"), resultSet.getBigDecimal("price"),
+                    resultSet.getDate("registrationDate").toLocalDate(), resultSet.getString("provider"));
+        } catch (SQLException e) {
+            throw new UnsupportedOperationException("Convert article error:" + e.getMessage());
+        }
+    }
 
     @Override
     public Article update(Article entity) {
@@ -62,17 +72,6 @@ public class ArticleRepositorySql extends GenericRepositorySql<Article> implemen
     @Override
     public List<Article> findAll() {
         return this.executeQueryConvert("SELECT id, barcode, summary, price, registrationDate, provider FROM Article");
-    }
-
-    @Override
-    protected Article convertToEntity(ResultSet resultSet) {
-        try {
-            return new Article(resultSet.getInt("id"), resultSet.getString("barcode"),
-                    resultSet.getString("summary"), resultSet.getBigDecimal("price"),
-                    resultSet.getDate("registrationDate").toLocalDate(), resultSet.getString("provider"));
-        } catch (SQLException e) {
-            throw new RuntimeException("Convert article error:" + e.getMessage());
-        }
     }
 
     @Override

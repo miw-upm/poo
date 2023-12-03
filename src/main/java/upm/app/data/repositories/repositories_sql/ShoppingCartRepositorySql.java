@@ -1,4 +1,4 @@
-package upm.app.data.repositories.repositories_mysql;
+package upm.app.data.repositories.repositories_sql;
 
 import upm.app.data.models.ArticleItem;
 import upm.app.data.models.ShoppingCart;
@@ -57,16 +57,6 @@ public class ShoppingCartRepositorySql extends GenericRepositorySql<ShoppingCart
     }
 
     @Override
-    public ShoppingCart update(ShoppingCart entity) {
-        this.executeUpdate("UPDATE ShoppingCart SET user_id = ?, creationDate = ? WHERE id = ?",
-                entity.getUser().getId(), Timestamp.valueOf(entity.getCreationDate()), entity.getId());
-        this.deleteArticleItemsByShoppingCartId(entity.getId());
-        this.createRelations(entity.getId(), entity.getArticleItems());
-        return this.read(entity.getId())
-                .orElseThrow(() -> new RuntimeException("Unexpected database error due to entity not found: " + entity.getId()));
-    }
-
-    @Override
     public Optional<ShoppingCart> read(Integer id) {
         Optional<ShoppingCart> shoppingCart = this.executeQueryConvert(
                         "SELECT id, user_id, creationDate FROM ShoppingCart WHERE id = ?", id).stream()
@@ -90,6 +80,28 @@ public class ShoppingCartRepositorySql extends GenericRepositorySql<ShoppingCart
     }
 
     @Override
+    protected ShoppingCart convertToEntity(ResultSet resultSet) {
+        try {
+            return new ShoppingCart(
+                    resultSet.getInt("id"),
+                    this.userRepositorySql.read(resultSet.getInt("user_id")).orElseThrow(),
+                    resultSet.getTimestamp("creationDate").toLocalDateTime());
+        } catch (SQLException e) {
+            throw new UnsupportedOperationException("convert To ShoppingCart error: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public ShoppingCart update(ShoppingCart entity) {
+        this.executeUpdate("UPDATE ShoppingCart SET user_id = ?, creationDate = ? WHERE id = ?",
+                entity.getUser().getId(), Timestamp.valueOf(entity.getCreationDate()), entity.getId());
+        this.deleteArticleItemsByShoppingCartId(entity.getId());
+        this.createRelations(entity.getId(), entity.getArticleItems());
+        return this.read(entity.getId())
+                .orElseThrow(() -> new RuntimeException("Unexpected database error due to entity not found: " + entity.getId()));
+    }
+
+    @Override
     public void deleteById(Integer id) {
         this.deleteArticleItemsByShoppingCartId(id);
         this.executeUpdate("DELETE FROM ShoppingCart WHERE id = ?", id);
@@ -108,15 +120,4 @@ public class ShoppingCartRepositorySql extends GenericRepositorySql<ShoppingCart
         return shoppingCarts;
     }
 
-    @Override
-    protected ShoppingCart convertToEntity(ResultSet resultSet) {
-        try {
-            return new ShoppingCart(
-                    resultSet.getInt("id"),
-                    this.userRepositorySql.read(resultSet.getInt("user_id")).orElseThrow(),
-                    resultSet.getTimestamp("creationDate").toLocalDateTime());
-        } catch (SQLException e) {
-            throw new RuntimeException("convert To ShoppingCart error: " + e.getMessage());
-        }
-    }
 }
