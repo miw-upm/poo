@@ -1,7 +1,7 @@
 package upm;
 
 import org.junit.jupiter.api.Test;
-import upm.app.App;
+import upm.app.console.version2.App;
 
 class AppTest {
     @Test

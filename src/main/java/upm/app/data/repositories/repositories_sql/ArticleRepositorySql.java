@@ -43,6 +43,7 @@ public class ArticleRepositorySql extends GenericRepositorySql<Article> implemen
                         "SELECT id, barcode, summary, price, registrationDate, provider FROM Article WHERE id = ?", id).stream()
                 .findFirst();
     }
+
     @Override
     protected Article convertToEntity(ResultSet resultSet) {
         try {

@@ -1,8 +1,9 @@
-package upm.app;
+package upm.app.console;
 
-import upm.app.console.CommandLineInterface;
-import upm.app.console.ErrorHandler;
-import upm.app.console.View;
+import upm.app.console.commands.CreateArticle;
+import upm.app.console.commands.CreateUser;
+import upm.app.console.commands.FindArticleByTagName;
+import upm.app.console.commands.FindTagByArticleBarcode;
 import upm.app.data.repositories.*;
 import upm.app.data.repositories.repositories_sql.*;
 import upm.app.services.ArticleService;
@@ -43,7 +44,11 @@ public class DependencyInjector {
         this.tagService = new TagService(this.tagRepository, this.articleRepository);
         this.articleService = new ArticleService(this.articleRepository, this.tagRepository);
 
-        this.commandLineInterface = new CommandLineInterface(this.view, this.userService, this.tagService, this.articleService);
+        this.commandLineInterface = new CommandLineInterface(this.view);
+        this.commandLineInterface.add(new CreateUser(this.userService, this.view));
+        this.commandLineInterface.add(new CreateArticle(this.articleService, this.view));
+        this.commandLineInterface.add(new FindArticleByTagName(this.articleService, this.view));
+        this.commandLineInterface.add(new FindTagByArticleBarcode(this.tagService, this.view));
 
         this.errorHandler = new ErrorHandler(this.commandLineInterface, this.view);
 

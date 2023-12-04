@@ -47,6 +47,7 @@ public class UserRepositorySql extends GenericRepositorySql<User> implements Use
             throw new UnsupportedOperationException("Retriever user error: " + e.getMessage());
         }
     }
+
     @Override
     public User update(User entity) {
         this.executeUpdate("UPDATE UserApp SET mobile = ?, name = ?, address = ? WHERE id = ?",

@@ -1,5 +1,6 @@
 package upm.app.services;
 
+import org.apache.logging.log4j.LogManager;
 import upm.app.data.models.Article;
 import upm.app.data.models.Tag;
 import upm.app.data.repositories.ArticleRepository;
@@ -46,6 +47,7 @@ public class TagService {
     }
 
     public List<Tag> findByArticleBarcodeFunctional(String articleBarcode) {
+        LogManager.getLogger(this.getClass()).debug(() -> (this.tagRepository.findAll()));
         return this.tagRepository.findAll().stream()
                 .filter(tag -> tag.getArticles().stream()
                         .anyMatch(article -> articleBarcode.equals(article.getBarcode())))

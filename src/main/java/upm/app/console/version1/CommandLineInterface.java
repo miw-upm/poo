@@ -29,10 +29,10 @@ public class CommandLineInterface {
 
     public boolean runCommands() {
         Scanner scanner = new Scanner(System.in).useDelimiter("[:,\\r\\n]");
-        boolean exit = false;
-        while (!exit) {
+        boolean exit;
+        do {
             exit = runCommand(scanner);
-        }
+        } while (!exit);
         return true;
     }
 

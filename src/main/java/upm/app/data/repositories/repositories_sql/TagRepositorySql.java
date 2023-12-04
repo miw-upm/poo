@@ -104,7 +104,7 @@ public class TagRepositorySql extends GenericRepositorySql<Tag> implements TagRe
     public List<Tag> findAll() {
         List<Tag> tags = this.executeQueryConvert("SELECT id, name, description FROM Tag");
         for (Tag tag : tags) {
-            this.readTagArticles(tag);
+            tag.setArticles(this.readTagArticles(tag));
         }
         return tags;
     }

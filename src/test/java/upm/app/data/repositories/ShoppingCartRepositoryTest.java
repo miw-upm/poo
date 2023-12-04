@@ -2,7 +2,7 @@ package upm.app.data.repositories;
 
 import org.apache.logging.log4j.LogManager;
 import org.junit.jupiter.api.Test;
-import upm.app.DependencyInjector;
+import upm.app.console.version2.DependencyInjector;
 import upm.app.data.models.ArticleItem;
 import upm.app.data.models.ShoppingCart;
 

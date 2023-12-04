@@ -1,4 +1,4 @@
-package upm.app;
+package upm.app.console.version2;
 
 public class App {
 
