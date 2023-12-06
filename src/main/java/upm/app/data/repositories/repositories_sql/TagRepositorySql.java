@@ -53,9 +53,7 @@ public class TagRepositorySql extends GenericRepositorySql<Tag> implements TagRe
     public Optional<Tag> read(Integer id) {
         Optional<Tag> tag = this.executeQueryConvert("SELECT id, name, description FROM Tag WHERE id = ?", id).stream()
                 .findFirst();
-        if (tag.isPresent()) {
-            tag.get().setArticles(this.readTagArticles(tag.get()));
-        }
+        tag.ifPresent(value -> value.setArticles(this.readTagArticles(value)));
         return tag;
     }
 
@@ -115,9 +113,7 @@ public class TagRepositorySql extends GenericRepositorySql<Tag> implements TagRe
         Optional<Tag> retrieverTag = this.executeQueryConvert(
                         "SELECT id, name, description FROM Tag WHERE name = ?", name).stream()
                 .findFirst();
-        if (retrieverTag.isPresent()) {
-            retrieverTag.get().setArticles(this.readTagArticles(retrieverTag.get()));
-        }
+        retrieverTag.ifPresent(tag -> tag.setArticles(this.readTagArticles(tag)));
         return retrieverTag;
     }
 }

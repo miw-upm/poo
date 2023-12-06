@@ -19,7 +19,6 @@ public class Tag {
 
     public Tag(String name, String description) {
         this(null, name, description);
-
     }
 
     public Integer getId() {

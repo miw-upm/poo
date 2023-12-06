@@ -35,7 +35,6 @@ public class CommandLineInterface {
         this.view.showCommand();
         String commandName = scanner.next();
         boolean exit = false;
-
         if (HELP_NAME.equals(commandName)) {
             this.help();
         } else if (EXIT_NAME.equals(commandName)) {

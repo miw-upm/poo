@@ -16,27 +16,22 @@ public class DependencyInjector {
     private static final DependencyInjector dependencyInjector = new DependencyInjector();
     private final ErrorHandler errorHandler;
     private final View view;
-    private final CommandLineInterface commandLineInterface;
     private final UserRepository userRepository;
     private final TagRepository tagRepository;
     private final ArticleRepository articleRepository;
     private final UserService userService;
     private final TagService tagService;
     private final ArticleService articleService;
-
     private final ShoppingCartRepository shoppingCartRepository;
-
     private final ShopSeeder shopSeeder;
 
     private DependencyInjector() {
         this.view = new View();
 
-        Connection connection = new RepositoryMysql().createConnection(); // new RepositoryH2().createConnection();
-
+        Connection connection = new RepositoryMysql().createConnection();
         this.userRepository = new UserRepositorySql(connection);
         this.articleRepository = new ArticleRepositorySql(connection);
         this.tagRepository = new TagRepositorySql(connection, (ArticleRepositorySql) this.articleRepository);
-
         this.shoppingCartRepository = new ShoppingCartRepositorySql(connection, (UserRepositorySql) this.userRepository,
                 (ArticleRepositorySql) this.articleRepository);
 
@@ -44,17 +39,16 @@ public class DependencyInjector {
         this.tagService = new TagService(this.tagRepository, this.articleRepository);
         this.articleService = new ArticleService(this.articleRepository, this.tagRepository);
 
-        this.commandLineInterface = new CommandLineInterface(this.view);
-        this.commandLineInterface.add(new CreateUser(this.userService, this.view));
-        this.commandLineInterface.add(new CreateArticle(this.articleService, this.view));
-        this.commandLineInterface.add(new FindArticleByTagName(this.articleService, this.view));
-        this.commandLineInterface.add(new FindTagByArticleBarcode(this.tagService, this.view));
+        CommandLineInterface commandLineInterface = new CommandLineInterface(this.view);
+        commandLineInterface.add(new CreateUser(this.userService, this.view));
+        commandLineInterface.add(new CreateArticle(this.articleService, this.view));
+        commandLineInterface.add(new FindArticleByTagName(this.articleService, this.view));
+        commandLineInterface.add(new FindTagByArticleBarcode(this.tagService, this.view));
 
-        this.errorHandler = new ErrorHandler(this.commandLineInterface, this.view);
+        this.errorHandler = new ErrorHandler(commandLineInterface, this.view);
 
         this.shopSeeder = new ShopSeeder(this.articleRepository, this.shoppingCartRepository, this.tagRepository, this.userRepository);
-
-        this.shopSeeder.seed(); //TODO only develop
+        this.shopSeeder.seed(); //Only develop
     }
 
     public static DependencyInjector getDependencyInjector() {
@@ -71,10 +65,6 @@ public class DependencyInjector {
 
     public View getView() {
         return this.view;
-    }
-
-    public CommandLineInterface getCommandLineInterface() {
-        return this.commandLineInterface;
     }
 
     public UserRepository getUserRepository() {

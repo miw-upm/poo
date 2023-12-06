@@ -12,13 +12,13 @@ public class ErrorHandler {
 
     public void handlesErrors() {
         boolean exit = false;
-        while (!exit) {
+        do {
             try {
                 exit = this.commandLineInterface.runCommands();
             } catch (Exception e) {
                 this.view.showError(">>> ERROR (" + e.getClass().getSimpleName() + ") >>> " + e.getMessage());
             }
-        }
+        } while (!exit);
         this.view.showBold("Hasta pronto!");
     }
 }

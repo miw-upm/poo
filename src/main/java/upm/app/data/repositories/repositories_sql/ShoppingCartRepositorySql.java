@@ -61,9 +61,7 @@ public class ShoppingCartRepositorySql extends GenericRepositorySql<ShoppingCart
         Optional<ShoppingCart> shoppingCart = this.executeQueryConvert(
                         "SELECT id, user_id, creationDate FROM ShoppingCart WHERE id = ?", id).stream()
                 .findFirst();
-        if (shoppingCart.isPresent()) {
-            shoppingCart.get().setArticleItems(this.readArticleItems(shoppingCart.get()));
-        }
+        shoppingCart.ifPresent(cart -> cart.setArticleItems(this.readArticleItems(cart)));
         return shoppingCart;
     }
 

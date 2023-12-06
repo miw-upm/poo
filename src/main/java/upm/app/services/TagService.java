@@ -49,7 +49,7 @@ public class TagService {
     }
 
     public List<Tag> findByArticleBarcodeFunctional(String articleBarcode) {
-        LogManager.getLogger(this.getClass()).debug(() -> (this.tagRepository.findAll()));
+        LogManager.getLogger(this.getClass()).debug(this.tagRepository::findAll);
         return this.tagRepository.findAll().stream()
                 .filter(tag -> tag.getArticles().stream()
                         .anyMatch(article -> articleBarcode.equals(article.getBarcode())))
