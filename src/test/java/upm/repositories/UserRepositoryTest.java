@@ -1,9 +1,10 @@
-package upm.app.data.repositories;
+package upm.repositories;
 
 import org.apache.logging.log4j.LogManager;
 import org.junit.jupiter.api.Test;
 import upm.app.console.version2.DependencyInjector;
 import upm.app.data.models.User;
+import upm.app.data.repositories.UserRepository;
 
 import java.util.Optional;
 

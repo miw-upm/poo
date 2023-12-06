@@ -44,7 +44,7 @@ public class CommandLineInterface {
             if (this.commands.containsKey(commandName)) {
                 this.commands.get(commandName).execute(scanner.next().split(";"));
             } else {
-                throw new UnsupportedOperationException("Comando '" + commandName + "' no existe.");
+                throw new UnsupportedCommandException("Comando '" + commandName + "' no existe.");
             }
         }
         return exit;

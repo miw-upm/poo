@@ -32,7 +32,7 @@ public class Article {
 
     public void setBarcode(String barcode) {
         if (barcode.length() != EUROPEAN_ARTICLE_NUMBER) {
-            throw new IllegalArgumentException("La longitud del código de barras para un artículo es incorrecto: " + barcode);
+            throw new InvalidAttributeException("La longitud del código de barras para un artículo es incorrecto: " + barcode);
         }
         this.barcode = barcode;
     }

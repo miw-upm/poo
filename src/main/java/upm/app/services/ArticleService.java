@@ -4,6 +4,8 @@ import upm.app.data.models.Article;
 import upm.app.data.models.Tag;
 import upm.app.data.repositories.ArticleRepository;
 import upm.app.data.repositories.TagRepository;
+import upm.app.services.exceptions.DuplicateException;
+import upm.app.services.exceptions.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,13 +21,13 @@ public class ArticleService {
     }
 
     public List<Article> findByTagName(String tagName) {
-        Tag tag = this.tagRepository.findByName(tagName).orElseThrow(() -> new IllegalArgumentException("Nombre de Etiqueta no encontrado: " + tagName));
+        Tag tag = this.tagRepository.findByName(tagName).orElseThrow(() -> new NotFoundException("Nombre de Etiqueta no encontrado: " + tagName));
         return tag.getArticles();
     }
 
     public Article create(Article article) {
         if (this.articleRepository.findByBarcode(article.getBarcode()).isPresent()) {
-            throw new IllegalArgumentException("El Código de barras ya existe, y debiera ser único: " + article.getBarcode());
+            throw new DuplicateException("El Código de barras ya existe, y debiera ser único: " + article.getBarcode());
         }
         article.setRegistrationDate(LocalDate.now());
         return this.articleRepository.create(article);

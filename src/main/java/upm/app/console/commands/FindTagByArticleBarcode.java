@@ -23,7 +23,7 @@ public class FindTagByArticleBarcode implements Command {
     @Override
     public void execute(String[] values) {
         if (values.length != 1) {
-            throw new IllegalArgumentException(CommandNames.FIND_ARTICLE_BY_TAG_NAME.getHelp());
+            throw new BadCommandException(CommandNames.FIND_ARTICLE_BY_TAG_NAME.getHelp());
         }
         List<Tag> tags = this.tagService.findByArticleBarcodeFunctional(values[0]);
         this.view.show(tags.toString());

@@ -23,7 +23,7 @@ public class FindArticleByTagName implements Command {
     @Override
     public void execute(String[] values) {
         if (values.length != 1) {
-            throw new IllegalArgumentException(CommandNames.FIND_ARTICLE_BY_TAG_NAME.getHelp());
+            throw new BadCommandException(CommandNames.FIND_ARTICLE_BY_TAG_NAME.getHelp());
         }
         List<Article> articles = this.articleService.findByTagName(values[0]);
         this.view.show(articles.toString());

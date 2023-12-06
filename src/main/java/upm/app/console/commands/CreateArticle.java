@@ -23,7 +23,7 @@ public class CreateArticle implements Command {
     @Override
     public void execute(String[] values) {
         if (values.length != 3 && values.length != 4) {
-            throw new IllegalArgumentException(CommandNames.CREATE_ARTICLE.getHelp());
+            throw new BadCommandException(CommandNames.CREATE_ARTICLE.getHelp());
         }
         String provider = null;
         if (values.length == 4) {

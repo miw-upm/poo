@@ -21,7 +21,7 @@ public class CreateUser implements Command {
     @Override
     public void execute(String[] values) {
         if (values.length != 3) {
-            throw new IllegalArgumentException(CommandNames.CREATE_USER.getHelp());
+            throw new BadCommandException(CommandNames.CREATE_USER.getHelp());
         }
         User createdUser = this.userService.create(new User(Integer.valueOf(values[0]), values[1], values[2]));
         this.view.show(createdUser.toString());
