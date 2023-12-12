@@ -1,5 +1,8 @@
-package upm.app.console;
+package upm.app;
 
+import upm.app.console.CommandLineInterface;
+import upm.app.console.ErrorHandler;
+import upm.app.console.View;
 import upm.app.console.commands.CreateArticle;
 import upm.app.console.commands.CreateUser;
 import upm.app.console.commands.FindArticleByTagName;
@@ -28,7 +31,7 @@ public class DependencyInjector {
     private DependencyInjector() {
         this.view = new View();
 
-        Connection connection = new RepositoryMysql().createConnection();
+        Connection connection = new RepositoryH2().createConnection();
         this.userRepository = new UserRepositorySql(connection);
         this.articleRepository = new ArticleRepositorySql(connection);
         this.tagRepository = new TagRepositorySql(connection, (ArticleRepositorySql) this.articleRepository);

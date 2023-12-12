@@ -1,10 +1,9 @@
-package upm.repositories;
+package upm.app.data.repositories;
 
 import org.apache.logging.log4j.LogManager;
 import org.junit.jupiter.api.Test;
-import upm.app.console.version2.DependencyInjector;
+import upm.app.DependencyInjector;
 import upm.app.data.models.Article;
-import upm.app.data.repositories.ArticleRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,7 +16,7 @@ class ArticleRepositoryTest {
     private final ArticleRepository articleRepository = DependencyInjector.getDependencyInjector().getArticleRepository();
 
     @Test
-    void testFindAll (){
+    void testFindAll() {
         LogManager.getLogger(this.getClass()).debug("findAll: " + this.articleRepository.findAll());
     }
 

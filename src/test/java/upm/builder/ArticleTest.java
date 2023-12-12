@@ -10,11 +10,11 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 class ArticleTest {
 
     @Test
-    void testBuilder(){
+    void testBuilder() {
         Article article = Article.builder().summary("s").barcode("0123456789012").price(BigDecimal.TEN).build();
-        assertEquals("0123456789012",article.getBarcode());
-        assertEquals("s",article.getSummary());
-        assertEquals(BigDecimal.TEN,article.getPrice());
+        assertEquals("0123456789012", article.getBarcode());
+        assertEquals("s", article.getSummary());
+        assertEquals(BigDecimal.TEN, article.getPrice());
         assertNull(article.getProvider());
     }
 }

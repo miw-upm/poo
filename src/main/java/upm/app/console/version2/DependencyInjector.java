@@ -10,7 +10,7 @@ import upm.app.services.UserService;
 import java.sql.Connection;
 
 public class DependencyInjector {
-    private static final DependencyInjector dependencyInjector = new DependencyInjector();
+    private static DependencyInjector dependencyInjector;
     private final ErrorHandler errorHandler;
     private final View view;
     private final CommandLineInterface commandLineInterface;
@@ -51,6 +51,9 @@ public class DependencyInjector {
     }
 
     public static DependencyInjector getDependencyInjector() {
+        if (dependencyInjector == null) {
+            dependencyInjector = new DependencyInjector();
+        }
         return dependencyInjector;
     }
 
