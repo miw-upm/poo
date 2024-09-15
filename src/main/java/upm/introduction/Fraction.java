@@ -26,12 +26,14 @@ package upm.introduction;
  */
 public class Fraction {
 
+    public static final int FORBIDDEN_VALUE = 0;
+
     private int numerator;
     private int denominator;
 
     public Fraction(int numerator, int denominator) {
         this.numerator = numerator;
-        this.denominator = denominator;
+        this.setDenominator(denominator);
     }
 
     public Fraction() {
@@ -51,6 +53,9 @@ public class Fraction {
     }
 
     public void setDenominator(int denominator) {
+        if (denominator == FORBIDDEN_VALUE) {
+            throw new IllegalArgumentException("Denominator cannot be zero.");
+        }
         this.denominator = denominator;
     }
 

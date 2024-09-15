@@ -1,6 +1,6 @@
 package upm.introduction;
 
-public class Wrapper {
+public class Wrappers {
 
     public static void main(String[] args) {
 
