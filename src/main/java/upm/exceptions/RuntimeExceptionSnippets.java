@@ -8,12 +8,6 @@ import java.util.Scanner;
 public class RuntimeExceptionSnippets {
     public final static double MINIMUM = 0;
 
-    public void methodPreconditions(double value) {
-        if (value < MINIMUM) {
-            throw new IllegalArgumentException("value: " + value + ", must be greater than equal to zero.");
-        }
-    }
-
     public static void main(String[] args) throws Exception {
         RuntimeExceptionSnippets app = new RuntimeExceptionSnippets();
         //app.throwRuntimeExceptionBySoftwareError();
@@ -23,6 +17,12 @@ public class RuntimeExceptionSnippets {
         //app.throwsException();
         //app.throwException();
 
+    }
+
+    public void methodPreconditions(double value) {
+        if (value < MINIMUM) {
+            throw new IllegalArgumentException("value: " + value + ", must be greater than equal to zero.");
+        }
     }
 
     public void throwRuntimeExceptionBySoftwareError() {

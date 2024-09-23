@@ -6,16 +6,18 @@ import java.util.Optional;
 
 public class OptionalSnippets {
     public static void main(String[] args) {
-        Optional<Point> pointOptional = getPoint();
-        if (pointOptional.isPresent()) {
-            System.out.println("Esta presente:" + pointOptional.get());
+        Optional<Point> point = Optional.of(new Point());
+        point = Optional.empty();
+
+        if (point.isPresent()) {
+            System.out.println("Esta presente:" + point.get());
         }
-        pointOptional.orElse(new Point());
-        if (pointOptional.isEmpty()) {
+        Point aPoint = point.orElse(new Point());
+        if (point.isEmpty()) {
             System.out.println("Esta vacio");
         }
-        pointOptional.orElseThrow(); //Throws: NoSuchElementException
-        pointOptional.orElseThrow(() -> new RuntimeException());
+        aPoint = point.orElseThrow(); //Throws: NoSuchElementException
+        aPoint = point.orElseThrow(() -> new RuntimeException());
     }
 
     public static Optional<Point> getPoint() {

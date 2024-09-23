@@ -2,9 +2,10 @@ package upm.generics;
 
 public class BoxSnippets {
     public static void main(String[] args) {
-        Box<Integer> intCaja = new Box<>();
-        intCaja.put(10);
-        Integer unInt = intCaja.get();
-        System.out.println(unInt);
+        Box<Integer> box = new Box<>();
+        box.put(10);
+        Integer integer = box.get();
+        System.out.println(integer);
     }
+
 }

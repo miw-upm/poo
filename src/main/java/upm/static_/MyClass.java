@@ -11,13 +11,13 @@ public class MyClass {
 
     private int instanceAttribute;
 
-    public void m(){
+    public static void m2() {
         MyClass.attribute = 10;
-        this.instanceAttribute = 10;
     }
 
-    public static void m2(){
+    public void m() {
         MyClass.attribute = 10;
+        this.instanceAttribute = 10;
     }
 
 }

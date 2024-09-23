@@ -1,8 +1,8 @@
 package upm.inheritances;
 
 public abstract class AbstractClass {
-    
-    public String m(){
+
+    public String m() {
         return "";
     }
 

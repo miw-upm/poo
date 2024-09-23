@@ -23,6 +23,10 @@ public class ListSnippets {
         System.out.println("list2: " + list2);
         list2.remove(0);
         System.out.println("list2: " + list2);
+        System.out.println("size: " + list2.size());
+        System.out.println("isEmpty: " + list2.isEmpty());
+        System.out.println("contains(\"2\"): " + list2.contains("2"));
+        System.out.println("indexOf(\"2\"): " + list2.indexOf("2"));
 
         String[] array = {"0", "1", "2"};
         List<String> list3 = new ArrayList<>(Arrays.asList(array));
