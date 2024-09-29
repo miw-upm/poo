@@ -1,7 +1,7 @@
 package upm.app.console;
 
 public class View {
-    public static final String COMMAND = "gps>";
+    public static final String COMMAND = "app>";
     public static final String RESET = "\u001B[0m";
     public static final String BLACK = "\u001B[30m";
     public static final String RED = "\u001B[31m";
