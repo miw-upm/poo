@@ -6,10 +6,10 @@ import upm.appentrega2.data.models.User;
 import java.time.LocalDate;
 
 public class ShopSeeder {
-    private final UserRepositoryMap userRepository;
-    private final ArticleRepositoryMap articleRepository;
+    private final UserRepository userRepository;
+    private final ArticleRepository articleRepository;
 
-    public ShopSeeder(UserRepositoryMap userRepository, ArticleRepositoryMap articleRepository) {
+    public ShopSeeder(UserRepository userRepository, ArticleRepository articleRepository) {
         this.userRepository = userRepository;
         this.articleRepository = articleRepository;
     }

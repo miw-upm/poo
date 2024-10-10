@@ -3,6 +3,8 @@ package upm.appentrega2.console;
 public enum Commands {
     CREATE_USER("create-user", ". Se crea un usuario.", "<mobile>", "<name>", "<address>"),
     LIST_USERS("list-users", ". Lista todos los usuarios"),
+    CREATE_ARTICLE("create-article", ". Se crea un artículo", "<barcode>", "<summary>", "<price>", "<provider>"),
+    LIST_ARTICLES("list-articles", ". Lista los artículos"),
 
     HELP("help", ". Muestra la ayuda."),
     EXIT("exit", ". Termina la ejecución.");

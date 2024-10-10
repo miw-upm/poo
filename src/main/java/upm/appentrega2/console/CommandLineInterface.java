@@ -1,6 +1,8 @@
 package upm.appentrega2.console;
 
+import upm.appentrega2.data.models.Article;
 import upm.appentrega2.data.models.User;
+import upm.appentrega2.services.ArticleService;
 import upm.appentrega2.services.UserService;
 
 import java.util.Arrays;
@@ -11,10 +13,12 @@ public class CommandLineInterface {
     private static final String COMMAND_DELIMITER_EXPRESSION = "[" + Delimiters.COMMAND.getValue() + "\\r\\n]";
     private final View view;
     private final UserService userService;
+    private final ArticleService articleService;
 
-    public CommandLineInterface(View view, UserService userService) {
+    public CommandLineInterface(View view, UserService userService, ArticleService articleService) {
         this.view = view;
         this.userService = userService;
+        this.articleService = articleService;
     }
 
     public boolean runCommands() {
@@ -43,6 +47,12 @@ public class CommandLineInterface {
             case LIST_USERS:
                 this.listUsers();
                 break;
+            case CREATE_ARTICLE:
+                this.createArticle(scanner, command);
+                break;
+            case LIST_ARTICLES:
+                this.listArticles();
+                break;
             default:
                 throw new UnsupportedOperationException("El comando -" + command + "- no se reconoce");
         }
@@ -67,6 +77,20 @@ public class CommandLineInterface {
     private void listUsers() {
         List<User> users = this.userService.findAll();
         this.view.show(users.toString());
+    }
+
+    private void createArticle(Scanner scanner, Commands command) {
+        String[] values = scanner.next().split(Delimiters.PARAM.getValue());
+        if (values.length != command.length()) {
+            throw new IllegalArgumentException("Error en el nº de parametros, valores encontrados " + Arrays.toString(values));
+        }
+        Article createdArticle = this.articleService.create(new Article(values[0], values[1], Double.valueOf(values[2]), values[3]));
+        this.view.show(createdArticle.toString());
+    }
+
+    private void listArticles() {
+        List<Article> articles = this.articleService.findAll();
+        this.view.show(articles.toString());
     }
 
 }

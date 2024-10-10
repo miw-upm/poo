@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 public class UserTest {
     @Test
     void testValidMobile() {
-        upm.appentrega1.data.models.User user = new upm.appentrega1.data.models.User(123_456_789, "name", "C/...");
+        User user = new User(123_456_789, "name", "C/...");
         Assertions.assertEquals(123_456_789, user.getMobile());
     }
 

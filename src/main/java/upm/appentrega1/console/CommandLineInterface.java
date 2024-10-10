@@ -74,6 +74,7 @@ public class CommandLineInterface {
         this.view.showBold(LIST_USERS);
         this.view.showBold(EXIT);
     }
+
     private void listUsers() {
         List<User> users = this.userService.findAll();
         this.view.show(users.toString());

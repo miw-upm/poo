@@ -1,14 +1,14 @@
 package upm.appentrega2.services;
 
 import upm.appentrega2.data.models.User;
-import upm.appentrega2.data.repositories.UserRepositoryMap;
+import upm.appentrega2.data.repositories.UserRepository;
 
 import java.util.List;
 
 public class UserService {
-    private final UserRepositoryMap userRepository;
+    private final UserRepository userRepository;
 
-    public UserService(UserRepositoryMap userRepository) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

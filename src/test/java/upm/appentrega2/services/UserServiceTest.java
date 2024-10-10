@@ -1,9 +1,8 @@
-package upm.appentrega2.data.services;
+package upm.appentrega2.services;
 
 import org.junit.jupiter.api.Test;
 import upm.appentrega2.DependencyInjector;
 import upm.appentrega2.data.models.User;
-import upm.appentrega2.services.UserService;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
