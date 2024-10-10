@@ -1,24 +1,15 @@
-package upm.appentrega1.console;
+package upm.appentrega2.console;
 
-import upm.appentrega1.data.models.User;
-import upm.appentrega1.services.UserService;
+import upm.appentrega2.data.models.User;
+import upm.appentrega2.services.UserService;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class CommandLineInterface {
-    private static final String COMMAND_DELIMITER = ":";
-    private static final String PARAM_DELIMITER = ",";
-    private static final String COMMAND_DELIMITER_EXPRESSION = "[" + COMMAND_DELIMITER + "\\r\\n]";
-    private static final String HELP = "help";
-    private static final String EXIT = "exit";
-    private static final String CREATE_USER = "create-user";
-    private static final String CREATE_USER_VALUES = "<mobile>,<name>,<address>";
-    private static final String LIST_USERS = "list-users";
-
+    private static final String COMMAND_DELIMITER_EXPRESSION = "[" + Delimiters.COMMAND.getValue() + "\\r\\n]";
     private final View view;
-
     private final UserService userService;
 
     public CommandLineInterface(View view, UserService userService) {
@@ -26,18 +17,18 @@ public class CommandLineInterface {
         this.userService = userService;
     }
 
-    public void runCommands() {
+    public boolean runCommands() {
         Scanner scanner = new Scanner(System.in).useDelimiter(COMMAND_DELIMITER_EXPRESSION);
         boolean exit;
         do {
             exit = runCommand(scanner);
         } while (!exit);
+        return true;
     }
 
     public boolean runCommand(Scanner scanner) {
         this.view.showCommand();
-        String command = scanner.next();
-        String[] values;
+        Commands command = Commands.fromValue(scanner.next());
         boolean exit = false;
         switch (command) {
             case HELP:
@@ -47,7 +38,7 @@ public class CommandLineInterface {
                 exit = true;
                 break;
             case CREATE_USER:
-                this.createUser(scanner);
+                this.createUser(scanner, command);
                 break;
             case LIST_USERS:
                 this.listUsers();
@@ -58,22 +49,21 @@ public class CommandLineInterface {
         return exit;
     }
 
-    private void createUser(Scanner scanner) {
-        String[] values;
-        values = scanner.next().split(PARAM_DELIMITER);
-        if (values.length != CREATE_USER_VALUES.split(PARAM_DELIMITER).length) {
+    private void help() {
+        for (Commands aCommand : Commands.values()) {
+            this.view.showBold(aCommand.getHelp());
+        }
+    }
+
+    private void createUser(Scanner scanner, Commands command) {
+        String[] values = scanner.next().split(Delimiters.PARAM.getValue());
+        if (values.length != command.length()) {
             throw new IllegalArgumentException("Error en el nº de parametros, valores encontrados " + Arrays.toString(values));
         }
         User createdUser = this.userService.create(new User(Integer.valueOf(values[0]), values[1], values[2]));
         this.view.show(createdUser.toString());
     }
 
-    private void help() {
-        this.view.showBold(HELP);
-        this.view.showBold(CREATE_USER + COMMAND_DELIMITER + CREATE_USER_VALUES);
-        this.view.showBold(LIST_USERS);
-        this.view.showBold(EXIT);
-    }
     private void listUsers() {
         List<User> users = this.userService.findAll();
         this.view.show(users.toString());

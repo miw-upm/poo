@@ -1,6 +1,6 @@
-package upm.appentrega1.data.repositories;
+package upm.appentrega2.data.repositories;
 
-import upm.appentrega1.data.models.User;
+import upm.appentrega2.data.models.User;
 
 import java.util.*;
 

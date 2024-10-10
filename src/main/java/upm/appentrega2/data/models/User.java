@@ -1,4 +1,4 @@
-package upm.appentrega1.data.models;
+package upm.appentrega2.data.models;
 
 import java.util.Objects;
 
