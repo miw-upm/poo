@@ -3,7 +3,7 @@ package upm.inheritances;
 import upm.inheritances.base.Padre;
 
 public class Hijo extends Padre {
-    private static String P_2 = "B";
+    private static final String P_2 = "B";
 
     public static void main(String[] args) {
         new Hijo().imprime();

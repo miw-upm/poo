@@ -1,15 +1,15 @@
-package upm.app.data.repositories.version0;
+package upm.appentrega1.data.repositories;
 
-import upm.app.data.models.User;
+import upm.appentrega1.data.models.User;
 
 import java.util.*;
 
-public class UserRepository {
+public class UserRepositoryMap {
 
     private final Map<Integer, User> map;
     private int id;
 
-    public UserRepository() {
+    public UserRepositoryMap() {
         this.map = new HashMap<>();
         this.id = 1;
     }
@@ -34,6 +34,15 @@ public class UserRepository {
 
     public void deleteById(Integer id) {
         this.map.remove(id);
+    }
+
+    public Optional<User> findByMobile(Integer mobile) {
+        for (User user : this.findAll()) {
+            if (user.getMobile().equals(mobile)) {
+                return Optional.of(user);
+            }
+        }
+        return Optional.empty();
     }
 
     public List<User> findAll() {

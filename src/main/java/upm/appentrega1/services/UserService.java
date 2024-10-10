@@ -1,12 +1,14 @@
-package upm.app.services.version0;
+package upm.appentrega1.services;
 
-import upm.app.data.models.User;
-import upm.app.data.repositories.UserRepository;
+import upm.appentrega1.data.models.User;
+import upm.appentrega1.data.repositories.UserRepositoryMap;
+
+import java.util.List;
 
 public class UserService {
-    private final UserRepository userRepository;
+    private final UserRepositoryMap userRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepositoryMap userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -17,4 +19,7 @@ public class UserService {
         return this.userRepository.create(user);
     }
 
+    public List<User> findAll() {
+        return this.userRepository.findAll();
+    }
 }

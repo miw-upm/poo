@@ -1,8 +1,8 @@
 package upm.inheritances.base;
 
 public class Padre {
+    private static final String P_2 = "A";
     protected static String P_1 = "Soy un ";
-    private static String P_2 = "A";
 
     public void imprime() {
         imprime1();

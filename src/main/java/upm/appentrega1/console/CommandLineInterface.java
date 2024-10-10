@@ -1,10 +1,10 @@
-package upm.app.console.version0;
+package upm.appentrega1.console;
 
-import upm.app.console.View;
-import upm.app.data.models.User;
-import upm.app.services.version0.UserService;
+import upm.appentrega1.data.models.User;
+import upm.appentrega1.services.UserService;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class CommandLineInterface {
@@ -13,6 +13,7 @@ public class CommandLineInterface {
     private static final String VALUE_DELIMITER = ",";
     private static final String CREATE_USER = "create-user";
     private static final String CREATE_USER_VALUES = "<mobile>,<name>,<address>";
+    private static final String LIST_USERS = "list-users";
     private static final String HELP = "help";
     private static final String EXIT = "exit";
 
@@ -47,9 +48,14 @@ public class CommandLineInterface {
                 User createdUser = this.userService.create(new User(Integer.valueOf(values[0]), values[1], values[2]));
                 this.view.show(createdUser.toString());
                 break;
+            case LIST_USERS:
+                List<User> users = this.userService.findAll();
+                this.view.show(users.toString());
+                break;
             case HELP:
                 this.view.showBold(HELP);
                 this.view.showBold(CREATE_USER + DELIMITER + CREATE_USER_VALUES);
+                this.view.showBold(LIST_USERS);
                 this.view.showBold(EXIT);
                 break;
             case EXIT:

@@ -9,7 +9,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserRepositoryTest {
+class UserRepositoryMapTest {
 
     private final UserRepository userRepository = DependencyInjector.getDependencyInjector().getUserRepository();
 
