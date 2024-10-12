@@ -37,15 +37,13 @@ public class CommandLineInterface {
     public boolean runCommand(Scanner scanner) {
         this.view.showCommand();
         String command = scanner.next();
-        String[] values;
-        boolean exit = false;
         switch (command) {
             case HELP:
                 this.help();
                 break;
-            case EXIT:
-                exit = true;
-                break;
+            case EXIT: {
+                return true;
+            }
             case CREATE_USER:
                 this.createUser(scanner);
                 break;
@@ -55,16 +53,15 @@ public class CommandLineInterface {
             default:
                 throw new UnsupportedOperationException("El comando -" + command + "- no se reconoce");
         }
-        return exit;
+        return false;
     }
 
     private void createUser(Scanner scanner) {
-        String[] values;
-        values = scanner.next().split(PARAM_DELIMITER);
-        if (values.length != CREATE_USER_VALUES.split(PARAM_DELIMITER).length) {
-            throw new IllegalArgumentException("Error en el nº de parametros, valores encontrados " + Arrays.toString(values));
+        String[] params = scanner.next().split(PARAM_DELIMITER);
+        if (params.length != CREATE_USER_VALUES.split(PARAM_DELIMITER).length) {
+            throw new IllegalArgumentException("Error en el nº de parametros, valores encontrados " + Arrays.toString(params));
         }
-        User createdUser = this.userService.create(new User(Integer.valueOf(values[0]), values[1], values[2]));
+        User createdUser = this.userService.create(new User(Integer.valueOf(params[0]), params[1], params[2]));
         this.view.show(createdUser.toString());
     }
 

@@ -32,45 +32,42 @@ public class CommandLineInterface {
 
     public boolean runCommand(Scanner scanner) {
         this.view.showCommand();
-        Commands command = Commands.fromValue(scanner.next());
-        boolean exit = false;
+        Command command = Command.fromValue(scanner.next());
+        String[] params = this.getParamsIfNeededAssured(scanner, command);
         switch (command) {
-            case HELP:
-                this.help();
-                break;
-            case EXIT:
-                exit = true;
-                break;
-            case CREATE_USER:
-                this.createUser(scanner, command);
-                break;
-            case LIST_USERS:
-                this.listUsers();
-                break;
-            case CREATE_ARTICLE:
-                this.createArticle(scanner, command);
-                break;
-            case LIST_ARTICLES:
-                this.listArticles();
-                break;
-            default:
-                throw new UnsupportedOperationException("El comando -" + command + "- no se reconoce");
+            case HELP -> this.help();
+            case EXIT -> {
+                return true;
+            }
+            case CREATE_USER -> this.createUser(params);
+            case LIST_USERS -> this.listUsers();
+            case CREATE_ARTICLE -> this.createArticle(params);
+            case LIST_ARTICLES -> this.listArticles();
+            default -> throw new UnsupportedOperationException("El comando -" + command + "- no se reconoce");
         }
-        return exit;
+        return false;
+    }
+
+    private String[] getParamsIfNeededAssured(Scanner scanner, Command command) {
+        if (command.getParams().length > 0) {
+            String[] params = scanner.next().split(Delimiters.PARAM.getValue());
+            if (command.getParams().length != params.length) {
+                throw new IllegalArgumentException("Parámetros esperados: " + Arrays.toString(command.getParams()) +
+                        ", encontrados " + Arrays.toString(params));
+            }
+            return params;
+        }
+        return new String[0];
     }
 
     private void help() {
-        for (Commands aCommand : Commands.values()) {
+        for (Command aCommand : Command.values()) {
             this.view.showBold(aCommand.getHelp());
         }
     }
 
-    private void createUser(Scanner scanner, Commands command) {
-        String[] values = scanner.next().split(Delimiters.PARAM.getValue());
-        if (values.length != command.length()) {
-            throw new IllegalArgumentException("Error en el nº de parametros, valores encontrados " + Arrays.toString(values));
-        }
-        User createdUser = this.userService.create(new User(Integer.valueOf(values[0]), values[1], values[2]));
+    private void createUser(String[] params) {
+        User createdUser = this.userService.create(new User(Integer.valueOf(params[0]), params[1], params[2]));
         this.view.show(createdUser.toString());
     }
 
@@ -79,12 +76,8 @@ public class CommandLineInterface {
         this.view.show(users.toString());
     }
 
-    private void createArticle(Scanner scanner, Commands command) {
-        String[] values = scanner.next().split(Delimiters.PARAM.getValue());
-        if (values.length != command.length()) {
-            throw new IllegalArgumentException("Error en el nº de parametros, valores encontrados " + Arrays.toString(values));
-        }
-        Article createdArticle = this.articleService.create(new Article(values[0], values[1], Double.valueOf(values[2]), values[3]));
+    private void createArticle(String[] params) {
+        Article createdArticle = this.articleService.create(new Article(params[0], params[1], Double.valueOf(params[2]), params[3]));
         this.view.show(createdArticle.toString());
     }
 

@@ -1,6 +1,6 @@
 package upm.appentrega2.console;
 
-public enum Commands {
+public enum Command {
     CREATE_USER("create-user", ". Se crea un usuario.", "<mobile>", "<name>", "<address>"),
     LIST_USERS("list-users", ". Lista todos los usuarios"),
     CREATE_ARTICLE("create-article", ". Se crea un artículo", "<barcode>", "<summary>", "<price>", "<provider>"),
@@ -13,14 +13,14 @@ public enum Commands {
     private final String[] params;
     private final String help;
 
-    Commands(String value, String help, String... params) {
+    Command(String value, String help, String... params) {
         this.value = value;
         this.help = help;
         this.params = params;
     }
 
-    public static Commands fromValue(String value) {
-        for (Commands command : Commands.values()) {
+    public static Command fromValue(String value) {
+        for (Command command : Command.values()) {
             if (value.equals(command.getValue())) {
                 return command;
             }
@@ -32,8 +32,8 @@ public enum Commands {
         return this.value;
     }
 
-    public int length() {
-        return this.params.length;
+    public String[] getParams() {
+        return this.params;
     }
 
     public String getHelp() {
