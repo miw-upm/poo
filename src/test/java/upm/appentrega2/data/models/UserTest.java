@@ -12,12 +12,12 @@ public class UserTest {
 
     @Test
     public void testInvalidMobileLessThan9Digits() {
-        Assertions.assertThrows(RuntimeException.class, () -> new upm.appentrega1.data.models.User(123, "error", "error"));
+        Assertions.assertThrows(RuntimeException.class, () -> new User(123, "error", "error"));
     }
 
     @Test
     public void testInvalidMobileMoreThan9Digits() {
-        Assertions.assertThrows(RuntimeException.class, () -> new upm.appentrega1.data.models.User(123_456_789_0, "error", "error"));
+        Assertions.assertThrows(RuntimeException.class, () -> new User(123_456_789_0, "error", "error"));
     }
 
     @Test
