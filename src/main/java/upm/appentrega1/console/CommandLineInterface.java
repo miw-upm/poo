@@ -14,7 +14,7 @@ public class CommandLineInterface {
     private static final String HELP = "help";
     private static final String EXIT = "exit";
     private static final String CREATE_USER = "create-user";
-    private static final String CREATE_USER_VALUES = "<mobile>,<name>,<address>";
+    private static final String CREATE_USER_PARAMS = "<mobile>,<name>,<address>";
     private static final String LIST_USERS = "list-users";
 
     private final View view;
@@ -58,7 +58,7 @@ public class CommandLineInterface {
 
     private void createUser(Scanner scanner) {
         String[] params = scanner.next().split(PARAM_DELIMITER);
-        if (params.length != CREATE_USER_VALUES.split(PARAM_DELIMITER).length) {
+        if (params.length != CREATE_USER_PARAMS.split(PARAM_DELIMITER).length) {
             throw new IllegalArgumentException("Error en el nº de parametros, valores encontrados " + Arrays.toString(params));
         }
         User createdUser = this.userService.create(new User(Integer.valueOf(params[0]), params[1], params[2]));
@@ -67,7 +67,7 @@ public class CommandLineInterface {
 
     private void help() {
         this.view.showBold(HELP);
-        this.view.showBold(CREATE_USER + COMMAND_DELIMITER + CREATE_USER_VALUES);
+        this.view.showBold(CREATE_USER + COMMAND_DELIMITER + CREATE_USER_PARAMS);
         this.view.showBold(LIST_USERS);
         this.view.showBold(EXIT);
     }

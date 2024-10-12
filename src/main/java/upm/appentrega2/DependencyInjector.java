@@ -25,7 +25,7 @@ public class DependencyInjector {
         this.userRepository = new UserRepositoryMap();
         this.articleRepository = new ArticleRepositoryMap();
         this.shopSeeder = new ShopSeeder(userRepository, articleRepository);
-        this.shopSeeder.seed();
+        this.shopSeeder.seed(); //TODO only develop
 
         this.userService = new UserService(this.userRepository);
         this.articleService = new ArticleService(this.articleRepository);
@@ -52,8 +52,23 @@ public class DependencyInjector {
         return this.commandLineInterface;
     }
 
+    public UserRepository getUserRepository() {
+        return this.userRepository;
+    }
+
+    public ArticleRepository getArticleRepository() {
+        return this.articleRepository;
+    }
+
+    public ShopSeeder getShopSeeder() {
+        return this.shopSeeder;
+    }
+
     public UserService getUserService() {
         return this.userService;
     }
 
+    public ArticleService getArticleService() {
+        return this.articleService;
+    }
 }

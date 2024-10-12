@@ -15,9 +15,9 @@ class UserServiceTest {
 
     @Test
     void testCreateMobileException() {
-        this.userService.create(new User(666000660, "...", "..."));
-        assertThrows(RuntimeException.class,
-                () -> this.userService.create(new User(666000660, "...", "...")));
+        User user = new User(666000660, "...", "...");
+        this.userService.create(user);
+        assertThrows(RuntimeException.class, () -> this.userService.create(user));
     }
 
     @Test
