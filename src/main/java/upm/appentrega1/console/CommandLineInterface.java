@@ -38,20 +38,13 @@ public class CommandLineInterface {
         this.view.showCommand();
         String command = scanner.next();
         switch (command) {
-            case HELP:
-                this.help();
-                break;
-            case EXIT: {
+            case HELP -> this.help();
+            case EXIT -> {
                 return true;
             }
-            case CREATE_USER:
-                this.createUser(scanner);
-                break;
-            case LIST_USERS:
-                this.listUsers();
-                break;
-            default:
-                throw new UnsupportedOperationException("El comando -" + command + "- no se reconoce");
+            case CREATE_USER -> this.createUser(scanner);
+            case LIST_USERS -> this.listUsers();
+            default -> throw new UnsupportedOperationException("El comando -" + command + "- no se reconoce");
         }
         return false;
     }

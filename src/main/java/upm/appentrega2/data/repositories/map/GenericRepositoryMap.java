@@ -1,10 +1,11 @@
 package upm.appentrega2.data.repositories.map;
 
+import upm.appentrega2.data.models.Entity;
 import upm.appentrega2.data.repositories.GenericRepository;
 
 import java.util.*;
 
-public abstract class GenericRepositoryMap<T> implements GenericRepository<T> {
+public abstract class GenericRepositoryMap<T extends Entity> implements GenericRepository<T> {
 
     private final Map<Integer, T> map;
 
@@ -17,7 +18,7 @@ public abstract class GenericRepositoryMap<T> implements GenericRepository<T> {
 
     @Override
     public T create(T entity) {
-        this.setId(entity, this.id);
+        entity.setId(this.id);
         this.map.put(this.id, entity);
         this.id++;
         return entity;
@@ -25,10 +26,10 @@ public abstract class GenericRepositoryMap<T> implements GenericRepository<T> {
 
     @Override
     public T update(T entity) {
-        if (this.getId(entity) == null) {
+        if (entity.getId() == null) {
             throw new IllegalArgumentException("No se puede actualizar una entidad cuando su id es null: " + entity);
         }
-        this.map.put(this.getId(entity), entity);
+        this.map.put(entity.getId(), entity);
         return entity;
     }
 
@@ -46,9 +47,5 @@ public abstract class GenericRepositoryMap<T> implements GenericRepository<T> {
     public List<T> findAll() {
         return new ArrayList<>(map.values());
     }
-
-    protected abstract Integer getId(T entity);
-
-    protected abstract void setId(T entity, Integer id);
 
 }

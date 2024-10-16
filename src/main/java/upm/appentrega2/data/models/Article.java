@@ -1,11 +1,9 @@
 package upm.appentrega2.data.models;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
-public class Article {
+public class Article extends Entity {
     private static final int EUROPEAN_ARTICLE_NUMBER = 13;
-    private Integer id;
     private String barcode;
     private String summary;
     private Double price;
@@ -62,33 +60,14 @@ public class Article {
         this.provider = provider;
     }
 
-    public Integer getId() {
-        return this.id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
         return "Article{" +
-                "id=" + id +
-                ", barcode='" + barcode + '\'' +
+                "barcode='" + barcode + '\'' +
                 ", summary='" + summary + '\'' +
                 ", price=" + price +
                 ", registrationDate=" + registrationDate +
                 ", provider='" + provider + '\'' +
-                '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public boolean equals(Object article) {
-        return this == article || article != null && getClass() == article.getClass() && (this.id.equals(((Article) article).id));
+                "} " + super.toString();
     }
 }

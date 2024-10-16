@@ -1,9 +1,6 @@
 package upm.appentrega2.data.models;
 
-import java.util.Objects;
-
-public class User {
-    private Integer id;
+public class User extends Entity {
     private Integer mobile;
     private String name;
     private String address;
@@ -12,14 +9,6 @@ public class User {
         this.setMobile(mobile);
         this.name = name;
         this.address = address;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Integer getMobile() {
@@ -52,20 +41,9 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", mobile=" + mobile +
+                "mobile=" + mobile +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
-                '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public boolean equals(Object user) {
-        return this == user || user != null && getClass() == user.getClass() && (this.id.equals(((User) user).id));
+                "} " + super.toString();
     }
 }
