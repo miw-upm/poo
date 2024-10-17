@@ -1,16 +1,17 @@
 package upm.appentrega2.data.models;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Article extends Entity {
     private static final int EUROPEAN_ARTICLE_NUMBER = 13;
     private String barcode;
     private String summary;
-    private Double price;
+    private BigDecimal price;
     private LocalDate registrationDate;
     private String provider;
 
-    public Article(String barcode, String summary, Double price, String provider) {
+    public Article(String barcode, String summary, BigDecimal price, String provider) {
         this.setBarcode(barcode);
         this.summary = summary;
         this.price = price;
@@ -44,11 +45,11 @@ public class Article extends Entity {
         this.registrationDate = registrationDate;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return this.price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
