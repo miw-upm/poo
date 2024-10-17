@@ -1,4 +1,4 @@
-package upm.exam;
+package upm.exam.p3;
 
 public class Snippets {
     public static void main(String[] args) {

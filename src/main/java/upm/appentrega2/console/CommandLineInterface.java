@@ -5,6 +5,7 @@ import upm.appentrega2.data.models.User;
 import upm.appentrega2.services.ArticleService;
 import upm.appentrega2.services.UserService;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -77,7 +78,7 @@ public class CommandLineInterface {
     }
 
     private void createArticle(String[] params) {
-        Article createdArticle = this.articleService.create(new Article(params[0], params[1], Double.valueOf(params[2]), params[3]));
+        Article createdArticle = this.articleService.create(new Article(params[0], params[1], new BigDecimal(params[2]), params[3]));
         this.view.show(createdArticle.toString());
     }
 
