@@ -2,11 +2,13 @@ package upm.appentrega2.data.models;
 
 public class User extends Entity {
     private Integer mobile;
+    private String password;
     private String name;
     private String address;
 
-    public User(Integer mobile, String name, String address) {
+    public User(Integer mobile, String password, String name, String address) {
         this.setMobile(mobile);
+        this.password = password;
         this.name = name;
         this.address = address;
     }
@@ -38,10 +40,19 @@ public class User extends Entity {
         this.address = address;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "mobile=" + mobile +
+                ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 "} " + super.toString();

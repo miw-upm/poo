@@ -22,13 +22,13 @@ class UserServiceTest {
 
     @Test
     void testCreate() {
-        this.userService.create(new User(666000010, "...", "..."));
+        this.userService.create(new User(666000010, "666","...", "..."));
         assertTrue(userRepository.findByMobile(666000010).isPresent());
     }
 
     @Test
     void testCreateMobileException() {
-        User user = new User(666000660, "...", "...");
+        User user = new User(666000660, "666","...", "...");
         assertThrows(RuntimeException.class, () -> this.userService.create(user));
     }
 

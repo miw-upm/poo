@@ -34,7 +34,7 @@ public class CommandLineInterface {
     public boolean runCommand(Scanner scanner) {
         this.view.showCommand();
         Command command = Command.fromValue(scanner.next());
-        String[] params = this.getParamsIfNeededAssured(scanner, command);
+        String[] params = this.scanParamsIfNeededAssured(scanner, command);
         switch (command) {
             case HELP -> this.help();
             case EXIT -> {
@@ -49,7 +49,7 @@ public class CommandLineInterface {
         return false;
     }
 
-    private String[] getParamsIfNeededAssured(Scanner scanner, Command command) {
+    private String[] scanParamsIfNeededAssured(Scanner scanner, Command command) {
         if (command.getParams().length > 0) {
             String[] params = scanner.next().split(Delimiters.PARAM.getValue());
             if (command.getParams().length != params.length) {
@@ -68,7 +68,7 @@ public class CommandLineInterface {
     }
 
     private void createUser(String[] params) {
-        User createdUser = this.userService.create(new User(Integer.valueOf(params[0]), params[1], params[2]));
+        User createdUser = this.userService.create(new User(Integer.valueOf(params[0]), params[1], params[2],params[3]));
         this.view.show(createdUser.toString());
     }
 

@@ -29,12 +29,12 @@ public class CommandTest {
 
     @Test
     void testGetParamsCreateUser() {
-        assertArrayEquals(new String[]{"mobile", "name", "address"}, Command.CREATE_USER.getParams());
+        assertArrayEquals(new String[]{"mobile", "password", "name", "address"}, Command.CREATE_USER.getParams());
     }
 
     @Test
     void testGetUserHelp() {
-        assertEquals("create-user:mobile,name,address. Se crea un usuario.", Command.CREATE_USER.getHelp());
+        assertEquals("create-user:mobile,password,name,address. Se crea un usuario.", Command.CREATE_USER.getHelp());
     }
 }
 
