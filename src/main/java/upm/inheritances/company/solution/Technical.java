@@ -1,6 +1,6 @@
 package upm.inheritances.company.solution;
 
-public class Technical extends Staff{
+public class Technical extends Staff {
     public static final double BASE = 0.25;
     private final Integer level;
 

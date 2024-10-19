@@ -8,6 +8,7 @@ import upm.appentrega2.services.UserService;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class CommandLineInterface {
@@ -15,6 +16,7 @@ public class CommandLineInterface {
     private final View view;
     private final UserService userService;
     private final ArticleService articleService;
+    private User user;
 
     public CommandLineInterface(View view, UserService userService, ArticleService articleService) {
         this.view = view;
@@ -32,7 +34,12 @@ public class CommandLineInterface {
     }
 
     public boolean runCommand(Scanner scanner) {
-        this.view.showCommand();
+        if (!Objects.isNull(this.user)) {
+            this.view.showCommand(this.user.getName());
+        } else {
+            this.view.showCommand();
+        }
+
         Command command = Command.fromValue(scanner.next());
         String[] params = this.scanParamsIfNeededAssured(scanner, command);
         switch (command) {
@@ -40,6 +47,8 @@ public class CommandLineInterface {
             case EXIT -> {
                 return true;
             }
+            case LOGIN -> this.login(params);
+            case LOGOUT -> this.logout();
             case CREATE_USER -> this.createUser(params);
             case LIST_USERS -> this.listUsers();
             case CREATE_ARTICLE -> this.createArticle(params);
@@ -47,6 +56,14 @@ public class CommandLineInterface {
             default -> throw new UnsupportedOperationException("El comando -" + command + "- no se reconoce");
         }
         return false;
+    }
+
+    private void logout() {
+        this.user = null;
+    }
+
+    private void login(String[] params) {
+        this.user = this.userService.login(Integer.valueOf(params[0]), params[1]);
     }
 
     private String[] scanParamsIfNeededAssured(Scanner scanner, Command command) {
@@ -68,7 +85,7 @@ public class CommandLineInterface {
     }
 
     private void createUser(String[] params) {
-        User createdUser = this.userService.create(new User(Integer.valueOf(params[0]), params[1], params[2],params[3]));
+        User createdUser = this.userService.create(new User(Integer.valueOf(params[0]), params[1], params[2], params[3]));
         this.view.show(createdUser.toString());
     }
 

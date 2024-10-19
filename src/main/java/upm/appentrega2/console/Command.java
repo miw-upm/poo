@@ -1,13 +1,14 @@
 package upm.appentrega2.console;
 
 public enum Command {
+    HELP("help", ". Muestra la ayuda."),
+    EXIT("exit", ". Termina la ejecución."),
+    LOGIN("login", ". Inicia sesión", "mobile", "password"),
+    LOGOUT("logout", ". Cierra sesión"),
     CREATE_USER("create-user", ". Se crea un usuario.", "mobile", "password", "name", "address"),
     LIST_USERS("list-users", ". Lista todos los usuarios"),
     CREATE_ARTICLE("create-article", ". Se crea un artículo", "barcode", "summary", "price", "provider"),
-    LIST_ARTICLES("list-articles", ". Lista los artículos"),
-
-    HELP("help", ". Muestra la ayuda."),
-    EXIT("exit", ". Termina la ejecución.");
+    LIST_ARTICLES("list-articles", ". Lista los artículos");
 
     private final String value;
     private final String[] params;

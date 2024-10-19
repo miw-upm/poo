@@ -18,9 +18,9 @@ public class ShopSeeder {
     public void seed() {
         User[] users = {
                 new User(666000660, "666", "user1", "Calle 1"),
-                new User(666000661, "666","user2", "Calle 2"),
-                new User(666000662, "666","user3", "Calle 3"),
-                new User(666000663, "666","user4", "Calle 4")
+                new User(666000661, "666", "user2", "Calle 2"),
+                new User(666000662, "666", "user3", "Calle 3"),
+                new User(666000663, "666", "user4", "Calle 4")
         };
         for (int i = 0; i < users.length; i++) {
             users[i] = this.userRepository.create(users[i]);
