@@ -34,10 +34,10 @@ public class CommandLineInterface {
     }
 
     public boolean runCommand(Scanner scanner) {
-        if (!Objects.isNull(this.user)) {
-            this.view.showCommand(this.user.getName());
-        } else {
+        if (Objects.isNull(this.user)) {
             this.view.showCommand();
+        } else {
+            this.view.showCommand(this.user.getName());
         }
 
         Command command = Command.fromValue(scanner.next());

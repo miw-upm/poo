@@ -5,8 +5,7 @@ import upm.appentrega2.DependencyInjector;
 import upm.appentrega2.data.models.User;
 import upm.appentrega2.data.repositories.UserRepository;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class UserServiceTest {
 
@@ -35,5 +34,19 @@ class UserServiceTest {
     @Test
     void testFindAll() {
         assertTrue(this.userService.findAll().size() >= 4);
+    }
+
+    @Test
+    void testLogin() {
+        assertNotNull(this.userService.login(666000660,"666"));
+    }
+
+    @Test
+    void testLoginMobileError() {
+        assertThrows(RuntimeException.class, () -> this.userService.login(666,"666"));
+    }
+    @Test
+    void testLoginPasswordError() {
+        assertThrows(RuntimeException.class, () -> this.userService.login(666000660,"error"));
     }
 }
