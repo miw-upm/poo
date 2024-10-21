@@ -39,7 +39,6 @@ public class CommandLineInterface {
         } else {
             this.view.showCommand(this.user.getName());
         }
-
         Command command = Command.fromValue(scanner.next());
         String[] params = this.scanParamsIfNeededAssured(scanner, command);
         switch (command) {
