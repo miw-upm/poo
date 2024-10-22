@@ -47,5 +47,4 @@ public abstract class GenericRepositoryMap<T extends Entity> implements GenericR
     public List<T> findAll() {
         return new ArrayList<>(map.values());
     }
-
 }

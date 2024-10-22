@@ -23,17 +23,13 @@ public class DependencyInjector {
     private final ShopSeeder shopSeeder;
     private final UserService userService;
     private final ArticleService articleService;
-
-
     private final TagService tagService;
-
 
     public DependencyInjector() {
         this.userRepository = new UserRepositoryMap();
         this.articleRepository = new ArticleRepositoryMap();
         this.tagRepository = new TagRepositoryMap();
         this.shoppingCartRepository = new ShoppingCartRepositoryMap();
-
 
         this.shopSeeder = new ShopSeeder(this.userRepository, this.articleRepository, this.tagRepository, this.shoppingCartRepository);
         this.shopSeeder.seed(); //TODO only develop
@@ -82,5 +78,17 @@ public class DependencyInjector {
 
     public ArticleService getArticleService() {
         return this.articleService;
+    }
+
+    public TagRepository getTagRepository() {
+        return this.tagRepository;
+    }
+
+    public ShoppingCartRepository getShoppingCartRepository() {
+        return this.shoppingCartRepository;
+    }
+
+    public TagService getTagService() {
+        return this.tagService;
     }
 }

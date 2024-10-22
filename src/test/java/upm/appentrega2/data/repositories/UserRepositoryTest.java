@@ -15,7 +15,7 @@ class UserRepositoryTest {
 
     @Test
     void testCreateAndRead() {
-        User user = this.userRepository.create(new User(666000001, "666","user-1", "address-1"));
+        User user = this.userRepository.create(new User(666000001, "666", "user-1", "address-1"));
         Optional<User> dbUser = this.userRepository.read(user.getId());
         assertTrue(dbUser.isPresent());
         assertEquals("user-1", dbUser.get().getName());
@@ -38,7 +38,7 @@ class UserRepositoryTest {
 
     @Test
     void testDelete() {
-        User user = this.userRepository.create(new User(666000002, "666","user-2", "address-2"));
+        User user = this.userRepository.create(new User(666000002, "666", "user-2", "address-2"));
         this.userRepository.deleteById(user.getId());
         assertFalse(this.userRepository.read(user.getId()).isPresent());
     }

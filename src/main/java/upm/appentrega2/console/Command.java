@@ -23,7 +23,6 @@ public enum Command {
     private final String value;
     private final String help;
     private final List<Rol> allowedRoles;
-
     private final String[] params;
 
 

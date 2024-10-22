@@ -76,5 +76,4 @@ public class ShopSeeder {
             this.shoppingCartRepository.create(cart);
         }
     }
-
 }

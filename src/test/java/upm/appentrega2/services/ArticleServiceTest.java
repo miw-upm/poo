@@ -6,9 +6,9 @@ import upm.appentrega2.data.models.Article;
 import upm.appentrega2.data.repositories.ArticleRepository;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ArticleServiceTest {
 
@@ -24,7 +24,7 @@ class ArticleServiceTest {
 
     @Test
     void testCreate() {
-        this.articleService.create(new Article("8400011122201", "art-1", new BigDecimal(1.1), "prov-1"));
+        this.articleService.create(new Article("8400011122201", "art-1", new BigDecimal("1.1"), "prov-1"));
         assertTrue(articleRepository.findByBarcode("8400011122201").isPresent());
     }
 
@@ -37,5 +37,14 @@ class ArticleServiceTest {
     @Test
     void testFindAll() {
         assertTrue(this.articleService.findAll().size() >= 4);
+    }
+
+    @Test
+    void testFindByTagName() {
+        List<Article> articles = this.articleService.findByTagName("tag1");
+        assertEquals(2, articles.size());
+        for (Article article : articles) {
+            assertTrue(List.of("8412345123450", "8412345123460").contains(article.getBarcode()));
+        }
     }
 }

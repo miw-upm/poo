@@ -11,22 +11,22 @@ public class CommandTest {
     @Test
     void testFromValueUser() {
         assertEquals(Command.CREATE_USER, Command.fromValue("create-user", Rol.ADMIN));
-        assertEquals(Command.LIST_USERS, Command.fromValue("list-users",Rol.ADMIN));
+        assertEquals(Command.LIST_USERS, Command.fromValue("list-users", Rol.ADMIN));
     }
 
     @Test
     void testFromInvalidCommand() {
-        Exception exception = assertThrows(BadRequestException.class, () -> Command.fromValue("invalid-command",Rol.ADMIN));
+        Exception exception = assertThrows(BadRequestException.class, () -> Command.fromValue("invalid-command", Rol.ADMIN));
     }
 
     @Test
     void testFromValueHelp() {
-        assertEquals(Command.HELP, Command.fromValue("help",Rol.ADMIN));
+        assertEquals(Command.HELP, Command.fromValue("help", Rol.ADMIN));
     }
 
     @Test
     void testFromValueExit() {
-        assertEquals(Command.EXIT, Command.fromValue("exit",Rol.ADMIN));
+        assertEquals(Command.EXIT, Command.fromValue("exit", Rol.ADMIN));
     }
 
     @Test

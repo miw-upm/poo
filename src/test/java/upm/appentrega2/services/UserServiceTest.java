@@ -21,13 +21,13 @@ class UserServiceTest {
 
     @Test
     void testCreate() {
-        this.userService.create(new User(666000010, "666","...", "..."));
+        this.userService.create(new User(666000010, "666", "...", "..."));
         assertTrue(userRepository.findByMobile(666000010).isPresent());
     }
 
     @Test
     void testCreateMobileException() {
-        User user = new User(666000660, "666","...", "...");
+        User user = new User(666000660, "666", "...", "...");
         assertThrows(RuntimeException.class, () -> this.userService.create(user));
     }
 
@@ -38,15 +38,16 @@ class UserServiceTest {
 
     @Test
     void testLogin() {
-        assertNotNull(this.userService.login(666000660,"666"));
+        assertNotNull(this.userService.login(666000660, "666"));
     }
 
     @Test
     void testLoginMobileError() {
-        assertThrows(RuntimeException.class, () -> this.userService.login(666,"666"));
+        assertThrows(RuntimeException.class, () -> this.userService.login(666, "666"));
     }
+
     @Test
     void testLoginPasswordError() {
-        assertThrows(RuntimeException.class, () -> this.userService.login(666000660,"error"));
+        assertThrows(RuntimeException.class, () -> this.userService.login(666000660, "error"));
     }
 }
