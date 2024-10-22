@@ -14,7 +14,11 @@ public enum Command {
     CREATE_USER("create-user", ". Se crea un usuario.", Rol.all(), "mobile", "password", "name", "address"),
     LIST_USERS("list-users", ". Lista todos los usuarios", List.of(Rol.ADMIN, Rol.MANAGEMENT)),
     CREATE_ARTICLE("create-article", ". Se crea un artículo", List.of(Rol.ADMIN, Rol.MANAGEMENT), "barcode", "summary", "price", "provider"),
-    LIST_ARTICLES("list-articles", ". Lista los artículos", Rol.authenticated());
+    LIST_ARTICLES("list-articles", ". Lista los artículos", Rol.authenticated()),
+    CREATE_TAG("create-tag", ". Se crea una etiqueta", Rol.authenticated(), "name", "description"),
+    ADD_ARTICLE_TO_TAG("add-article-to-tag", ". Añadir un artículo a una etiqueta", Rol.authenticated(), "tagName", "articleBarcode"),
+    FIND_ARTICLE_BY_TAG_NAME("find-article-by-tag-name", ". Presenta los artículos asociados a una etiqueta", Rol.authenticated(), "tagName"),
+    FIND_TAG_BY_ARTICLE_BARCODE("find-tag-by-article-barcode", ". Presenta las atiquetas asociadas al artículo", Rol.authenticated(), "articleBarcode");
 
     private final String value;
     private final String help;

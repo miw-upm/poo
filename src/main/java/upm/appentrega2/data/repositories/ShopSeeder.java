@@ -1,18 +1,22 @@
 package upm.appentrega2.data.repositories;
 
-import upm.appentrega2.data.models.Article;
-import upm.appentrega2.data.models.User;
+import upm.appentrega2.data.models.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ShopSeeder {
     private final UserRepository userRepository;
     private final ArticleRepository articleRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
+    private final TagRepository tagRepository;
 
-    public ShopSeeder(UserRepository userRepository, ArticleRepository articleRepository) {
-        this.userRepository = userRepository;
+    public ShopSeeder(UserRepository userRepository, ArticleRepository articleRepository, TagRepository tagRepository, ShoppingCartRepository shoppingCartRepository) {
         this.articleRepository = articleRepository;
+        this.shoppingCartRepository = shoppingCartRepository;
+        this.tagRepository = tagRepository;
+        this.userRepository = userRepository;
     }
 
     public void seed() {
@@ -36,6 +40,40 @@ public class ShopSeeder {
         for (int i = 0; i < articles.length; i++) {
             articles[i].setRegistrationDate(LocalDate.now());
             articles[i] = this.articleRepository.create(articles[i]);
+        }
+        Tag[] tags = {
+                new Tag("tag1", "tag 1"),
+                new Tag("tag2", "tag 2"),
+                new Tag("tag3", "tag 3"),
+                new Tag("tag4", "tag 4"),
+                new Tag("tag5", "tag 5")
+        };
+        tags[0].addArticle(articles[0]);
+        tags[0].addArticle(articles[1]);
+        tags[1].addArticle(articles[0]);
+        tags[1].addArticle(articles[2]);
+        tags[3].addArticle(articles[3]);
+        tags[3].addArticle(articles[4]);
+        for (Tag tag : tags) {
+            this.tagRepository.create(tag);
+        }
+
+        ArticleItem[] articleItems = {
+                new ArticleItem(articles[0], 1, new BigDecimal("11.346")),
+                new ArticleItem(articles[1], 2, BigDecimal.TEN),
+                new ArticleItem(articles[1], 3, BigDecimal.ZERO),
+                new ArticleItem(articles[2], 4, BigDecimal.ONE)
+        };
+        ShoppingCart[] carts = {
+                new ShoppingCart(users[0], LocalDateTime.now()),
+                new ShoppingCart(users[1], LocalDateTime.now())
+        };
+        carts[0].add(articleItems[0]);
+        carts[0].add(articleItems[1]);
+        carts[1].add(articleItems[2]);
+        carts[1].add(articleItems[3]);
+        for (ShoppingCart cart : carts) {
+            this.shoppingCartRepository.create(cart);
         }
     }
 

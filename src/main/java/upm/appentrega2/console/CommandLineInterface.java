@@ -3,8 +3,10 @@ package upm.appentrega2.console;
 import upm.appentrega2.console.exceptions.BadRequestException;
 import upm.appentrega2.data.models.Article;
 import upm.appentrega2.data.models.Rol;
+import upm.appentrega2.data.models.Tag;
 import upm.appentrega2.data.models.User;
 import upm.appentrega2.services.ArticleService;
+import upm.appentrega2.services.TagService;
 import upm.appentrega2.services.UserService;
 
 import java.math.BigDecimal;
@@ -18,12 +20,14 @@ public class CommandLineInterface {
     private final View view;
     private final UserService userService;
     private final ArticleService articleService;
+    private final TagService tagService;
     private User user;
 
-    public CommandLineInterface(View view, UserService userService, ArticleService articleService) {
+    public CommandLineInterface(View view, UserService userService, ArticleService articleService, TagService tagService) {
         this.view = view;
         this.userService = userService;
         this.articleService = articleService;
+        this.tagService = tagService;
     }
 
     public boolean runCommands() {
@@ -50,9 +54,33 @@ public class CommandLineInterface {
             case LIST_USERS -> this.listUsers();
             case CREATE_ARTICLE -> this.createArticle(params);
             case LIST_ARTICLES -> this.listArticles();
+            case CREATE_TAG -> this.createTag(params);
+            case ADD_ARTICLE_TO_TAG -> this.addArticleToTag(params);
+            case FIND_ARTICLE_BY_TAG_NAME -> this.findArticleByTagName(params);
+            case FIND_TAG_BY_ARTICLE_BARCODE -> this.findTagByArticleBarcode(params);
             default -> throw new UnsupportedOperationException("El comando -" + command + "- no se reconoce");
         }
         return false;
+    }
+
+    private void findTagByArticleBarcode(String[] params) {
+        List<Tag> tags = this.tagService.findByArticleBarcode(params[0]);
+        this.view.show(tags.toString());
+    }
+
+    private void findArticleByTagName(String[] params) {
+        List<Article> articles = this.articleService.findByTagName(params[0]);
+        this.view.show(articles.toString());
+    }
+
+    private void addArticleToTag(String[] params) {
+        Tag tagUpdated = this.tagService.addArticle(params[0], params[1]);
+        this.view.show(tagUpdated.toString());
+    }
+
+    private void createTag(String[] params) {
+        Tag tagCreated = this.tagService.create(new Tag(params[0], params[1]));
+        this.view.show(tagCreated.toString());
     }
 
     private String userName() {

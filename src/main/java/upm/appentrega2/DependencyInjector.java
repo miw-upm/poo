@@ -3,12 +3,13 @@ package upm.appentrega2;
 import upm.appentrega2.console.CommandLineInterface;
 import upm.appentrega2.console.ErrorHandler;
 import upm.appentrega2.console.View;
-import upm.appentrega2.data.repositories.ArticleRepository;
-import upm.appentrega2.data.repositories.ShopSeeder;
-import upm.appentrega2.data.repositories.UserRepository;
+import upm.appentrega2.data.repositories.*;
 import upm.appentrega2.data.repositories.map.ArticleRepositoryMap;
+import upm.appentrega2.data.repositories.map.ShoppingCartRepositoryMap;
+import upm.appentrega2.data.repositories.map.TagRepositoryMap;
 import upm.appentrega2.data.repositories.map.UserRepositoryMap;
 import upm.appentrega2.services.ArticleService;
+import upm.appentrega2.services.TagService;
 import upm.appentrega2.services.UserService;
 
 public class DependencyInjector {
@@ -17,21 +18,32 @@ public class DependencyInjector {
     private final CommandLineInterface commandLineInterface;
     private final UserRepository userRepository;
     private final ArticleRepository articleRepository;
+    private final TagRepository tagRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
     private final ShopSeeder shopSeeder;
     private final UserService userService;
     private final ArticleService articleService;
 
+
+    private final TagService tagService;
+
+
     public DependencyInjector() {
         this.userRepository = new UserRepositoryMap();
         this.articleRepository = new ArticleRepositoryMap();
-        this.shopSeeder = new ShopSeeder(userRepository, articleRepository);
+        this.tagRepository = new TagRepositoryMap();
+        this.shoppingCartRepository = new ShoppingCartRepositoryMap();
+
+
+        this.shopSeeder = new ShopSeeder(this.userRepository, this.articleRepository, this.tagRepository, this.shoppingCartRepository);
         this.shopSeeder.seed(); //TODO only develop
 
         this.userService = new UserService(this.userRepository);
-        this.articleService = new ArticleService(this.articleRepository);
+        this.articleService = new ArticleService(this.articleRepository, this.tagRepository);
+        this.tagService = new TagService(this.tagRepository, this.articleRepository);
 
         this.view = new View();
-        this.commandLineInterface = new CommandLineInterface(this.view, this.userService, this.articleService);
+        this.commandLineInterface = new CommandLineInterface(this.view, this.userService, this.articleService, this.tagService);
 
         this.errorHandler = new ErrorHandler(this.commandLineInterface, this.view);
     }
