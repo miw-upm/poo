@@ -1,6 +1,7 @@
 package upm.appentrega2.console;
 
 import upm.appentrega2.data.models.Article;
+import upm.appentrega2.data.models.Rol;
 import upm.appentrega2.data.models.User;
 import upm.appentrega2.services.ArticleService;
 import upm.appentrega2.services.UserService;
@@ -34,12 +35,8 @@ public class CommandLineInterface {
     }
 
     public boolean runCommand(Scanner scanner) {
-        if (Objects.isNull(this.user)) {
-            this.view.showCommand();
-        } else {
-            this.view.showCommand(this.user.getName());
-        }
-        Command command = Command.fromValue(scanner.next());
+        this.view.showCommand(this.userName());
+        Command command = Command.fromValue(scanner.next(), this.userRol());
         String[] params = this.scanParamsIfNeededAssured(scanner, command);
         switch (command) {
             case HELP -> this.help();
@@ -55,6 +52,22 @@ public class CommandLineInterface {
             default -> throw new UnsupportedOperationException("El comando -" + command + "- no se reconoce");
         }
         return false;
+    }
+
+    private String userName() {
+        if (Objects.isNull(this.user)) {
+            return "";
+        } else {
+            return this.user.getName();
+        }
+    }
+
+    private Rol userRol() {
+        if (Objects.isNull(this.user)) {
+            return Rol.NONE;
+        } else {
+            return this.user.getRol();
+        }
     }
 
     private void logout() {
@@ -79,7 +92,10 @@ public class CommandLineInterface {
 
     private void help() {
         for (Command aCommand : Command.values()) {
-            this.view.showBold(aCommand.getHelp());
+            String message = aCommand.getHelp(this.userRol());
+            if (!message.isEmpty()) {
+                this.view.showBold(aCommand.getHelp(this.userRol()));
+            }
         }
     }
 

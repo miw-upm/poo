@@ -21,10 +21,6 @@ public class View {
         System.out.print(name + " " + COMMAND);
     }
 
-    public void showCommand() {
-        System.out.print(COMMAND);
-    }
-
     public void showError(String message) {
         System.out.println(BACKGROUND_RED + BLACK + "  " + message + "  " + RESET);
     }
