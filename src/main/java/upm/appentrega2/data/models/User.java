@@ -21,7 +21,7 @@ public class User extends Entity {
 
     public void setMobile(Integer mobile) {
         if (mobile > 999_999_999 || mobile < 100_000_000) {
-            throw new RuntimeException("El móvil debe tener 9 digitos y debe ser positivo: " + mobile);
+            throw new InvalidAttributeException("El móvil debe tener 9 digitos y debe ser positivo: " + mobile);
         }
         this.mobile = mobile;
     }

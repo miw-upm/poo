@@ -1,6 +1,7 @@
 package upm.appentrega2.console;
 
 import org.junit.jupiter.api.Test;
+import upm.appentrega2.console.exceptions.BadRequestException;
 import upm.appentrega2.data.models.Rol;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,7 +16,7 @@ public class CommandTest {
 
     @Test
     void testFromInvalidCommand() {
-        Exception exception = assertThrows(UnsupportedOperationException.class, () -> Command.fromValue("invalid-command",Rol.ADMIN));
+        Exception exception = assertThrows(BadRequestException.class, () -> Command.fromValue("invalid-command",Rol.ADMIN));
     }
 
     @Test

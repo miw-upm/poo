@@ -1,5 +1,7 @@
 package upm.appentrega2.console;
 
+import upm.appentrega2.console.exceptions.BadRequestException;
+import upm.appentrega2.console.exceptions.ForbiddenException;
 import upm.appentrega2.data.models.Rol;
 
 import java.util.List;
@@ -32,12 +34,12 @@ public enum Command {
         for (Command command : Command.values()) {
             if (value.equals(command.getValue())) {
                 if (!command.allowedRoles.contains(userRoll)) {
-                    throw new RuntimeException("Prohibido, no tiene permiso suficiente");
+                    throw new ForbiddenException("Prohibido, no tiene permiso suficiente");
                 }
                 return command;
             }
         }
-        throw new UnsupportedOperationException("Comando '" + value + "' no existe.");
+        throw new BadRequestException("Comando '" + value + "' no existe.");
     }
 
     public String getValue() {

@@ -1,5 +1,6 @@
 package upm.appentrega2.console;
 
+import upm.appentrega2.console.exceptions.BadRequestException;
 import upm.appentrega2.data.models.Article;
 import upm.appentrega2.data.models.Rol;
 import upm.appentrega2.data.models.User;
@@ -82,7 +83,7 @@ public class CommandLineInterface {
         if (command.getParams().length > 0) {
             String[] params = scanner.next().split(Delimiters.PARAM.getValue());
             if (command.getParams().length != params.length) {
-                throw new IllegalArgumentException("Parámetros esperados: " + Arrays.toString(command.getParams()) +
+                throw new BadRequestException("Parámetros esperados: " + Arrays.toString(command.getParams()) +
                         ", encontrados " + Arrays.toString(params));
             }
             return params;

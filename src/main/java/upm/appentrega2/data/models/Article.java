@@ -24,7 +24,7 @@ public class Article extends Entity {
 
     public void setBarcode(String barcode) {
         if (barcode.length() != EUROPEAN_ARTICLE_NUMBER) {
-            throw new RuntimeException("La longitud del código de barras debe ser: " + EUROPEAN_ARTICLE_NUMBER + ", encontrado:" + barcode);
+            throw new InvalidAttributeException("La longitud del código de barras debe ser: " + EUROPEAN_ARTICLE_NUMBER + ", encontrado:" + barcode);
         }
         this.barcode = barcode;
     }

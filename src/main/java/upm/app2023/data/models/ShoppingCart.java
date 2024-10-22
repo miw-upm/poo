@@ -12,7 +12,6 @@ public class ShoppingCart {
     private Integer id;
     private List<ArticleItem> articleItems;
 
-
     public ShoppingCart(User user, LocalDateTime creationDate) {
         this(null, user, creationDate);
     }
