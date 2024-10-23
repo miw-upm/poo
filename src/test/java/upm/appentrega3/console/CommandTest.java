@@ -1,8 +1,8 @@
-package upm.appentrega2.console;
+package upm.appentrega3.console;
 
 import org.junit.jupiter.api.Test;
-import upm.appentrega2.console.exceptions.BadRequestException;
-import upm.appentrega2.data.models.Rol;
+import upm.appentrega3.console.exceptions.BadRequestException;
+import upm.appentrega3.data.models.Rol;
 
 import static org.junit.jupiter.api.Assertions.*;
 
