@@ -1,6 +1,7 @@
 package upm.exceptions;
 
 import org.junit.jupiter.api.Test;
+import upm.poo.exceptions.RuntimeExceptionSnippets;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
