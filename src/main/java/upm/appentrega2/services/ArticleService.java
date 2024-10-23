@@ -8,6 +8,7 @@ import upm.appentrega2.services.exceptions.DuplicateException;
 import upm.appentrega2.services.exceptions.NotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ArticleService {
     private final ArticleRepository articleRepository;
@@ -26,8 +27,11 @@ public class ArticleService {
     }
 
     public List<Article> findByTagName(String tagName) {
-        Tag tag = this.tagRepository.findByName(tagName).orElseThrow(() -> new NotFoundException("Nombre de Etiqueta no encontrado: " + tagName));
-        return tag.getArticles();
+        Optional<Tag> tag = this.tagRepository.findByName(tagName);
+        if (tag.isEmpty()){
+            return List.of();
+        }
+        return tag.get().getArticles();
     }
 
     public List<Article> findAll() {

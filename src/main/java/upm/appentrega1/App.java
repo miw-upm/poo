@@ -11,7 +11,7 @@ public class App {
         UserRepositoryMap userRepository = new UserRepositoryMap();
         UserService userService = new UserService(userRepository);
         View view = new View();
-        view.showBold("Run App..version1");
+        view.showBold("App. " + App.class.getPackageName() + "  " + upm.appentrega3.console.View.COPY_RIGHT + "UPM.ETSISI.POO");
         new CommandLineInterface(view, userService).runCommands();
     }
 }

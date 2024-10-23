@@ -7,7 +7,7 @@ public class ErrorHandler {
     public ErrorHandler(CommandLineInterface commandLineInterface, View view) {
         this.commandLineInterface = commandLineInterface;
         this.view = view;
-        this.view.showBold("App. " + View.COPY_RIGHT + "UPM.ETSISI.POO");
+        this.view.showBold("App. " + this.getClass().getPackageName() + "  " + upm.appentrega3.console.View.COPY_RIGHT + "UPM.ETSISI.POO");
     }
 
     public void handlesErrors() {

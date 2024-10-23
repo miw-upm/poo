@@ -3,6 +3,7 @@ package upm.appentrega3;
 import upm.appentrega3.console.CommandLineInterface;
 import upm.appentrega3.console.ErrorHandler;
 import upm.appentrega3.console.View;
+import upm.appentrega3.console.commands.*;
 import upm.appentrega3.data.repositories.*;
 import upm.appentrega3.data.repositories.map.ArticleRepositoryMap;
 import upm.appentrega3.data.repositories.map.ShoppingCartRepositoryMap;
@@ -39,7 +40,12 @@ public class DependencyInjector {
         this.tagService = new TagService(this.tagRepository, this.articleRepository);
 
         this.view = new View();
-        this.commandLineInterface = new CommandLineInterface(this.view, this.userService, this.articleService, this.tagService);
+        this.commandLineInterface = new CommandLineInterface(this.view);
+        this.commandLineInterface.add(new Help(this.commandLineInterface));
+        this.commandLineInterface.add(new Exit());
+        this.commandLineInterface.add(new Login(this.commandLineInterface, this.userService));
+        this.commandLineInterface.add(new Logout(this.commandLineInterface));
+        commandLineInterface.add(new CreateUser(this.userService, this.view));
 
         this.errorHandler = new ErrorHandler(this.commandLineInterface, this.view);
     }
