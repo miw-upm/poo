@@ -30,6 +30,7 @@ public class Exit implements Command {
 
     @Override
     public void execute(String[] values) {
+        // Nothing to do, it never gets executed
     }
 
 }

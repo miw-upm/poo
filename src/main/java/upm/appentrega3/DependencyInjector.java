@@ -45,8 +45,14 @@ public class DependencyInjector {
         this.commandLineInterface.add(new Exit());
         this.commandLineInterface.add(new Login(this.commandLineInterface, this.userService));
         this.commandLineInterface.add(new Logout(this.commandLineInterface));
-        commandLineInterface.add(new CreateUser(this.userService, this.view));
-
+        this.commandLineInterface.add(new CreateUser(this.view, this.userService));
+        this.commandLineInterface.add(new ListUsers(this.view, this.userService));
+        this.commandLineInterface.add(new CreateArticle(this.view, this.articleService));
+        this.commandLineInterface.add(new ListArticles(this.view, this.articleService));
+        this.commandLineInterface.add(new CreateTag(this.view, this.tagService));
+        this.commandLineInterface.add(new AddArticleToTag(this.view, this.tagService));
+        this.commandLineInterface.add(new FindArticleByTagName(this.view, this.articleService));
+        this.commandLineInterface.add(new FindTagByArticleBarcode(this.view, this.tagService));
         this.errorHandler = new ErrorHandler(this.commandLineInterface, this.view);
     }
 

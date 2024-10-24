@@ -8,8 +8,8 @@ import upm.appentrega3.data.models.User;
 import java.util.*;
 
 public class CommandLineInterface {
-    private static final String COMMAND_DELIMITER_EXPRESSION = "[" + Delimiters.COMMAND.getValue() + "\\r\\n]";
     public static final String EXIT = "exit";
+    private static final String COMMAND_DELIMITER_EXPRESSION = "[" + Delimiters.COMMAND.getValue() + "\\r\\n]";
     private final Map<String, Command> commands;
     private final View view;
     private User user;
@@ -35,16 +35,16 @@ public class CommandLineInterface {
     public boolean runCommand(Scanner scanner) {
         this.view.showCommand(this.userName());
         String command = scanner.next();
+        if (!this.commands.containsKey(command)) {
+            throw new BadRequestException("Comando '" + command + "' no existe.");
+        }
+        if (!this.commands.get(command).allowedRoles().contains(this.userRol())) {
+            throw new ForbiddenException("rol actual: " + this.userRol() + ", permitidos: " + this.commands.get(command).allowedRoles());
+        }
         String[] params = this.scanParamsIfNeededAssured(scanner, command);
         if (EXIT.equals(command)) {
             return true;
         } else {
-            if (!this.commands.containsKey(command)) {
-                throw new BadRequestException("Comando '" + command + "' no existe.");
-            }
-            if (this.commands.get(command).allowedRoles().contains(this.userRol())) {
-                throw new ForbiddenException("Prohibido, no tiene permiso suficiente");
-            }
             this.commands.get(command).execute(params);
         }
         return false;
@@ -91,6 +91,4 @@ public class CommandLineInterface {
     public void setUser(User user) {
         this.user = user;
     }
-
-
 }

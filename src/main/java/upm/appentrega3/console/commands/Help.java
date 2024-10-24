@@ -30,7 +30,7 @@ public class Help implements Command {
 
     @Override
     public String helpMessage() {
-        return "Se crea un usuario";
+        return "Muestra la ayuda";
     }
 
     @Override

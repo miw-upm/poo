@@ -1,10 +1,13 @@
 package upm.appentrega3.console;
 
+import upm.appentrega2.console.View;
+import upm.appentrega2.services.ArticleService;
 import upm.appentrega3.data.models.Rol;
 
 import java.util.List;
 
 public interface Command {
+
     String name();
 
     List<String> params();
@@ -13,9 +16,13 @@ public interface Command {
 
     String helpMessage();
 
-    void execute(String[] values);
+    void execute(String[] params);
 
     default String help() {
-        return this.name() + Delimiters.COMMAND.getValue() + String.join(Delimiters.PARAM.getValue(), this.params()) + ". " + this.helpMessage() + ".";
+        StringBuilder result = new StringBuilder(this.name());
+        if (!this.params().isEmpty()) {
+            result.append(Delimiters.COMMAND.getValue()).append(String.join(Delimiters.PARAM.getValue(), this.params()));
+        }
+        return result.append(". ").append(this.helpMessage()).append(".").toString();
     }
 }
