@@ -14,6 +14,7 @@ import upm.appentrega3.services.TagService;
 import upm.appentrega3.services.UserService;
 
 public class DependencyInjector {
+    private static final DependencyInjector instance = new DependencyInjector();
     private final ErrorHandler errorHandler;
     private final View view;
     private final CommandLineInterface commandLineInterface;
@@ -26,7 +27,7 @@ public class DependencyInjector {
     private final ArticleService articleService;
     private final TagService tagService;
 
-    public DependencyInjector() {
+    private DependencyInjector() {
         this.userRepository = new UserRepositoryMap();
         this.articleRepository = new ArticleRepositoryMap();
         this.tagRepository = new TagRepositoryMap();
@@ -54,6 +55,10 @@ public class DependencyInjector {
         this.commandLineInterface.add(new FindArticleByTagName(this.view, this.articleService));
         this.commandLineInterface.add(new FindTagByArticleBarcode(this.view, this.tagService));
         this.errorHandler = new ErrorHandler(this.commandLineInterface, this.view);
+    }
+
+    public static DependencyInjector getInstance(){
+        return instance;
     }
 
     public void run() {

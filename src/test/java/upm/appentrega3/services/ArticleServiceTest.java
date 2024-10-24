@@ -17,9 +17,8 @@ class ArticleServiceTest {
     private final ArticleRepository articleRepository;
 
     public ArticleServiceTest() {
-        DependencyInjector dependencyInjector = new DependencyInjector();
-        this.articleService = dependencyInjector.getArticleService();
-        this.articleRepository = dependencyInjector.getArticleRepository();
+        this.articleService = DependencyInjector.getInstance().getArticleService();
+        this.articleRepository = DependencyInjector.getInstance().getArticleRepository();
     }
 
     @Test

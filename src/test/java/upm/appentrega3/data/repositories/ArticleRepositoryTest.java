@@ -3,13 +3,14 @@ package upm.appentrega3.data.repositories;
 import org.junit.jupiter.api.Test;
 import upm.appentrega3.DependencyInjector;
 import upm.appentrega3.data.models.Article;
+
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArticleRepositoryTest {
 
-    private final ArticleRepository articleRepository = new DependencyInjector().getArticleRepository();
+    private final ArticleRepository articleRepository = DependencyInjector.getInstance().getArticleRepository();
 
     @Test
     void testFindByBarcode() {

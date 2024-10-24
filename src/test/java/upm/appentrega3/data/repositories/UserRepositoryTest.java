@@ -1,9 +1,8 @@
 package upm.appentrega3.data.repositories;
 
 import org.junit.jupiter.api.Test;
-import upm.appentrega2.DependencyInjector;
-import upm.appentrega2.data.models.User;
-import upm.appentrega2.data.repositories.UserRepository;
+import upm.appentrega3.DependencyInjector;
+import upm.appentrega3.data.models.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserRepositoryTest {
 
-    private final UserRepository userRepository = new DependencyInjector().getUserRepository();
+    private final UserRepository userRepository = DependencyInjector.getInstance().getUserRepository();
 
     @Test
     void testCreateAndRead() {
@@ -25,7 +24,7 @@ class UserRepositoryTest {
 
     @Test
     void testUpdate() {
-        User dbUser = this.userRepository.read(1).get();
+        User dbUser = this.userRepository.read(1).orElseThrow();
         dbUser.setName("Updated user 1");
         this.userRepository.update(dbUser);
 

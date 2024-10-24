@@ -3,13 +3,12 @@ package upm.appentrega3.data.models;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-
 import java.math.BigDecimal;
 
 class ArticleTest {
     @Test
     void testValidBarcode() {
-       Article article = new Article("8400011122200", "name", BigDecimal.TWO, "prov1");
+        Article article = new Article("8400011122200", "name", BigDecimal.TWO, "prov1");
         Assertions.assertEquals("8400011122200", article.getBarcode());
     }
 

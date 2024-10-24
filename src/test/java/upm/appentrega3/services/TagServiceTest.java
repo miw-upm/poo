@@ -1,12 +1,11 @@
 package upm.appentrega3.services;
 
 import org.junit.jupiter.api.Test;
-import upm.appentrega2.DependencyInjector;
-import upm.appentrega2.data.models.Tag;
-import upm.appentrega2.data.repositories.TagRepository;
-import upm.appentrega2.services.TagService;
-import upm.appentrega2.services.exceptions.DuplicateException;
-import upm.appentrega2.services.exceptions.NotFoundException;
+import upm.appentrega3.DependencyInjector;
+import upm.appentrega3.data.models.Tag;
+import upm.appentrega3.data.repositories.TagRepository;
+import upm.appentrega3.services.exceptions.DuplicateException;
+import upm.appentrega3.services.exceptions.NotFoundException;
 
 import java.util.List;
 
@@ -18,9 +17,8 @@ class TagServiceTest {
     private final TagRepository tagRepository;
 
     TagServiceTest() {
-        DependencyInjector dependencyInjector = new DependencyInjector();
-        this.tagService = dependencyInjector.getTagService();
-        this.tagRepository = dependencyInjector.getTagRepository();
+        this.tagService = DependencyInjector.getInstance().getTagService();
+        this.tagRepository = DependencyInjector.getInstance().getTagRepository();
     }
 
     @Test

@@ -1,10 +1,9 @@
 package upm.appentrega3.services;
 
 import org.junit.jupiter.api.Test;
-import upm.appentrega2.DependencyInjector;
-import upm.appentrega2.data.models.User;
-import upm.appentrega2.data.repositories.UserRepository;
-import upm.appentrega2.services.UserService;
+import upm.appentrega3.DependencyInjector;
+import upm.appentrega3.data.models.User;
+import upm.appentrega3.data.repositories.UserRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,9 +14,8 @@ class UserServiceTest {
     private final UserRepository userRepository;
 
     public UserServiceTest() {
-        DependencyInjector dependencyInjector = new DependencyInjector();
-        this.userService = dependencyInjector.getUserService();
-        this.userRepository = dependencyInjector.getUserRepository();
+        this.userService = DependencyInjector.getInstance().getUserService();
+        this.userRepository = DependencyInjector.getInstance().getUserRepository();
     }
 
     @Test

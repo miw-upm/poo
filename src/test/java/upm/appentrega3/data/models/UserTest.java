@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 class UserTest {
     @Test
     void testValidMobile() {
-       User user = new User(123_456_789, "666", "name", "C/...");
+        User user = new User(123_456_789, "666", "name", "C/...");
         Assertions.assertEquals(123_456_789, user.getMobile());
     }
 
