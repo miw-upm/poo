@@ -53,7 +53,7 @@ class TagServiceTest {
 
     @Test
     void testFindByArticleBarcode() {
-        List<Tag> tags = this.tagService.findByArticleBarcode("8412345123450");
+        List<Tag> tags = this.tagService.findByArticleBarcode("8412345123450").toList();
         assertEquals(2, tags.size());
         for (Tag tag : tags) {
             assertTrue(List.of("tag1", "tag2").contains(tag.getName()));

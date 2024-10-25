@@ -5,9 +5,9 @@ import upm.appentrega3.data.models.Tag;
 import upm.appentrega3.data.repositories.ArticleRepository;
 import upm.appentrega3.data.repositories.TagRepository;
 import upm.appentrega3.services.exceptions.DuplicateException;
-import upm.appentrega3.services.exceptions.NotFoundException;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class ArticleService {
     private final ArticleRepository articleRepository;
@@ -19,15 +19,16 @@ public class ArticleService {
     }
 
     public Article create(Article article) {
-        if (this.articleRepository.findByBarcode(article.getBarcode()).isPresent()) {
-            throw new DuplicateException("El codigo de barras ya existe, y debiera ser único: " + article.getBarcode());
-        }
+        this.articleRepository.findByBarcode(article.getBarcode())
+                .ifPresent(article1 -> {
+                    throw new DuplicateException("El codigo de barras ya existe, y debiera ser único: " + article.getBarcode());
+                });
         return this.articleRepository.create(article);
     }
 
-    public List<Article> findByTagName(String tagName) {
-        Tag tag = this.tagRepository.findByName(tagName).orElseThrow(() -> new NotFoundException("Nombre de Etiqueta no encontrado: " + tagName));
-        return tag.getArticles();
+    public Stream<Article> findByTagName(String tagName) {
+        return this.tagRepository.findByName(tagName).stream()
+                .flatMap(tag -> tag.getArticles().stream());
     }
 
     public List<Article> findAll() {

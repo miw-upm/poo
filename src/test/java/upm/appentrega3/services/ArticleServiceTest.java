@@ -7,6 +7,7 @@ import upm.appentrega3.data.repositories.ArticleRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,7 +41,7 @@ class ArticleServiceTest {
 
     @Test
     void testFindByTagName() {
-        List<Article> articles = this.articleService.findByTagName("tag1");
+        List<Article> articles = this.articleService.findByTagName("tag1").toList();
         assertEquals(2, articles.size());
         for (Article article : articles) {
             assertTrue(List.of("8412345123450", "8412345123460").contains(article.getBarcode()));

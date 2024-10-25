@@ -3,85 +3,102 @@ package upm.doo.functional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Code {
     public static final List<Integer> INTEGER_LIST = List.of(3, -2, 0, 4);
     public static final List<String> STRING_LIST = List.of("3", "-2", "0", "4");
 
 
-    public void consumer() {
-        for (int i = 0; i < INTEGER_LIST.size(); i++) { //for i
-            System.out.println(INTEGER_LIST.get(i));
+    public void consumerForI(List<Integer> list) {
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
         }
+    }
 
-        for (int item : INTEGER_LIST) {  //for each
+    public void consumerForEach(List<Integer> list) {
+        for (int item : list) {  //for each
             System.out.println(item);
         }
-
-        INTEGER_LIST.stream()
-                .forEach(System.out::println);  //functional //item->System.out.println(item)
     }
 
-    public void predicate() { // only positive values
-        for (int i = 0; i < INTEGER_LIST.size(); i++) { //for i
-            if (INTEGER_LIST.get(i) >= 0) {
-                System.out.println(INTEGER_LIST.get(i));
+    public void consumer(List<Integer> list) {
+        list.forEach(System.out::println);
+    }
+
+    public List<Integer> predicateForIOnlyPositive(List<Integer> list) {
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i) >= 0) {
+                result.add(list.get(i));
             }
         }
-        for (int item : INTEGER_LIST) {  //for each
+        return result;
+    }
+
+    public List<Integer> predicateForEachOnlyPositive(List<Integer> list) {
+        List<Integer> result = new ArrayList<>();
+        for (int item : list) {
             if (item >= 0) {
-                System.out.println(item);
+                result.add(item);
             }
         }
-        INTEGER_LIST.stream() //functional
-                .filter(item -> item >= 0)
-                .forEach(System.out::println);
+        return result;
     }
 
-    public void function() { // convierte a Integer, elimina 0 y *2
-        List<Integer> result2 = new ArrayList<>();
-        for (String item : STRING_LIST) {  //for each
+    public Stream<Integer> predicateFunctionalPositive(Stream<Integer> stream) {
+        return stream.filter(item -> item >= 0);
+    }
+
+    public List<Integer> functionForEachConvertToIntRemove0Multiply2(List<String> list) {
+        List<Integer> result = new ArrayList<>();
+        for (String item : list) {
             int intItem = Integer.parseInt(item);
             if (intItem != 0) {
-                result2.add(intItem * 2);
+                result.add(intItem * 2);
             }
         }
-        System.out.println(result2);
+        return result;
+    }
 
-        List<Integer> result = STRING_LIST.stream() //functional
+    public Stream<Integer> functionFunctionalConvertToIntRemove0Multiply2(Stream<String> stream) {
+        return stream
                 .map(Integer::parseInt)
                 .filter(item -> item != 0)
-                .map(item -> item * 2)
-                .toList();
-        System.out.println(result);
+                .map(item -> item * 2);
     }
 
-    public void suplier() {
+    public List<Integer> suplierForI() {
         List<Integer> result = new ArrayList<>();
         for (int i = 0; i < 10; i++) { //for i
-            result.add(i * 2);
+            result.add(i);
         }
-        System.out.println(result);
-
-        List<Integer> result2 = IntStream
-                .range(0, 10)
-                .map(value -> value * 2)
-                .boxed()
-                .toList();
-        System.out.println(result2);
+        return (result);
     }
 
-    public void average() {
+    public List<Integer> suplierFunctional() {
+        return IntStream
+                .range(0, 10)
+                .boxed()
+                .toList();
+    }
+
+    public double averageForEach(List<Integer> list) {
+        if (list.isEmpty()) {
+            return Double.NaN;
+        }
         int sum = 0;
-        for (int number : INTEGER_LIST) {
+        for (int number : list) {
             sum += number;
         }
-        double average = (double) sum / INTEGER_LIST.size();
+        return (double) sum / list.size();
+    }
 
-        average = INTEGER_LIST.stream()
+    public double averageFunctional(List<Integer> list) {
+        return list.stream()
                 .mapToDouble(Integer::intValue)
                 .average()
-                .orElseThrow(); // Manejo de caso vacío
+                .orElse(Double.NaN);
     }
 
 }

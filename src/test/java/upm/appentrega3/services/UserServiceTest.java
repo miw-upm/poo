@@ -32,7 +32,7 @@ class UserServiceTest {
 
     @Test
     void testFindAll() {
-        assertTrue(this.userService.findAll().size() >= 4);
+        assertTrue(this.userService.findAll().toList().size() >= 4);
     }
 
     @Test

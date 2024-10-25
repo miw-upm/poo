@@ -6,6 +6,7 @@ import upm.appentrega3.services.exceptions.DuplicateException;
 import upm.appentrega3.services.exceptions.UnauthorizedException;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class UserService {
     private final UserRepository userRepository;
@@ -15,21 +16,19 @@ public class UserService {
     }
 
     public User create(User user) {
-        if (this.userRepository.findByMobile(user.getMobile()).isPresent()) {
+        this.userRepository.findByMobile(user.getMobile()).ifPresent(existingUser -> {
             throw new DuplicateException("El móvil ya existe, y debiera ser único: " + user.getMobile());
-        }
+        });
         return this.userRepository.create(user);
     }
 
-    public List<User> findAll() {
-        return this.userRepository.findAll();
+    public Stream<User> findAll() {
+        return this.userRepository.findAll().stream();
     }
 
     public User login(Integer mobile, String password) {
-        User user = this.userRepository.findByMobile(mobile).orElseThrow(() -> new UnauthorizedException("Movil o contraseña incorrecto"));
-        if (!password.equals(user.getPassword())) {
-            throw new UnauthorizedException("Movil o contraseña incorrecto");
-        }
-        return user;
+        return this.userRepository.findByMobile(mobile)
+                .filter(user -> password.equals(user.getPassword()))
+                .orElseThrow(() -> new UnauthorizedException("Móvil o contraseña incorrecto"));
     }
 }
