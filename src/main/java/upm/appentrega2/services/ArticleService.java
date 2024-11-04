@@ -5,7 +5,6 @@ import upm.appentrega2.data.models.Tag;
 import upm.appentrega2.data.repositories.ArticleRepository;
 import upm.appentrega2.data.repositories.TagRepository;
 import upm.appentrega2.services.exceptions.DuplicateException;
-import upm.appentrega2.services.exceptions.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,10 +27,11 @@ public class ArticleService {
 
     public List<Article> findByTagName(String tagName) {
         Optional<Tag> tag = this.tagRepository.findByName(tagName);
-        if (tag.isEmpty()){
+        if (tag.isPresent()) {
+            return tag.get().getArticles();
+        } else {
             return List.of();
         }
-        return tag.get().getArticles();
     }
 
     public List<Article> findAll() {

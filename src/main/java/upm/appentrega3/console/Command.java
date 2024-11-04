@@ -1,7 +1,5 @@
 package upm.appentrega3.console;
 
-import upm.appentrega2.console.View;
-import upm.appentrega2.services.ArticleService;
 import upm.appentrega3.data.models.Rol;
 
 import java.util.List;

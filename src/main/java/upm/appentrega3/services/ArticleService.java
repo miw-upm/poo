@@ -21,14 +21,15 @@ public class ArticleService {
     public Article create(Article article) {
         this.articleRepository.findByBarcode(article.getBarcode())
                 .ifPresent(article1 -> {
-                    throw new DuplicateException("El codigo de barras ya existe, y debiera ser único: " + article.getBarcode());
+                    throw new DuplicateException("El codigo de barras ya existe, y debiera ser único: " + article1.getBarcode());
                 });
         return this.articleRepository.create(article);
     }
 
     public Stream<Article> findByTagName(String tagName) {
         return this.tagRepository.findByName(tagName).stream()
-                .flatMap(tag -> tag.getArticles().stream());
+                .flatMap(tag -> tag.getArticles().stream())
+                .distinct();
     }
 
     public List<Article> findAll() {
