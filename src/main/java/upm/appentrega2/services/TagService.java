@@ -9,6 +9,7 @@ import upm.appentrega2.services.exceptions.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class TagService {
     private final TagRepository tagRepository;
@@ -27,11 +28,17 @@ public class TagService {
     }
 
     public Tag addArticle(String name, String articleBarcode) {
-        Tag dbTag = this.tagRepository.findByName(name).orElseThrow(() -> new NotFoundException("Nombre de etiqueta no encontrado: " + name));
-        Article dbArticle = this.articleRepository.findByBarcode(articleBarcode).orElseThrow(() -> new NotFoundException("Codigo de barras no encontrado: " + articleBarcode));
-        dbTag.addArticle(dbArticle);
-        this.tagRepository.update(dbTag);
-        return dbTag;
+        Optional<Tag> dbTag = this.tagRepository.findByName(name);
+        if (dbTag.isEmpty()) {
+            throw new NotFoundException("Nombre de etiqueta no encontrado: " + name);
+        }
+        Optional<Article> dbArticle = this.articleRepository.findByBarcode(articleBarcode);
+        if (dbArticle.isEmpty()) {
+            throw new NotFoundException("Codigo de barras no encontrado: " + articleBarcode);
+        }
+        dbTag.get().addArticle(dbArticle.get());
+        this.tagRepository.update(dbTag.get());
+        return dbTag.get();
     }
 
     public List<Tag> findByArticleBarcode(String articleBarcode) {

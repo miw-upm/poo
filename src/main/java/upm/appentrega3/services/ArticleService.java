@@ -1,12 +1,10 @@
 package upm.appentrega3.services;
 
 import upm.appentrega3.data.models.Article;
-import upm.appentrega3.data.models.Tag;
 import upm.appentrega3.data.repositories.ArticleRepository;
 import upm.appentrega3.data.repositories.TagRepository;
 import upm.appentrega3.services.exceptions.DuplicateException;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 public class ArticleService {
@@ -32,7 +30,7 @@ public class ArticleService {
                 .distinct();
     }
 
-    public List<Article> findAll() {
-        return this.articleRepository.findAll();
+    public Stream<Article> findAll() {
+        return this.articleRepository.findAll().stream();
     }
 }

@@ -6,6 +6,7 @@ import upm.appentrega2.services.exceptions.DuplicateException;
 import upm.appentrega2.services.exceptions.UnauthorizedException;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserService {
     private final UserRepository userRepository;
@@ -26,10 +27,13 @@ public class UserService {
     }
 
     public User login(Integer mobile, String password) {
-        User user = this.userRepository.findByMobile(mobile).orElseThrow(() -> new UnauthorizedException("Movil o contraseña incorrecto"));
-        if (!password.equals(user.getPassword())) {
+        Optional<User> user = this.userRepository.findByMobile(mobile);
+        if (user.isEmpty()) {
             throw new UnauthorizedException("Movil o contraseña incorrecto");
         }
-        return user;
+        if (!password.equals(user.get().getPassword())) {
+            throw new UnauthorizedException("Movil o contraseña incorrecto");
+        }
+        return user.get();
     }
 }

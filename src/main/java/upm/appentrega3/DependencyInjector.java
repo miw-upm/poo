@@ -57,7 +57,7 @@ public class DependencyInjector {
         this.errorHandler = new ErrorHandler(this.commandLineInterface, this.view);
     }
 
-    public static DependencyInjector getInstance(){
+    public static DependencyInjector getInstance() {
         return instance;
     }
 

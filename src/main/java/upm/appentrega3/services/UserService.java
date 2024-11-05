@@ -5,7 +5,6 @@ import upm.appentrega3.data.repositories.UserRepository;
 import upm.appentrega3.services.exceptions.DuplicateException;
 import upm.appentrega3.services.exceptions.UnauthorizedException;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 public class UserService {
