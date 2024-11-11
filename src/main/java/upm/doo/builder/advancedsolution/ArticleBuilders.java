@@ -1,4 +1,4 @@
-package upm.doo.builder.advanced_solution;
+package upm.doo.builder.advancedsolution;
 
 import java.math.BigDecimal;
 

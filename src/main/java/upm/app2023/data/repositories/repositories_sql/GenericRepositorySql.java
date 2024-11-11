@@ -30,7 +30,7 @@ public abstract class GenericRepositorySql<T> implements GenericRepository<T> {
             }
             throw new UnsupportedOperationException("SQL: " + sql + " ===>>> No se ha podido generar la id");
         } catch (SQLException e) {
-            throw new UnsupportedOperationException("SQL: " + sql + " ===>>> " + e);
+            throw new UnsupportedOperationException(message(sql, e));
         }
     }
 
@@ -46,7 +46,7 @@ public abstract class GenericRepositorySql<T> implements GenericRepository<T> {
             this.assignValues(preparedStatement, values);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new UnsupportedOperationException("SQL: " + sql + " ===>>> " + e);
+            throw new UnsupportedOperationException(message(sql, e));
         }
     }
 
@@ -61,8 +61,12 @@ public abstract class GenericRepositorySql<T> implements GenericRepository<T> {
             }
             return entities;
         } catch (SQLException e) {
-            throw new UnsupportedOperationException("SQL: " + sql + " ===>>> " + e);
+            throw new UnsupportedOperationException(message(sql, e));
         }
+    }
+
+    private static String message(String sql, SQLException e) {
+        return "SQL: " + sql + " ===>>> " + e;
     }
 
     protected abstract T convertToEntity(ResultSet resulSet);
@@ -77,7 +81,7 @@ public abstract class GenericRepositorySql<T> implements GenericRepository<T> {
                 entities.add(convert.apply(resultSet));
             }
         } catch (SQLException e) {
-            throw new UnsupportedOperationException("SQL: " + sql + " ===>>> " + e);
+            throw new UnsupportedOperationException(message(sql, e));
         }
         return entities;
     }

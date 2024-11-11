@@ -14,10 +14,6 @@ public class Article {
     private BigDecimal price;
     private String provider;
 
-    public static Builder builder() {
-        return new Builder();
-    }
-
     public String getBarcode() {
         return barcode;
     }
@@ -89,6 +85,10 @@ public class Article {
     @Override
     public boolean equals(Object article) {
         return this == article || article != null && getClass() == article.getClass() && (this.id.equals(((Article) article).id));
+    }
+
+    public static Builder builder() {
+        return new Article.Builder();
     }
 
     public static class Builder {

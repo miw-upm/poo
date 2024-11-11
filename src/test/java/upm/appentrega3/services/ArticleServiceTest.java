@@ -36,7 +36,7 @@ class ArticleServiceTest {
 
     @Test
     void testFindAll() {
-        assertTrue(this.articleService.findAll().size() >= 4);
+        assertTrue(this.articleService.findAll().toList().size() >= 4);
     }
 
     @Test
