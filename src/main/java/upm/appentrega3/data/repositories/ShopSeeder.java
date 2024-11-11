@@ -1,5 +1,6 @@
 package upm.appentrega3.data.repositories;
 
+import org.apache.logging.log4j.LogManager;
 import upm.appentrega3.data.models.*;
 
 import java.math.BigDecimal;
@@ -20,6 +21,7 @@ public class ShopSeeder {
     }
 
     public void seed() {
+        LogManager.getLogger(this.getClass()).info(() -> "Seed ");
         User[] users = {
                 new User(666000660, "666", "user1", "Calle 1"),
                 new User(666000661, "666", "user2", "Calle 2"),

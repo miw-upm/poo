@@ -28,7 +28,7 @@
         <!-- JUnit -->
         <junit.jupiter.version>5.9.3</junit.jupiter.version>
         <!-- Logs -->
-        <log4j.version>2.20.0</log4j.version>
+        <log4j.version>2.24.1</log4j.version>
         <!-- Database -->
         <mysql.version>8.0.33</mysql.version>
         <h2.version>2.1.214</h2.version>
