@@ -5,15 +5,15 @@ import org.apache.logging.log4j.LogManager;
 import java.sql.*;
 
 public class MysqlTables {
-    private static final String DATABASE = "poo";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String URL = "jdbc:mysql://localhost:3306/";
+    private static final String DATABASE = "poo";
     private static final String USER = "root";
     private static final String PASSWORD = "";
 
     private static final String URL_H2 = "jdbc:h2:mem:test";
 
-    private Connection connection;
+    private final Connection connection;
 
     public MysqlTables(String bd) {
         if ("h2".equals(bd)) {
@@ -45,8 +45,8 @@ public class MysqlTables {
     }
 
     private void dropDatabase() {
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-             Statement statement = connection.createStatement()) {
+        try (Connection connectionTmp = DriverManager.getConnection(URL, USER, PASSWORD);
+             Statement statement = connectionTmp.createStatement()) {
             statement.executeUpdate("DROP DATABASE IF EXISTS " + DATABASE + ";");
         } catch (SQLException e) {
             LogManager.getLogger(this.getClass()).debug(e);
@@ -54,8 +54,8 @@ public class MysqlTables {
     }
 
     private void createDatabase() {
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-             Statement statement = connection.createStatement()) {
+        try (Connection connectionTmp = DriverManager.getConnection(URL, USER, PASSWORD);
+             Statement statement = connectionTmp.createStatement()) {
             statement.executeUpdate("CREATE DATABASE IF NOT EXISTS " + DATABASE + ";");
         } catch (SQLException e) {
             LogManager.getLogger(this.getClass()).debug(e);
