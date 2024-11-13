@@ -9,7 +9,7 @@ public interface ArticleBuilders {
     }
 
     interface Summary {
-        Price summary(String nick);
+        Price summary(String sumary);
     }
 
     interface Price {
