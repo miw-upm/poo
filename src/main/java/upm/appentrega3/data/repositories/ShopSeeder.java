@@ -27,8 +27,8 @@ public class ShopSeeder {
                 new User(666000661, "666", "user2", "Calle 2"),
                 new User(666000662, "666", "user3", "Calle 3"),
                 new User(666000663, "666", "user4", "Calle 4"),
-                new User(666000666, "666", "admin", "Calle Ad"),
-                new User(666000667, "666", "management", "Calle 4")
+                new User(666000666, "666", "admin", "Calle Admin"),
+                new User(666000667, "666", "management", "Calle Management")
         };
         users[4].setRol(Rol.ADMIN);
         users[5].setRol(Rol.MANAGEMENT);
@@ -37,12 +37,12 @@ public class ShopSeeder {
         }
 
         Article[] articles = {
-                Article.builder().barcode("8412345123450").summary("art1").price(BigDecimal.TEN).provider("prov1").build(),
-                Article.builder().barcode("8412345123460").summary("art2").price(BigDecimal.ONE).provider("prov1").build(),
-                Article.builder().barcode("8412345123470").price(BigDecimal.ONE).build(),
-                new Article("8412345123470", "art3", BigDecimal.TWO, "prov2"),
-                new Article("8412345123480", "art4", new BigDecimal("10.2"), "prov2"),
-                new Article("8412345123490", "art5", BigDecimal.TEN, "prov3"),
+                Article.builder().barcode("8412345123410").summary("art1").price(BigDecimal.TEN).provider("prov1").build(),
+                Article.builder().barcode("8412345123420").summary("art2").price(BigDecimal.ONE).provider("prov1").build(),
+                Article.builder().barcode("8412345123430").price(BigDecimal.ONE).build(),
+                new Article("8412345123440", "art4", BigDecimal.TWO, "prov2"),
+                new Article("8412345123450", "art5", new BigDecimal("10.2"), "prov2"),
+                new Article("8412345123460", "art6", BigDecimal.TEN, "prov3"),
         };
         for (int i = 0; i < articles.length; i++) {
             articles[i].setRegistrationDate(LocalDate.now());

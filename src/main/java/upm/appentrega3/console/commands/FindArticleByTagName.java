@@ -38,6 +38,6 @@ public class FindArticleByTagName implements Command {
 
     @Override
     public void execute(String[] params) {
-        this.view.show(this.articleService.findByTagName(params[0]).toString());
+        this.articleService.findByTagName(params[0]).forEach(article -> this.view.show(article.toString()));
     }
 }

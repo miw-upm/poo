@@ -6,6 +6,7 @@ import upm.appentrega3.data.models.Article;
 import upm.appentrega3.data.repositories.ArticleRepository;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -24,13 +25,16 @@ class ArticleServiceTest {
 
     @Test
     void testCreate() {
-        this.articleService.create(new Article("8400011122201", "art-1", new BigDecimal("1.1"), "prov-1"));
+        Article article = new Article("8400011122201", "art-1", new BigDecimal("1.1"), "prov-1");
+        article.setRegistrationDate(LocalDate.now());
+        this.articleService.create(article);
         assertTrue(articleRepository.findByBarcode("8400011122201").isPresent());
     }
 
     @Test
     void testCreateBarcodeException() {
         Article article = new Article("8412345123460", "error", BigDecimal.TEN, "error");
+        article.setRegistrationDate(LocalDate.now());
         assertThrows(RuntimeException.class, () -> this.articleService.create(article));
     }
 
@@ -44,7 +48,7 @@ class ArticleServiceTest {
         List<Article> articles = this.articleService.findByTagName("tag1").toList();
         assertEquals(2, articles.size());
         for (Article article : articles) {
-            assertTrue(List.of("8412345123450", "8412345123460").contains(article.getBarcode()));
+            assertTrue(List.of("8412345123410", "8412345123420").contains(article.getBarcode()));
         }
     }
 }

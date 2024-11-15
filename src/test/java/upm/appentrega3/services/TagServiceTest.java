@@ -36,9 +36,9 @@ class TagServiceTest {
     @Test
     void testAddArticle() {
         this.tagService.create(new Tag("tag-test2", "tag-test2"));
-        this.tagService.addArticle("tag-test2", "8412345123490");
+        this.tagService.addArticle("tag-test2", "8412345123460");
         assertTrue(this.tagRepository.findByName("tag-test2").isPresent());
-        assertEquals("8412345123490", this.tagRepository.findByName("tag-test2").get().getArticles().get(0).getBarcode());
+        assertEquals("8412345123460", this.tagRepository.findByName("tag-test2").get().getArticles().get(0).getBarcode());
     }
 
     @Test
@@ -53,7 +53,7 @@ class TagServiceTest {
 
     @Test
     void testFindByArticleBarcode() {
-        List<Tag> tags = this.tagService.findByArticleBarcode("8412345123450").toList();
+        List<Tag> tags = this.tagService.findByArticleBarcode("8412345123410").toList();
         assertEquals(2, tags.size());
         for (Tag tag : tags) {
             assertTrue(List.of("tag1", "tag2").contains(tag.getName()));

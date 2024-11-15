@@ -9,9 +9,12 @@ import upm.appentrega3.data.repositories.map.ArticleRepositoryMap;
 import upm.appentrega3.data.repositories.map.ShoppingCartRepositoryMap;
 import upm.appentrega3.data.repositories.map.TagRepositoryMap;
 import upm.appentrega3.data.repositories.map.UserRepositoryMap;
+import upm.appentrega3.data.repositories.mysql.*;
 import upm.appentrega3.services.ArticleService;
 import upm.appentrega3.services.TagService;
 import upm.appentrega3.services.UserService;
+
+import java.sql.Connection;
 
 public class DependencyInjector {
     private static final DependencyInjector instance = new DependencyInjector();
@@ -28,10 +31,11 @@ public class DependencyInjector {
     private final TagService tagService;
 
     private DependencyInjector() {
-        this.userRepository = new UserRepositoryMap();
-        this.articleRepository = new ArticleRepositoryMap();
-        this.tagRepository = new TagRepositoryMap();
-        this.shoppingCartRepository = new ShoppingCartRepositoryMap();
+        Connection connection = new RepositoryH2().createConnection();
+        this.userRepository = new UserRepositorySql(connection);
+        this.articleRepository = new ArticleRepositorySql(connection);
+        this.tagRepository = new TagRepositorySql(connection, (ArticleRepositorySql) this.articleRepository);
+        this.shoppingCartRepository = new ShoppingCartRepositorySql(connection, (UserRepositorySql) this.userRepository, (ArticleRepositorySql) this.articleRepository);
 
         this.shopSeeder = new ShopSeeder(this.userRepository, this.articleRepository, this.tagRepository, this.shoppingCartRepository);
         this.shopSeeder.seed(); //TODO only develop

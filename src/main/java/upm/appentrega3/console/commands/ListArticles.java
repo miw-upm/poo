@@ -38,6 +38,6 @@ public class ListArticles implements Command {
 
     @Override
     public void execute(String[] params) {
-        this.view.show(this.articleService.findAll().toString());
+        this.articleService.findAll().forEach(article -> this.view.show(article.toString()));
     }
 }

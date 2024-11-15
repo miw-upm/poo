@@ -18,7 +18,7 @@ public class ListUsers implements Command {
 
     @Override
     public void execute(String[] params) {
-        this.view.show(this.userService.findAll().toString());
+        this.userService.findAll().forEach(userBd-> this.view.show(userBd.toString()));
     }
 
     @Override

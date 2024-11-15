@@ -14,7 +14,7 @@ class ArticleRepositoryTest {
 
     @Test
     void testFindByBarcode() {
-        Optional<Article> dbUser = articleRepository.findByBarcode("8412345123460");
+        Optional<Article> dbUser = articleRepository.findByBarcode("8412345123420");
         assertTrue(dbUser.isPresent());
         assertEquals("art2", dbUser.get().getSummary());
     }
