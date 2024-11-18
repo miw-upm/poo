@@ -109,9 +109,9 @@ public class TagRepositorySql extends GenericRepositorySql<Tag> implements TagRe
     @Override
     protected Tag convertToEntity(ResultSet resultSet) {
         try {
-            Tag tagBd =  new Tag(resultSet.getString("name"), resultSet.getString("description"));
+            Tag tagBd = new Tag(resultSet.getString("name"), resultSet.getString("description"));
             tagBd.setId(resultSet.getInt("id"));
-            return  tagBd;
+            return tagBd;
         } catch (SQLException e) {
             throw new UnsupportedOperationException("convertToTag error: " + e.getMessage());
         }

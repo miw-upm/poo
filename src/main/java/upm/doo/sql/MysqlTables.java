@@ -25,6 +25,15 @@ public class MysqlTables {
         }
     }
 
+    public static void main(String[] args) {
+        MysqlTables mysqlTables = new MysqlTables("mysql");
+        mysqlTables.createUserTable();
+        mysqlTables.createArticleTable();
+        mysqlTables.createShoppingCartTable();
+        mysqlTables.createArticleItemTableV2();
+        mysqlTables.createTag();
+    }
+
     private Connection createConnectionMySql() {
         try {
             Class.forName(MysqlTables.DRIVER);
@@ -61,7 +70,6 @@ public class MysqlTables {
             LogManager.getLogger(this.getClass()).debug(e);
         }
     }
-
 
     public void executeUpdate(String sql) {
         LogManager.getLogger(this.getClass()).debug(() -> "Sql: " + sql);
@@ -114,15 +122,6 @@ public class MysqlTables {
                 "tag_id INT NOT NULL,article_id INT NOT NULL," +
                 "PRIMARY KEY (tag_id, article_id)," +
                 "FOREIGN KEY (tag_id) REFERENCES Tag(id),FOREIGN KEY (article_id) REFERENCES Article(id))");
-    }
-
-    public static void main(String[] args) {
-        MysqlTables mysqlTables = new MysqlTables("mysql");
-        mysqlTables.createUserTable();
-        mysqlTables.createArticleTable();
-        mysqlTables.createShoppingCartTable();
-        mysqlTables.createArticleItemTableV2();
-        mysqlTables.createTag();
     }
 
 }

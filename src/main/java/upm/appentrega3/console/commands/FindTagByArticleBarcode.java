@@ -38,6 +38,6 @@ public class FindTagByArticleBarcode implements Command {
 
     @Override
     public void execute(String[] params) {
-        this.tagService.findByArticleBarcode(params[0]).forEach(tag ->  this.view.show(tag.toString()));
+        this.tagService.findByArticleBarcode(params[0]).forEach(tag -> this.view.show(tag.toString()));
     }
 }

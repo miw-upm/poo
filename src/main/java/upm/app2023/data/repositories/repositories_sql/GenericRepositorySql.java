@@ -16,6 +16,10 @@ public abstract class GenericRepositorySql<T> implements GenericRepository<T> {
         this.connection = connection;
     }
 
+    private static String message(String sql, SQLException e) {
+        return "SQL: " + sql + " ===>>> " + e;
+    }
+
     protected Integer executeInsertGeneratedKey(String sql, Object... values) {
         LogManager.getLogger(this.getClass()).debug(() -> "Sql: " + sql);
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -63,10 +67,6 @@ public abstract class GenericRepositorySql<T> implements GenericRepository<T> {
         } catch (SQLException e) {
             throw new UnsupportedOperationException(message(sql, e));
         }
-    }
-
-    private static String message(String sql, SQLException e) {
-        return "SQL: " + sql + " ===>>> " + e;
     }
 
     protected abstract T convertToEntity(ResultSet resulSet);

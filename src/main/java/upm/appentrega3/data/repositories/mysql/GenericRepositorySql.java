@@ -1,7 +1,6 @@
 package upm.appentrega3.data.repositories.mysql;
 
 import org.apache.logging.log4j.LogManager;
-
 import upm.appentrega3.data.models.Entity;
 import upm.appentrega3.data.repositories.GenericRepository;
 
@@ -16,6 +15,10 @@ public abstract class GenericRepositorySql<T extends Entity> implements GenericR
 
     protected GenericRepositorySql(Connection connection) {
         this.connection = connection;
+    }
+
+    private static String message(String sql, SQLException e) {
+        return "SQL: " + sql + " ===>>> " + e;
     }
 
     protected Integer executeInsertGeneratedKey(String sql, Object... values) {
@@ -65,10 +68,6 @@ public abstract class GenericRepositorySql<T extends Entity> implements GenericR
         } catch (SQLException e) {
             throw new UnsupportedOperationException(message(sql, e));
         }
-    }
-
-    private static String message(String sql, SQLException e) {
-        return "SQL: " + sql + " ===>>> " + e;
     }
 
     protected abstract T convertToEntity(ResultSet resulSet);

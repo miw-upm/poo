@@ -109,10 +109,10 @@ public class ShoppingCartRepositorySql extends GenericRepositorySql<ShoppingCart
     @Override
     protected ShoppingCart convertToEntity(ResultSet resultSet) {
         try {
-            ShoppingCart shoppingCartBd =  new ShoppingCart(
+            ShoppingCart shoppingCartBd = new ShoppingCart(
                     this.userRepositorySql.read(resultSet.getInt("user_id")).orElseThrow(),
                     resultSet.getTimestamp("creationDate").toLocalDateTime());
-            shoppingCartBd.setId( resultSet.getInt("id"));
+            shoppingCartBd.setId(resultSet.getInt("id"));
             return shoppingCartBd;
         } catch (SQLException e) {
             throw new UnsupportedOperationException("convert To ShoppingCart error: " + e.getMessage());
