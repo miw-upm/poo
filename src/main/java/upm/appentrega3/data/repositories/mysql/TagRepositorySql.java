@@ -68,18 +68,6 @@ public class TagRepositorySql extends GenericRepositorySql<Tag> implements TagRe
         }, tag.getId());
     }
 
-
-    @Override
-    protected Tag convertToEntity(ResultSet resultSet) {
-        try {
-            Tag tagBd =  new Tag(resultSet.getString("name"), resultSet.getString("description"));
-            tagBd.setId(resultSet.getInt("id"));
-            return  tagBd;
-        } catch (SQLException e) {
-            throw new UnsupportedOperationException("convertToTag error: " + e.getMessage());
-        }
-    }
-
     @Override
     public Tag update(Tag entity) {
         this.executeUpdate("UPDATE Tag SET name = ?, description = ? WHERE id = ?",
@@ -109,7 +97,6 @@ public class TagRepositorySql extends GenericRepositorySql<Tag> implements TagRe
         return tags;
     }
 
-
     @Override
     public Optional<Tag> findByName(String name) {
         Optional<Tag> retrieverTag = this.executeQueryConvert(
@@ -117,5 +104,16 @@ public class TagRepositorySql extends GenericRepositorySql<Tag> implements TagRe
                 .findFirst();
         retrieverTag.ifPresent(tag -> tag.setArticles(this.readTagArticles(tag)));
         return retrieverTag;
+    }
+
+    @Override
+    protected Tag convertToEntity(ResultSet resultSet) {
+        try {
+            Tag tagBd =  new Tag(resultSet.getString("name"), resultSet.getString("description"));
+            tagBd.setId(resultSet.getInt("id"));
+            return  tagBd;
+        } catch (SQLException e) {
+            throw new UnsupportedOperationException("convertToTag error: " + e.getMessage());
+        }
     }
 }

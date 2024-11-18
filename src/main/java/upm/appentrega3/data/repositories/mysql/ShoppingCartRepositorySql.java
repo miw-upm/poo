@@ -78,19 +78,6 @@ public class ShoppingCartRepositorySql extends GenericRepositorySql<ShoppingCart
     }
 
     @Override
-    protected ShoppingCart convertToEntity(ResultSet resultSet) {
-        try {
-            ShoppingCart shoppingCartBd =  new ShoppingCart(
-                    this.userRepositorySql.read(resultSet.getInt("user_id")).orElseThrow(),
-                    resultSet.getTimestamp("creationDate").toLocalDateTime());
-            shoppingCartBd.setId( resultSet.getInt("id"));
-            return shoppingCartBd;
-        } catch (SQLException e) {
-            throw new UnsupportedOperationException("convert To ShoppingCart error: " + e.getMessage());
-        }
-    }
-
-    @Override
     public ShoppingCart update(ShoppingCart entity) {
         this.executeUpdate("UPDATE ShoppingCart SET user_id = ?, creationDate = ? WHERE id = ?",
                 entity.getUser().getId(), Timestamp.valueOf(entity.getCreationDate()), entity.getId());
@@ -119,4 +106,16 @@ public class ShoppingCartRepositorySql extends GenericRepositorySql<ShoppingCart
         return shoppingCarts;
     }
 
+    @Override
+    protected ShoppingCart convertToEntity(ResultSet resultSet) {
+        try {
+            ShoppingCart shoppingCartBd =  new ShoppingCart(
+                    this.userRepositorySql.read(resultSet.getInt("user_id")).orElseThrow(),
+                    resultSet.getTimestamp("creationDate").toLocalDateTime());
+            shoppingCartBd.setId( resultSet.getInt("id"));
+            return shoppingCartBd;
+        } catch (SQLException e) {
+            throw new UnsupportedOperationException("convert To ShoppingCart error: " + e.getMessage());
+        }
+    }
 }

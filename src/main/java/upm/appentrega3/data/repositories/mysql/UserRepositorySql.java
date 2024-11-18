@@ -42,19 +42,6 @@ public class UserRepositorySql extends GenericRepositorySql<User> implements Use
     }
 
     @Override
-    protected User convertToEntity(ResultSet resultSet) {
-        try {
-            User userBd = new User(resultSet.getInt("mobile"), resultSet.getString("password"),
-                    resultSet.getString("name"), resultSet.getString("address"));
-            userBd.setId(resultSet.getInt("id"));
-            userBd.setRol(Rol.valueOf(resultSet.getString("rol")));
-            return userBd;
-        } catch (SQLException e) {
-            throw new UnsupportedOperationException("Retriever user error: " + e.getMessage());
-        }
-    }
-
-    @Override
     public User update(User entity) {
         this.executeUpdate("UPDATE UserApp SET mobile = ?, password = ?, name = ?, address = ?, rol = ? WHERE id = ?",
                 entity.getMobile(), entity.getPassword(), entity.getName(), entity.getAddress(), entity.getRol().name(), entity.getId());
@@ -76,5 +63,18 @@ public class UserRepositorySql extends GenericRepositorySql<User> implements Use
     public Optional<User> findByMobile(Integer mobile) {
         return this.executeQueryConvert("SELECT id, mobile, password, name, address, rol FROM UserApp WHERE mobile = ?", mobile).stream()
                 .findFirst();
+    }
+
+    @Override
+    protected User convertToEntity(ResultSet resultSet) {
+        try {
+            User userBd = new User(resultSet.getInt("mobile"), resultSet.getString("password"),
+                    resultSet.getString("name"), resultSet.getString("address"));
+            userBd.setId(resultSet.getInt("id"));
+            userBd.setRol(Rol.valueOf(resultSet.getString("rol")));
+            return userBd;
+        } catch (SQLException e) {
+            throw new UnsupportedOperationException("Retriever user error: " + e.getMessage());
+        }
     }
 }

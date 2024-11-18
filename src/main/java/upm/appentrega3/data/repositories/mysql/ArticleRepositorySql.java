@@ -45,20 +45,6 @@ public class ArticleRepositorySql extends GenericRepositorySql<Article> implemen
     }
 
     @Override
-    protected Article convertToEntity(ResultSet resultSet) {
-        try {
-            Article articleBd = new Article(resultSet.getString("barcode"),
-                    resultSet.getString("summary"), resultSet.getBigDecimal("price"),
-                    resultSet.getString("provider"));
-            articleBd.setId(resultSet.getInt("id"));
-            articleBd.setRegistrationDate(resultSet.getDate("registrationDate").toLocalDate());
-            return articleBd;
-        } catch (SQLException e) {
-            throw new UnsupportedOperationException("Convert article error:" + e.getMessage());
-        }
-    }
-
-    @Override
     public Article update(Article entity) {
         this.executeUpdate(
                 "UPDATE Article SET barcode = ?, summary = ?, price = ?, registrationDate =  ?, provider = ? WHERE id = ?",
@@ -84,5 +70,19 @@ public class ArticleRepositorySql extends GenericRepositorySql<Article> implemen
                         "SELECT id, barcode, summary, price, registrationDate, provider FROM Article WHERE barcode LIKE ?",
                         barcode).stream()
                 .findFirst();
+    }
+
+    @Override
+    protected Article convertToEntity(ResultSet resultSet) {
+        try {
+            Article articleBd = new Article(resultSet.getString("barcode"),
+                    resultSet.getString("summary"), resultSet.getBigDecimal("price"),
+                    resultSet.getString("provider"));
+            articleBd.setId(resultSet.getInt("id"));
+            articleBd.setRegistrationDate(resultSet.getDate("registrationDate").toLocalDate());
+            return articleBd;
+        } catch (SQLException e) {
+            throw new UnsupportedOperationException("Convert article error:" + e.getMessage());
+        }
     }
 }
