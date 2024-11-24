@@ -1,13 +1,11 @@
 package upm.appentrega4.gui.commands;
 
-import upm.appentrega4.gui.Command;
-import upm.appentrega4.gui.CommandLineInterface;
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.data.models.User;
+import upm.appentrega4.gui.Command;
 import upm.appentrega4.gui.Controller;
 import upm.appentrega4.services.UserService;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Login implements Command {

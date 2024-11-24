@@ -1,8 +1,8 @@
 package upm.appentrega4.gui.commands;
 
+import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.gui.Command;
 import upm.appentrega4.gui.View;
-import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.services.ArticleService;
 
 import java.util.List;

@@ -1,8 +1,8 @@
 package upm.appentrega4.gui.commands;
 
+import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.gui.Command;
 import upm.appentrega4.gui.View;
-import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.services.ArticleService;
 
 import java.util.List;
@@ -38,6 +38,6 @@ public class ListArticles implements Command {
 
     @Override
     public List<String> execute(String[] params) {
-        return this.articleService.findAll().map(article ->article.toString()).toList();
+        return this.articleService.findAll().map(article -> article.toString()).toList();
     }
 }

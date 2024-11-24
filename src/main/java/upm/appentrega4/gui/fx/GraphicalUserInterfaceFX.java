@@ -18,9 +18,13 @@ import java.util.List;
 public class GraphicalUserInterfaceFX extends Application {
     private Controller controller;
     private Menu commandMenu;
-    private  VBox contentArea;
+    private VBox contentArea;
 
     private Stage primaryStage;
+
+    public static void main(String[] args) {
+        Application.launch(args);
+    }
 
     @Override
     public void init() {
@@ -58,13 +62,13 @@ public class GraphicalUserInterfaceFX extends Application {
     }
 
     private void generatedCommandMenu(String item) {
-        if ("login".equals(item) || "logout".equals(item)){
+        if ("login".equals(item) || "logout".equals(item)) {
             generatedCommandMenu();
         }
     }
 
     private void generatedCommandMenu() {
-        this.primaryStage.setTitle("App Shop. "+this.controller.userName());
+        this.primaryStage.setTitle("App Shop. " + this.controller.userName());
         this.commandMenu.getItems().clear();
         for (String key : this.controller.keys()) {
             MenuItem menuItem = new MenuItem(key);
@@ -108,9 +112,5 @@ public class GraphicalUserInterfaceFX extends Application {
                 new ErrorDialog(item, e.getMessage());
             }
         };
-    }
-
-    public static void main(String[] args) {
-        Application.launch(args);
     }
 }

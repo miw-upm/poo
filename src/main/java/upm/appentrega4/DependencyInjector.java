@@ -1,12 +1,10 @@
 package upm.appentrega4;
 
-import upm.appentrega4.gui.CommandLineInterface;
-import upm.appentrega4.gui.Controller;
-import upm.appentrega4.gui.ErrorHandler;
-import upm.appentrega4.gui.View;
-import upm.appentrega4.gui.commands.*;
 import upm.appentrega4.data.repositories.*;
 import upm.appentrega4.data.repositories.mysql.*;
+import upm.appentrega4.gui.Controller;
+import upm.appentrega4.gui.View;
+import upm.appentrega4.gui.commands.*;
 import upm.appentrega4.services.ArticleService;
 import upm.appentrega4.services.TagService;
 import upm.appentrega4.services.UserService;
@@ -64,9 +62,11 @@ public class DependencyInjector {
     public Controller getController() {
         return controller;
     }
+
     public View getView() {
         return this.view;
     }
+
     public UserRepository getUserRepository() {
         return this.userRepository;
     }

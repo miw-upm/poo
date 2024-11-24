@@ -4,7 +4,6 @@ import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.data.models.User;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Controller {
 
@@ -24,7 +23,7 @@ public class Controller {
         this.user = user;
     }
 
-    public String userName(){
+    public String userName() {
         if (Objects.isNull(this.user)) {
             return "";
         } else {
@@ -34,7 +33,7 @@ public class Controller {
 
     public List<String> keys() {
         return this.commands.keySet().stream()
-                .filter(aKey->this.command(aKey).allowedRoles().contains( this.userRol()))
+                .filter(aKey -> this.command(aKey).allowedRoles().contains(this.userRol()))
                 .toList();
     }
 
