@@ -1,5 +1,7 @@
 package upm.appentrega3.data.models;
 
+import upm.appentrega3.data.models.exceptions.InvalidAttributeException;
+
 public class User extends Entity {
     private Integer mobile;
     private Rol rol;

@@ -2,6 +2,7 @@ package upm.appentrega3.console.commands;
 
 import upm.appentrega3.console.Command;
 import upm.appentrega3.console.View;
+import upm.appentrega3.data.models.CreationTag;
 import upm.appentrega3.data.models.Rol;
 import upm.appentrega3.data.models.Tag;
 import upm.appentrega3.services.TagService;
@@ -24,7 +25,7 @@ public class CreateTag implements Command {
 
     @Override
     public List<String> params() {
-        return List.of("name", "description");
+        return List.of("name", "description", "barcode");
     }
 
     @Override
@@ -39,7 +40,7 @@ public class CreateTag implements Command {
 
     @Override
     public void execute(String[] params) {
-        Tag createdTag = this.tagService.create(new Tag(params[0], params[1]));
+        Tag createdTag = this.tagService.create(new CreationTag(params[0], params[1], params[2]));
         this.view.show(createdTag.toString());
     }
 }

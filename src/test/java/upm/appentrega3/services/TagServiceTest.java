@@ -2,6 +2,7 @@ package upm.appentrega3.services;
 
 import org.junit.jupiter.api.Test;
 import upm.appentrega3.DependencyInjector;
+import upm.appentrega3.data.models.CreationTag;
 import upm.appentrega3.data.models.Tag;
 import upm.appentrega3.data.repositories.TagRepository;
 import upm.appentrega3.services.exceptions.DuplicateException;
@@ -23,23 +24,25 @@ class TagServiceTest {
 
     @Test
     void testCreate() {
-        this.tagService.create(new Tag("tag-test1", "tag-test1"));
+        this.tagService.create(new CreationTag("tag-test1", "tag-test1","8412345123460"));
         assertTrue(this.tagRepository.findByName("tag-test1").isPresent());
     }
 
     @Test
     void testCreateDuplicatedNameException() {
-        Tag tag = new Tag("tag1", "error");
-        assertThrows(DuplicateException.class, () -> this.tagService.create(tag));
+        CreationTag creationTag = new CreationTag("tag1", "error", "error");
+        assertThrows(DuplicateException.class, () -> this.tagService.create(creationTag));
     }
 
     @Test
     void testAddArticle() {
-        this.tagService.create(new Tag("tag-test2", "tag-test2"));
-        this.tagService.addArticle("tag-test2", "8412345123460");
+        this.tagService.create(new CreationTag("tag-test2", "tag-test2","8412345123460"));
+        this.tagService.addArticle("tag-test2", "8412345123450");
         assertTrue(this.tagRepository.findByName("tag-test2").isPresent());
-        assertEquals("8412345123460", this.tagRepository.findByName("tag-test2").get().getArticles().get(0).getBarcode());
-    }
+        assertTrue(this.tagRepository.findByName("tag-test2").get().getArticles().stream()
+                .map(article -> article.getBarcode())
+                .allMatch(barcode -> "8412345123450".equals(barcode)||"8412345123460".equals(barcode)));
+        }
 
     @Test
     void testAddArticleTagNameNotFoundException() {

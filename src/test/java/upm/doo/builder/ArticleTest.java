@@ -1,7 +1,6 @@
 package upm.doo.builder;
 
 import org.junit.jupiter.api.Test;
-import upm.doo.builder.Article;
 
 import java.math.BigDecimal;
 

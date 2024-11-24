@@ -1,0 +1,50 @@
+@startuml
+package shop{
+  package data{
+    package models{
+      class Entity {
+         -Integer id
+      }
+      class User extends Entity{
+        -Integer mobile
+        -String name
+        -String address
+      }
+      enum Rol {
+        ADMIN, MANAGEMENT, CUSTOMER, NONE
+        +List<Rol> {static} all()
+        +List<Rol> {static} authenticated()
+      }
+      class Article extends Entity{
+        -String barcode
+        -String summary
+        -BigDecimal price
+        -LocalDate registrationDate
+        -String provider
+      }
+      class Tag extends Entity {
+        +String name;
+        +String description
+      }
+      class ShoppingCart extends Entity {
+        +LocalDateTime creationDate
+      }
+      class ArticleItem {
+        +Integer amount
+        +BigDecimal discount
+      }
+      class CreationTag <<record>> {
+        - name : String
+        - description : String
+        - barcode : String
+      }
+    }
+  }
+}
+User "n" o--> "1" Rol
+Tag "n" o--> "n" Article
+ShoppingCart "n" o--> "1" User
+ShoppingCart "1" *--> "n" ArticleItem
+ArticleItem "n" o--> "1" Article
+
+@enduml

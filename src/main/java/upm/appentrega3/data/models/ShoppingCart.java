@@ -44,4 +44,12 @@ public class ShoppingCart extends Entity {
         return this.user;
     }
 
+    @Override
+    public String toString() {
+        return "ShoppingCart{" +
+                "user=" + user +
+                ", creationDate=" + creationDate +
+                ", articleItems=" + articleItems +
+                "} " + super.toString();
+    }
 }

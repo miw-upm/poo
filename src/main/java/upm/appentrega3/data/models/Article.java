@@ -1,5 +1,7 @@
 package upm.appentrega3.data.models;
 
+import upm.appentrega3.data.models.exceptions.InvalidAttributeException;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 

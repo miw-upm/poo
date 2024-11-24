@@ -8,7 +8,6 @@ import upm.appentrega3.data.repositories.ArticleRepository;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 

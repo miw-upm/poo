@@ -36,7 +36,7 @@ public class TagRepositorySql extends GenericRepositorySql<Tag> implements TagRe
     @Override
     public Tag create(Tag tag) {
         int id = this.executeInsertGeneratedKey("INSERT INTO Tag (name, description) VALUES (?,?)", tag.getName(), tag.getDescription());
-        createRelations(id, tag.getArticles());
+        this.createRelations(id, tag.getArticles());
         return this.findByName(tag.getName()).orElseThrow(() -> new RuntimeException("Unexpected database error due to entity not found: " + id));
     }
 

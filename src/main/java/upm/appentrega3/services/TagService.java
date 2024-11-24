@@ -1,6 +1,7 @@
 package upm.appentrega3.services;
 
 import upm.appentrega3.data.models.Article;
+import upm.appentrega3.data.models.CreationTag;
 import upm.appentrega3.data.models.Tag;
 import upm.appentrega3.data.repositories.ArticleRepository;
 import upm.appentrega3.data.repositories.TagRepository;
@@ -18,10 +19,14 @@ public class TagService {
         this.articleRepository = articleRepository;
     }
 
-    public Tag create(Tag tag) {
-        this.tagRepository.findByName(tag.getName()).ifPresent(existingTag -> {
-            throw new DuplicateException(String.format("El nombre de etiqueta '%s' ya existe y debe ser único.", tag.getName()));
+    public Tag create(CreationTag creationTag) {
+        this.tagRepository.findByName(creationTag.name()).ifPresent(existingTag -> {
+            throw new DuplicateException(String.format("El nombre de etiqueta '%s' ya existe y debe ser único.", creationTag.name()));
         });
+        Article dbArticle = this.articleRepository.findByBarcode(creationTag.barcode())
+                .orElseThrow(() -> new NotFoundException("Codigo de barras no encontrado: " + creationTag.barcode()));
+        Tag tag = new Tag(creationTag.name(), creationTag.description());
+        tag.addArticle(dbArticle);
         return this.tagRepository.create(tag);
     }
 
