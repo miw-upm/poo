@@ -11,6 +11,10 @@ import javafx.stage.Stage;
 
 public class CommandInterfaceFX extends Application {
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("App Shop");
@@ -36,13 +40,13 @@ public class CommandInterfaceFX extends Application {
         helpMenu.getItems().add(aboutItem);
 
         aboutItem.setOnAction(actionEvent -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information Dialog");
-            alert.setHeaderText("Dialog Header");
-            alert.setContentText("This is an example of a dialog in JavaFX.");
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText("Dialog Header");
+                    alert.setContentText("This is an example of a dialog in JavaFX.");
 
-            // Mostrar el diálogo
-            alert.showAndWait();
+                    // Mostrar el diálogo
+                    alert.showAndWait();
                 }
         );
 
@@ -119,9 +123,5 @@ public class CommandInterfaceFX extends Application {
         Scene scene = new Scene(root, 500, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

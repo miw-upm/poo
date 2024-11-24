@@ -10,6 +10,10 @@ import javafx.stage.Stage;
 
 public class ModalDialogExample extends Application {
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Ejemplo de Diálogos Modales");
@@ -52,10 +56,6 @@ public class ModalDialogExample extends Application {
 
         // Mostrar el diálogo
         dialog.showAndWait(); // Bloquea la interacción con la ventana principal
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
 

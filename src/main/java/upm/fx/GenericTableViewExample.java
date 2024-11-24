@@ -15,6 +15,10 @@ import java.util.List;
 
 public class GenericTableViewExample extends Application {
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Generic TableView Example");
@@ -110,9 +114,5 @@ public class GenericTableViewExample extends Application {
         public String getEmail() {
             return email;
         }
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

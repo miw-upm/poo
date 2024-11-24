@@ -1,4 +1,5 @@
 package upm.fx;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
@@ -6,6 +7,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class ComboBoxExample extends Application {
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -32,9 +37,5 @@ public class ComboBoxExample extends Application {
         Scene scene = new Scene(root, 300, 200);
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

@@ -19,7 +19,6 @@ public class GraphicalUserInterfaceFX extends Application {
     private Controller controller;
     private Menu commandMenu;
     private VBox contentArea;
-
     private Stage primaryStage;
 
     public static void main(String[] args) {

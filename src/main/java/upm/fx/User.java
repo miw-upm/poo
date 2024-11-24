@@ -1,9 +1,9 @@
 package upm.fx;
 
 public class User {
-    private String name;
-    private String email;
-    private int age;
+    private final String name;
+    private final String email;
+    private final int age;
 
     public User(String name, String email, int age) {
         this.name = name;

@@ -12,6 +12,10 @@ import javafx.stage.Stage;
 
 public class TableViewExample extends Application {
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) {
         // Crear la TableView
@@ -71,10 +75,6 @@ public class TableViewExample extends Application {
         public String getEmail() {
             return email;
         }
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
 

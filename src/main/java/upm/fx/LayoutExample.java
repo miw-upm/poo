@@ -9,6 +9,10 @@ import javafx.stage.Stage;
 
 public class LayoutExample extends Application {
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Ejemplo de Layouts en JavaFX");
@@ -61,10 +65,6 @@ public class LayoutExample extends Application {
         Scene scene = new Scene(root, 400, 600);
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
 
