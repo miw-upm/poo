@@ -1,16 +1,16 @@
-package upm.appentrega4.console.commands;
+package upm.appentrega4.gui.commands;
 
-import upm.appentrega4.console.Command;
-import upm.appentrega4.console.CommandLineInterface;
+import upm.appentrega4.gui.Command;
 import upm.appentrega4.data.models.Rol;
+import upm.appentrega4.gui.Controller;
 
 import java.util.List;
 
 public class Logout implements Command {
-    private final CommandLineInterface commandLineInterface;
+    private final Controller controller;
 
-    public Logout(CommandLineInterface commandLineInterface) {
-        this.commandLineInterface = commandLineInterface;
+    public Logout(Controller controller) {
+        this.controller = controller;
     }
 
     @Override
@@ -34,7 +34,8 @@ public class Logout implements Command {
     }
 
     @Override
-    public void execute(String[] params) {
-        this.commandLineInterface.setUser(null);
+    public List<String> execute(String[] params) {
+        this.controller.setUser(null);
+        return List.of("Hasta pronto!!!");
     }
 }

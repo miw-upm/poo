@@ -1,4 +1,4 @@
-package upm.appentrega4.console.exceptions;
+package upm.appentrega4.gui.exceptions;
 
 public class BadRequestException extends RuntimeException {
     private static final String DESCRIPTION = "Petición incorrecta";

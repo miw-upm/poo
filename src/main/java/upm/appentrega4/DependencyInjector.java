@@ -1,9 +1,10 @@
 package upm.appentrega4;
 
-import upm.appentrega4.console.CommandLineInterface;
-import upm.appentrega4.console.ErrorHandler;
-import upm.appentrega4.console.View;
-import upm.appentrega4.console.commands.*;
+import upm.appentrega4.gui.CommandLineInterface;
+import upm.appentrega4.gui.Controller;
+import upm.appentrega4.gui.ErrorHandler;
+import upm.appentrega4.gui.View;
+import upm.appentrega4.gui.commands.*;
 import upm.appentrega4.data.repositories.*;
 import upm.appentrega4.data.repositories.mysql.*;
 import upm.appentrega4.services.ArticleService;
@@ -14,9 +15,8 @@ import java.sql.Connection;
 
 public class DependencyInjector {
     private static final DependencyInjector instance = new DependencyInjector();
-    private final ErrorHandler errorHandler;
+    private final Controller controller;
     private final View view;
-    private final CommandLineInterface commandLineInterface;
     private final UserRepository userRepository;
     private final ArticleRepository articleRepository;
     private final TagRepository tagRepository;
@@ -41,42 +41,32 @@ public class DependencyInjector {
         this.tagService = new TagService(this.tagRepository, this.articleRepository);
 
         this.view = new View();
-        this.commandLineInterface = new CommandLineInterface(this.view);
-        this.commandLineInterface.add(new Help(this.commandLineInterface));
-        this.commandLineInterface.add(new Exit());
-        this.commandLineInterface.add(new Login(this.commandLineInterface, this.userService));
-        this.commandLineInterface.add(new Logout(this.commandLineInterface));
-        this.commandLineInterface.add(new CreateUser(this.view, this.userService));
-        this.commandLineInterface.add(new ListUsers(this.view, this.userService));
-        this.commandLineInterface.add(new CreateArticle(this.view, this.articleService));
-        this.commandLineInterface.add(new ListArticles(this.view, this.articleService));
-        this.commandLineInterface.add(new CreateTag(this.view, this.tagService));
-        this.commandLineInterface.add(new AddArticleToTag(this.view, this.tagService));
-        this.commandLineInterface.add(new FindArticleByTagName(this.view, this.articleService));
-        this.commandLineInterface.add(new FindTagByArticleBarcode(this.view, this.tagService));
-        this.errorHandler = new ErrorHandler(this.commandLineInterface, this.view);
+        this.controller = new Controller();
+        this.controller.add(new Help(controller));
+        this.controller.add(new Login(this.controller, this.userService));
+        this.controller.add(new Logout(this.controller));
+        this.controller.add(new CreateUser(this.view, this.userService));
+        this.controller.add(new ListUsers(this.view, this.userService));
+        this.controller.add(new ListUsers(this.view, this.userService));
+        this.controller.add(new CreateArticle(this.view, this.articleService));
+        this.controller.add(new ListArticles(this.view, this.articleService));
+        this.controller.add(new CreateTag(this.view, this.tagService));
+        this.controller.add(new AddArticleToTag(this.view, this.tagService));
+        this.controller.add(new FindArticleByTagName(this.view, this.articleService));
+        this.controller.add(new FindTagByArticleBarcode(this.view, this.tagService));
     }
 
     public static DependencyInjector getInstance() {
         return instance;
     }
 
-    public void run() {
-        this.errorHandler.handlesErrors();
-    }
 
-    public ErrorHandler getErrorHandler() {
-        return this.errorHandler;
+    public Controller getController() {
+        return controller;
     }
-
     public View getView() {
         return this.view;
     }
-
-    public CommandLineInterface getCommandLineInterface() {
-        return this.commandLineInterface;
-    }
-
     public UserRepository getUserRepository() {
         return this.userRepository;
     }

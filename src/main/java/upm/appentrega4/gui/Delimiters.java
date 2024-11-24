@@ -1,4 +1,4 @@
-package upm.appentrega4.console;
+package upm.appentrega4.gui;
 
 public enum Delimiters {
     COMMAND(":"), PARAM(",");

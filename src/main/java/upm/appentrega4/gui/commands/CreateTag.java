@@ -1,7 +1,7 @@
-package upm.appentrega4.console.commands;
+package upm.appentrega4.gui.commands;
 
-import upm.appentrega4.console.Command;
-import upm.appentrega4.console.View;
+import upm.appentrega4.gui.Command;
+import upm.appentrega4.gui.View;
 import upm.appentrega4.data.models.CreationTag;
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.data.models.Tag;
@@ -39,8 +39,8 @@ public class CreateTag implements Command {
     }
 
     @Override
-    public void execute(String[] params) {
+    public List<String> execute(String[] params) {
         Tag createdTag = this.tagService.create(new CreationTag(params[0], params[1], params[2]));
-        this.view.show(createdTag.toString());
+        return List.of(createdTag.toString());
     }
 }

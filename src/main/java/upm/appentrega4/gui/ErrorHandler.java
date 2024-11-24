@@ -1,4 +1,4 @@
-package upm.appentrega4.console;
+package upm.appentrega4.gui;
 
 public class ErrorHandler {
     private final CommandLineInterface commandLineInterface;

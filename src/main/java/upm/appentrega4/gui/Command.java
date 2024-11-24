@@ -1,4 +1,4 @@
-package upm.appentrega4.console;
+package upm.appentrega4.gui;
 
 import upm.appentrega4.data.models.Rol;
 
@@ -14,7 +14,7 @@ public interface Command {
 
     String helpMessage();
 
-    void execute(String[] params);
+    List<String> execute(String[] params);
 
     default String help() {
         StringBuilder result = new StringBuilder(this.name());

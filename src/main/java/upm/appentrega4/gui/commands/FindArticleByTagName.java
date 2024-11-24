@@ -1,7 +1,7 @@
-package upm.appentrega4.console.commands;
+package upm.appentrega4.gui.commands;
 
-import upm.appentrega4.console.Command;
-import upm.appentrega4.console.View;
+import upm.appentrega4.gui.Command;
+import upm.appentrega4.gui.View;
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.services.ArticleService;
 
@@ -37,7 +37,7 @@ public class FindArticleByTagName implements Command {
     }
 
     @Override
-    public void execute(String[] params) {
-        this.articleService.findByTagName(params[0]).forEach(article -> this.view.show(article.toString()));
+    public List<String> execute(String[] params) {
+        return this.articleService.findByTagName(params[0]).map(article -> article.toString()).toList();
     }
 }

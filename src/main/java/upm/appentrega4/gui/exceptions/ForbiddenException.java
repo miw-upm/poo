@@ -1,4 +1,4 @@
-package upm.appentrega4.console.exceptions;
+package upm.appentrega4.gui.exceptions;
 
 public class ForbiddenException extends RuntimeException {
     private static final String DESCRIPTION = "Prohibido. No tiene permisos suficientes";

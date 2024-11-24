@@ -1,7 +1,7 @@
-package upm.appentrega4.console.commands;
+package upm.appentrega4.gui.commands;
 
-import upm.appentrega4.console.Command;
-import upm.appentrega4.console.View;
+import upm.appentrega4.gui.Command;
+import upm.appentrega4.gui.View;
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.data.models.User;
 import upm.appentrega4.services.UserService;
@@ -38,8 +38,8 @@ public class CreateUser implements Command {
     }
 
     @Override
-    public void execute(String[] params) {
+    public List<String> execute(String[] params) {
         User createdUser = this.userService.create(new User(Integer.valueOf(params[0]), params[1], params[2], params[3]));
-        this.view.show(createdUser.toString());
+        return List.of(createdUser.toString());
     }
 }

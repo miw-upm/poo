@@ -1,4 +1,4 @@
-package upm.appentrega4.console;
+package upm.appentrega4.gui;
 
 public class View {
     public static final String COMMAND = "app>";
