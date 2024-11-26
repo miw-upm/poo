@@ -43,15 +43,15 @@ public class DependencyInjector {
         this.controller.add(new Help(controller));
         this.controller.add(new Login(this.controller, this.userService));
         this.controller.add(new Logout(this.controller));
-        this.controller.add(new CreateUser(this.view, this.userService));
-        this.controller.add(new ListUsers(this.view, this.userService));
-        this.controller.add(new ListUsers(this.view, this.userService));
-        this.controller.add(new CreateArticle(this.view, this.articleService));
-        this.controller.add(new ListArticles(this.view, this.articleService));
-        this.controller.add(new CreateTag(this.view, this.tagService));
-        this.controller.add(new AddArticleToTag(this.view, this.tagService));
-        this.controller.add(new FindArticleByTagName(this.view, this.articleService));
-        this.controller.add(new FindTagByArticleBarcode(this.view, this.tagService));
+        this.controller.add(new CreateUser(this.userService));
+        this.controller.add(new ListUsers(this.userService));
+        this.controller.add(new ListUsers(this.userService));
+        this.controller.add(new CreateArticle(this.articleService));
+        this.controller.add(new ListArticles(this.articleService));
+        this.controller.add(new CreateTag(this.tagService));
+        this.controller.add(new AddArticleToTag(this.tagService));
+        this.controller.add(new FindArticleByTagName(this.articleService));
+        this.controller.add(new FindTagByArticleBarcode(this.tagService));
     }
 
     public static DependencyInjector getInstance() {

@@ -38,7 +38,7 @@ public class Login implements Command {
     }
 
     @Override
-    public List<String> execute(String[] params) {
+    public List<Object> execute(String[] params) {
         User userLogged = this.userService.login(Integer.valueOf(params[0]), params[1]);
         this.controller.setUser(userLogged);
         return List.of("Bienvenido, " + userLogged.getName());

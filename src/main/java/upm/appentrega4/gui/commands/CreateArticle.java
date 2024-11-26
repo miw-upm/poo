@@ -3,18 +3,15 @@ package upm.appentrega4.gui.commands;
 import upm.appentrega4.data.models.Article;
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.gui.Command;
-import upm.appentrega4.gui.View;
 import upm.appentrega4.services.ArticleService;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public class CreateArticle implements Command {
-    private final View view;
     private final ArticleService articleService;
 
-    public CreateArticle(View view, ArticleService articleService) {
-        this.view = view;
+    public CreateArticle(ArticleService articleService) {
         this.articleService = articleService;
     }
 
@@ -39,8 +36,8 @@ public class CreateArticle implements Command {
     }
 
     @Override
-    public List<String> execute(String[] params) {
+    public List<Object> execute(String[] params) {
         Article createdArticle = this.articleService.create(new Article(params[0], params[1], new BigDecimal(params[2]), params[3]));
-        return List.of(createdArticle.toString());
+        return List.of(createdArticle);
     }
 }

@@ -34,7 +34,8 @@ public class Help implements Command {
     }
 
     @Override
-    public List<String> execute(String[] params) {
-        return this.controller.help();
+    public List<Object> execute(String[] params) {
+        return this.controller.help().stream()
+                .map(Object.class::cast).toList();
     }
 }

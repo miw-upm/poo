@@ -2,17 +2,14 @@ package upm.appentrega4.gui.commands;
 
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.gui.Command;
-import upm.appentrega4.gui.View;
 import upm.appentrega4.services.ArticleService;
 
 import java.util.List;
 
 public class FindArticleByTagName implements Command {
-    private final View view;
     private final ArticleService articleService;
 
-    public FindArticleByTagName(View view, ArticleService articleService) {
-        this.view = view;
+    public FindArticleByTagName(ArticleService articleService) {
         this.articleService = articleService;
     }
 
@@ -37,7 +34,8 @@ public class FindArticleByTagName implements Command {
     }
 
     @Override
-    public List<String> execute(String[] params) {
-        return this.articleService.findByTagName(params[0]).map(article -> article.toString()).toList();
+    public List<Object> execute(String[] params) {
+        return this.articleService.findByTagName(params[0])
+                .map(Object.class::cast).toList();
     }
 }

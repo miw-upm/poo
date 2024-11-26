@@ -24,7 +24,7 @@ public class GenericTableViewExample extends Application {
         primaryStage.setTitle("Generic TableView Example");
 
         // Crear la TableView
-        TableView<Object> tableView = new TableView<>();
+
 
         // Crear datos genéricos
         List<Person> people = List.of(
@@ -36,7 +36,7 @@ public class GenericTableViewExample extends Application {
         ObservableList<Object> data = FXCollections.observableArrayList(people);
 
         // Generar columnas dinámicamente
-        generateColumns(tableView, Person.class);
+        TableView<Object> tableView= this.generateColumns(Person.class);
 
         // Asignar los datos a la tabla
         tableView.setItems(data);
@@ -50,13 +50,8 @@ public class GenericTableViewExample extends Application {
         primaryStage.show();
     }
 
-    /**
-     * Genera columnas dinámicamente basadas en los campos de la clase proporcionada.
-     *
-     * @param tableView la tabla donde se añadirán las columnas.
-     * @param clazz     la clase de los objetos que se mostrarán en la tabla.
-     */
-    private void generateColumns(TableView<Object> tableView, Class<?> clazz) {
+    private TableView<Object> generateColumns(Class<?> clazz) {
+        TableView<Object> tableView = new TableView<>();
         for (Field field : clazz.getDeclaredFields()) {
             TableColumn<Object, String> column = new TableColumn<>(capitalize(field.getName()));
 
@@ -74,6 +69,9 @@ public class GenericTableViewExample extends Application {
 
             tableView.getColumns().add(column);
         }
+
+
+        return tableView;
     }
 
     /**

@@ -2,17 +2,14 @@ package upm.appentrega4.gui.commands;
 
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.gui.Command;
-import upm.appentrega4.gui.View;
 import upm.appentrega4.services.TagService;
 
 import java.util.List;
 
 public class FindTagByArticleBarcode implements Command {
-    private final View view;
     private final TagService tagService;
 
-    public FindTagByArticleBarcode(View view, TagService tagService) {
-        this.view = view;
+    public FindTagByArticleBarcode(TagService tagService) {
         this.tagService = tagService;
     }
 
@@ -37,7 +34,8 @@ public class FindTagByArticleBarcode implements Command {
     }
 
     @Override
-    public List<String> execute(String[] params) {
-        return this.tagService.findByArticleBarcode(params[0]).map(tag -> tag.toString()).toList();
+    public List<Object> execute(String[] params) {
+        return this.tagService.findByArticleBarcode(params[0])
+                .map(Object.class::cast).toList();
     }
 }

@@ -4,17 +4,14 @@ import upm.appentrega4.data.models.CreationTag;
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.data.models.Tag;
 import upm.appentrega4.gui.Command;
-import upm.appentrega4.gui.View;
 import upm.appentrega4.services.TagService;
 
 import java.util.List;
 
 public class CreateTag implements Command {
-    private final View view;
     private final TagService tagService;
 
-    public CreateTag(View view, TagService tagService) {
-        this.view = view;
+    public CreateTag(TagService tagService) {
         this.tagService = tagService;
     }
 
@@ -39,8 +36,8 @@ public class CreateTag implements Command {
     }
 
     @Override
-    public List<String> execute(String[] params) {
+    public List<Object> execute(String[] params) {
         Tag createdTag = this.tagService.create(new CreationTag(params[0], params[1], params[2]));
-        return List.of(createdTag.toString());
+        return List.of(createdTag);
     }
 }

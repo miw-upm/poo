@@ -1,4 +1,4 @@
-package upm.appentrega4.gui.fx;
+package upm.appentrega4.gui.fx.dialogs;
 
 import javafx.scene.control.Alert;
 

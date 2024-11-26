@@ -1,4 +1,4 @@
-package upm.appentrega4.gui.fx;
+package upm.appentrega4.gui.fx.dialogs;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -6,8 +6,8 @@ import javafx.scene.control.ListView;
 
 import java.util.List;
 
-public class ListDialog extends Alert {
-    public ListDialog(String header, List<String> content) {
+public class StringListDialog extends Alert {
+    public StringListDialog(String header, List<String> content) {
         super(Alert.AlertType.INFORMATION);
         this.setTitle("Information");
         this.setHeaderText(header);

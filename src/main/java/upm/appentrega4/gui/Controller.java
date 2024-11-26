@@ -1,18 +1,28 @@
 package upm.appentrega4.gui;
 
+import javafx.scene.layout.VBox;
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.data.models.User;
+import upm.appentrega4.gui.fx.components.Status;
 
 import java.util.*;
 
 public class Controller {
-
     private final Map<String, Command> commands;
-
     private User user;
+    private VBox contentArea;
+    private Status status;
 
     public Controller() {
         this.commands = new HashMap<>();
+    }
+
+    public void setContentArea(VBox contentArea) {
+        this.contentArea = contentArea;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public void add(Command command) {

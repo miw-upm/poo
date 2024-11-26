@@ -14,7 +14,7 @@ public interface Command {
 
     String helpMessage();
 
-    List<String> execute(String[] params);
+    List<Object> execute(String[] params);
 
     default String help() {
         StringBuilder result = new StringBuilder(this.name());

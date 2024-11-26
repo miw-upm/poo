@@ -7,10 +7,13 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import upm.appentrega4.DependencyInjector;
 import upm.appentrega4.gui.Controller;
+import upm.appentrega4.gui.fx.components.Status;
+import upm.appentrega4.gui.fx.dialogs.ObjectListDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +22,9 @@ public class GraphicalUserInterfaceFX extends Application {
     private Controller controller;
     private Menu commandMenu;
     private VBox contentArea;
-    private Stage primaryStage;
+    private Status status;
+
+    private Label userLabel;
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -32,7 +37,7 @@ public class GraphicalUserInterfaceFX extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+        primaryStage.setTitle("App Shop");
         MenuBar menuBar;
 
         BorderPane root = new BorderPane();
@@ -40,7 +45,14 @@ public class GraphicalUserInterfaceFX extends Application {
 
         menuBar = new MenuBar();
         Menu fileMenu = new Menu("File");
-        MenuItem exitItem = new MenuItem("Exit");
+        MenuItem loginItem = new MenuItem("login");
+        loginItem.setOnAction(this.menuActionHandler("login"));
+        fileMenu.getItems().add(loginItem);
+        MenuItem logoutItem = new MenuItem("Logout");
+        logoutItem.setOnAction(this.menuActionHandler("logout"));
+        logoutItem.setDisable(true);
+        fileMenu.getItems().add(logoutItem);
+        MenuItem exitItem = new MenuItem("exit");
         exitItem.setOnAction(event -> primaryStage.close());
         fileMenu.getItems().add(exitItem);
 
@@ -55,6 +67,16 @@ public class GraphicalUserInterfaceFX extends Application {
         root.setTop(menuBar);
         root.setCenter(contentArea);
 
+        VBox bottomArea = new VBox();
+        this.status = new Status();
+        this.userLabel = new Label(this.controller.userName());
+        bottomArea.getChildren().add(userLabel);
+        bottomArea.getChildren().add(status);
+        root.setBottom(bottomArea);
+
+        this.controller.setStatus(this.status);
+        this.controller.setContentArea(this.contentArea);
+
         Scene scene = new Scene(root, 500, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -62,16 +84,16 @@ public class GraphicalUserInterfaceFX extends Application {
 
     private void generatedCommandMenu(String item) {
         if ("login".equals(item) || "logout".equals(item)) {
+            this.userLabel.setText(this.controller.userName());
             generatedCommandMenu();
         }
     }
 
     private void generatedCommandMenu() {
-        this.primaryStage.setTitle("App Shop. " + this.controller.userName());
         this.commandMenu.getItems().clear();
         for (String key : this.controller.keys()) {
             MenuItem menuItem = new MenuItem(key);
-            menuItem.setOnAction(menuActionHandler(key));
+            menuItem.setOnAction(this.menuActionHandler(key));
             this.commandMenu.getItems().addAll(menuItem);
         }
     }
@@ -79,7 +101,7 @@ public class GraphicalUserInterfaceFX extends Application {
     private EventHandler<ActionEvent> menuActionHandler(String item) {
         if (this.controller.command(item).params().isEmpty()) {
             return eventSubmit -> {
-                new ListDialog(item, this.controller.command(item).execute(new String[0]));
+                new ObjectListDialog(item, this.controller.command(item).execute(new String[0]));
                 this.generatedCommandMenu(item);
             };
         } else {
@@ -104,11 +126,11 @@ public class GraphicalUserInterfaceFX extends Application {
     private EventHandler<ActionEvent> submitActionHandler(List<TextField> fields, String item) {
         return eventSubmit -> {
             try {
-                new ListDialog(item, this.controller.command(item).execute(
+                new ObjectListDialog(item, this.controller.command(item).execute(
                         fields.stream().map(TextInputControl::getText).toArray(String[]::new)));
                 this.generatedCommandMenu(item);
             } catch (Exception e) {
-                new ErrorDialog(item, e.getMessage());
+                this.status.error(item + ": " + e.getMessage());
             }
         };
     }

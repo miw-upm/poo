@@ -34,7 +34,7 @@ public class Logout implements Command {
     }
 
     @Override
-    public List<String> execute(String[] params) {
+    public List<Object> execute(String[] params) {
         this.controller.setUser(null);
         return List.of("Hasta pronto!!!");
     }
