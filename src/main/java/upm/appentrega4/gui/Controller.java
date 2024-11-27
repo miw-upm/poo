@@ -3,14 +3,13 @@ package upm.appentrega4.gui;
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.data.models.User;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class Controller {
     private final Map<String, Command> commands;
     private User user;
+    private Consumer<String> listener;
 
     public Controller() {
         this.commands = new HashMap<>();
@@ -22,11 +21,15 @@ public class Controller {
 
     public void setUser(User user) {
         this.user = user;
+        if (listener != null) {
+            this.listener.accept(this.userName());
+        }
+
     }
 
     public String userName() {
         if (Objects.isNull(this.user)) {
-            return "";
+            return "Not logged";
         } else {
             return this.user.getName();
         }
@@ -52,4 +55,7 @@ public class Controller {
         }
     }
 
+    public void setListenerToUser(Consumer<String> listener) {
+        this.listener = listener;
+    }
 }

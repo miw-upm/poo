@@ -49,11 +49,13 @@ public class GraphicalUserInterfaceFX extends Application {
         this.commandMenu = new Menu("Commands");
         menuBar.getMenus().addAll(this.prepareFileMenu(primaryStage), commandMenu,this.prepareHelpMenu());
 
-        Label userLabel = new Label("Not logged");
-        userLabel.textProperty().addListener((observable, oldValue, newValue) -> generatedCommandMenu());
+        Label userLabel = new Label(this.controller.userName());
+        this.controller.setListenerToUser( (String userName) -> {
+            userLabel.setText(userName);
+            generatedCommandMenu();
+        });
         userLabel.setAlignment(Pos.CENTER_RIGHT);
         userLabel.setPadding(new Insets(10));
-        View.instance().setUserLabel(userLabel);
         HBox topBox = new HBox(menuBar, userLabel);
         topBox.setAlignment(Pos.CENTER_LEFT);
         topBox.setSpacing(10);

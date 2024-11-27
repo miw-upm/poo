@@ -48,6 +48,5 @@ public class Login extends AbstractCommand {
         User userLogged = this.userService.login(Integer.valueOf(fields.get(0).getText()), fields.get(1).getText());
         this.controller.setUser(userLogged);
         View.instance().getStatus().successful("Bienvenido, " + userLogged.getName());
-        View.instance().getUserLabel().setText(userLogged.getName());
     }
 }
