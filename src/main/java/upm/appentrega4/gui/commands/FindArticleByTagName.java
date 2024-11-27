@@ -2,7 +2,7 @@ package upm.appentrega4.gui.commands;
 
 import javafx.scene.control.TextField;
 import upm.appentrega4.data.models.Rol;
-import upm.appentrega4.gui.fx.View;
+import upm.appentrega4.gui.fx.GraphicalUserInterfaceFX;
 import upm.appentrega4.gui.fx.dialogs.EntityListDialog;
 import upm.appentrega4.services.ArticleService;
 
@@ -44,6 +44,6 @@ public class FindArticleByTagName extends AbstractCommand {
     public void executeAction(List<TextField> fields) {
         new EntityListDialog(this.name(), this.articleService.findByTagName(fields.get(0).getText())
                 .map(Object.class::cast).toList());
-        View.instance().getStatus().successful("Consulta realizada");
+        GraphicalUserInterfaceFX.getInstance().getStatus().successful("Consulta realizada");
     }
 }

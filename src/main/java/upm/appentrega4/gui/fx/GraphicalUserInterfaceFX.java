@@ -18,10 +18,14 @@ import upm.appentrega4.gui.Controller;
 import upm.appentrega4.gui.fx.components.Status;
 
 public class GraphicalUserInterfaceFX extends Application {
+    private static GraphicalUserInterfaceFX instance;
     private Controller controller;
     private Menu commandMenu;
     private MenuItem logoutItem;
     private MenuItem loginItem;
+
+    private  VBox contentArea;
+    private Status status;
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -30,27 +34,32 @@ public class GraphicalUserInterfaceFX extends Application {
     @Override
     public void init() {
         this.controller = DependencyInjector.getInstance().getController();
+        GraphicalUserInterfaceFX.setInstance(this);
+    }
+    public static GraphicalUserInterfaceFX getInstance() {
+        return instance;
+    }
+    private static void setInstance(GraphicalUserInterfaceFX graphicalUserInterfaceFX) {
+        instance = graphicalUserInterfaceFX;
     }
 
     @Override
     public void start(Stage primaryStage) {
-
         primaryStage.setTitle("App Shop");
         MenuBar menuBar;
 
         BorderPane root = new BorderPane();
 
-        VBox contentArea = new VBox();
+        this.contentArea = new VBox();
         contentArea.setPadding(new Insets(10));
         contentArea.setSpacing(10);
-        View.instance().setContentArea(contentArea);
 
         menuBar = new MenuBar();
         this.commandMenu = new Menu("Commands");
-        menuBar.getMenus().addAll(this.prepareFileMenu(primaryStage), commandMenu,this.prepareHelpMenu());
+        menuBar.getMenus().addAll(this.prepareFileMenu(primaryStage), commandMenu, this.prepareHelpMenu());
 
         Label userLabel = new Label(this.controller.userName());
-        this.controller.setListenerToUser( (String userName) -> {
+        this.controller.setListenerToUser((String userName) -> {
             userLabel.setText(userName);
             generatedCommandMenu();
         });
@@ -62,8 +71,7 @@ public class GraphicalUserInterfaceFX extends Application {
         HBox.setHgrow(menuBar, Priority.ALWAYS);
         topBox.setAlignment(Pos.CENTER);
 
-        Status status = new Status();
-        View.instance().setStatus(status);
+        this.status = new Status();
 
         root.setTop(topBox);
         root.setCenter(contentArea);
@@ -95,6 +103,7 @@ public class GraphicalUserInterfaceFX extends Application {
         MenuItem aboutItem = new MenuItem("about");
         aboutItem.setOnAction(event -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("UPM");
             alert.setHeaderText("POO. Curso 2024-25");
             alert.showAndWait();
         });
@@ -109,19 +118,23 @@ public class GraphicalUserInterfaceFX extends Application {
             menuItem.setOnAction(this.menuActionHandler(key));
             this.commandMenu.getItems().addAll(menuItem);
         }
-        boolean isLoggedIn = !Rol.NONE.equals(this.controller.userRol());
-        this.loginItem.setDisable(isLoggedIn);
-        this.logoutItem.setDisable(!isLoggedIn);
+        this.loginItem.setDisable(!Rol.NONE.equals(this.controller.userRol()));
+        this.logoutItem.setDisable(Rol.NONE.equals(this.controller.userRol()));
     }
 
     private EventHandler<ActionEvent> menuActionHandler(String item) {
-        return eventSubmit -> {
-            try {
-                this.controller.command(item).execute();
-            } catch (Exception e) {
-                View.instance().getStatus().error(item + ": " + e.getMessage());
-            }
-        };
+        return eventSubmit -> this.controller.command(item).execute();
     }
 
+    public Controller getController() {
+        return controller;
+    }
+
+    public VBox getContentArea() {
+        return contentArea;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
 }

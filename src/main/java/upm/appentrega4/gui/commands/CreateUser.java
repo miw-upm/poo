@@ -3,7 +3,7 @@ package upm.appentrega4.gui.commands;
 import javafx.scene.control.TextField;
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.data.models.User;
-import upm.appentrega4.gui.fx.View;
+import upm.appentrega4.gui.fx.GraphicalUserInterfaceFX;
 import upm.appentrega4.gui.fx.dialogs.EntityListDialog;
 import upm.appentrega4.services.UserService;
 
@@ -45,7 +45,7 @@ public class CreateUser extends AbstractCommand {
     public void executeAction(List<TextField> fields) {
         User createdUser = this.userService.create(
                 new User(Integer.valueOf(fields.get(0).getText()), fields.get(1).getText(), fields.get(2).getText(), fields.get(3).getText()));
-        View.instance().getStatus().successful("Usuario creado correctamente");
+        GraphicalUserInterfaceFX.getInstance().getStatus().successful("Usuario creado correctamente");
         new EntityListDialog(this.name(), List.of(createdUser));
     }
 }

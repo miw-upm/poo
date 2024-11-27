@@ -4,7 +4,7 @@ import javafx.scene.control.TextField;
 import upm.appentrega4.data.models.CreationTag;
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.data.models.Tag;
-import upm.appentrega4.gui.fx.View;
+import upm.appentrega4.gui.fx.GraphicalUserInterfaceFX;
 import upm.appentrega4.gui.fx.dialogs.EntityListDialog;
 import upm.appentrega4.services.TagService;
 
@@ -46,7 +46,7 @@ public class CreateTag extends AbstractCommand {
     public void executeAction(List<TextField> fields) {
         Tag createdTag = this.tagService.create(
                 new CreationTag(fields.get(0).getText(), fields.get(1).getText(), fields.get(2).getText()));
-        View.instance().getStatus().successful("Etiqueta creado correctamente");
+        GraphicalUserInterfaceFX.getInstance().getStatus().successful("Etiqueta creado correctamente");
         new EntityListDialog(this.name(), List.of(createdTag));
 
     }

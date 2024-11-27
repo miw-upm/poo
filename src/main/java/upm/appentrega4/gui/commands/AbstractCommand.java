@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import upm.appentrega4.gui.Command;
-import upm.appentrega4.gui.fx.View;
+import upm.appentrega4.gui.fx.GraphicalUserInterfaceFX;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
 public abstract class AbstractCommand implements Command {
 
     protected void preparedForm() {
-        View.instance().getContentArea().getChildren().clear();
+        GraphicalUserInterfaceFX.getInstance().getContentArea().getChildren().clear();
         List<TextField> fields = new ArrayList<>();
         for (String fieldName : this.params()) {
             Label label = new Label(fieldName + ":");
@@ -25,11 +25,11 @@ public abstract class AbstractCommand implements Command {
             fields.add(field);
             HBox fieldRow = new HBox(5);
             fieldRow.getChildren().addAll(label, field);
-            View.instance().getContentArea().getChildren().add(fieldRow);
+            GraphicalUserInterfaceFX.getInstance().getContentArea().getChildren().add(fieldRow);
         }
         Button submit = new Button("submit");
         submit.setOnAction(this.submitActionHandler(fields));
-        View.instance().getContentArea().getChildren().add(submit);
+        GraphicalUserInterfaceFX.getInstance().getContentArea().getChildren().add(submit);
     }
 
     protected EventHandler<ActionEvent> submitActionHandler(List<TextField> fields) {
@@ -37,7 +37,7 @@ public abstract class AbstractCommand implements Command {
             try {
                 this.executeAction(fields);
             } catch (Exception e) {
-                View.instance().getStatus().error("login : " + e.getMessage());
+                GraphicalUserInterfaceFX.getInstance().getStatus().error("login : " + e.getMessage());
             }
         };
     }
