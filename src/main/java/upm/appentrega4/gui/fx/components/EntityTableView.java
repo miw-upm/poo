@@ -9,11 +9,11 @@ import javafx.scene.control.TableView;
 import java.lang.reflect.Field;
 import java.util.List;
 
-public class GenericTableView extends TableView<Object> {
+public class EntityTableView extends TableView<Object> {
 
-    public GenericTableView(List<Object> content) {
-                ObservableList<Object> data = FXCollections.observableArrayList(content);
-        //this.addColumns(content.get(0).getClass().getSuperclass());
+    public EntityTableView(List<Object> content) {
+        ObservableList<Object> data = FXCollections.observableArrayList(content);
+        this.addColumns(content.get(0).getClass().getSuperclass());
         this.addColumns(content.get(0).getClass());
         this.setItems(data);
     }

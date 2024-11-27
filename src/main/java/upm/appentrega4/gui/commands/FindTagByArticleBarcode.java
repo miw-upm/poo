@@ -1,12 +1,13 @@
 package upm.appentrega4.gui.commands;
 
+import javafx.scene.control.TextField;
 import upm.appentrega4.data.models.Rol;
-import upm.appentrega4.gui.Command;
+import upm.appentrega4.gui.fx.dialogs.EntityListDialog;
 import upm.appentrega4.services.TagService;
 
 import java.util.List;
 
-public class FindTagByArticleBarcode implements Command {
+public class FindTagByArticleBarcode extends AbstractCommand {
     private final TagService tagService;
 
     public FindTagByArticleBarcode(TagService tagService) {
@@ -34,8 +35,13 @@ public class FindTagByArticleBarcode implements Command {
     }
 
     @Override
-    public List<Object> execute(String[] params) {
-        return this.tagService.findByArticleBarcode(params[0])
-                .map(Object.class::cast).toList();
+    public void execute() {
+        this.preparedForm();
+    }
+
+    @Override
+    public void executeAction(List<TextField> fields) {
+        new EntityListDialog(this.name(), this.tagService.findByArticleBarcode(fields.get(0).getText())
+                .map(Object.class::cast).toList());
     }
 }

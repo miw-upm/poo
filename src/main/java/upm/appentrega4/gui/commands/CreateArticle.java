@@ -1,14 +1,16 @@
 package upm.appentrega4.gui.commands;
 
+import javafx.scene.control.TextField;
 import upm.appentrega4.data.models.Article;
 import upm.appentrega4.data.models.Rol;
-import upm.appentrega4.gui.Command;
+import upm.appentrega4.gui.fx.View;
+import upm.appentrega4.gui.fx.dialogs.EntityListDialog;
 import upm.appentrega4.services.ArticleService;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public class CreateArticle implements Command {
+public class CreateArticle extends AbstractCommand {
     private final ArticleService articleService;
 
     public CreateArticle(ArticleService articleService) {
@@ -36,8 +38,15 @@ public class CreateArticle implements Command {
     }
 
     @Override
-    public List<Object> execute(String[] params) {
-        Article createdArticle = this.articleService.create(new Article(params[0], params[1], new BigDecimal(params[2]), params[3]));
-        return List.of(createdArticle);
+    public void execute() {
+        this.preparedForm();
+    }
+
+    @Override
+    public void executeAction(List<TextField> fields) {
+        Article createdArticle = this.articleService.create(
+                new Article(fields.get(0).getText(), fields.get(1).getText(), new BigDecimal(fields.get(2).getText()), fields.get(3).getText()));
+        View.instance().getStatus().successful("Usuario creado correctamente");
+        new EntityListDialog(this.name(), List.of(createdArticle));
     }
 }

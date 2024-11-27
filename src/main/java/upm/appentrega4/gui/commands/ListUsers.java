@@ -1,22 +1,16 @@
 package upm.appentrega4.gui.commands;
 
 import upm.appentrega4.data.models.Rol;
-import upm.appentrega4.gui.Command;
+import upm.appentrega4.gui.fx.dialogs.EntityListDialog;
 import upm.appentrega4.services.UserService;
 
 import java.util.List;
 
-public class ListUsers implements Command {
+public class ListUsers extends AbstractCommand {
     private final UserService userService;
 
     public ListUsers(UserService userService) {
         this.userService = userService;
-    }
-
-    @Override
-    public List<Object> execute(String[] params) {
-        return this.userService.findAll()
-                .map(Object.class::cast).toList();
     }
 
     @Override
@@ -37,6 +31,12 @@ public class ListUsers implements Command {
     @Override
     public String helpMessage() {
         return "Lista todos los usuarios";
+    }
+
+    @Override
+    public void execute() {
+        new EntityListDialog(this.name(), this.userService.findAll()
+                .map(Object.class::cast).toList());
     }
 
 }

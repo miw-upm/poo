@@ -1,13 +1,15 @@
 package upm.appentrega4.gui.commands;
 
+import javafx.scene.control.TextField;
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.data.models.User;
-import upm.appentrega4.gui.Command;
+import upm.appentrega4.gui.fx.View;
+import upm.appentrega4.gui.fx.dialogs.EntityListDialog;
 import upm.appentrega4.services.UserService;
 
 import java.util.List;
 
-public class CreateUser implements Command {
+public class CreateUser extends AbstractCommand {
     private final UserService userService;
 
     public CreateUser(UserService userService) {
@@ -35,8 +37,15 @@ public class CreateUser implements Command {
     }
 
     @Override
-    public List<Object> execute(String[] params) {
-        User createdUser = this.userService.create(new User(Integer.valueOf(params[0]), params[1], params[2], params[3]));
-        return List.of(createdUser);
+    public void execute() {
+        this.preparedForm();
+    }
+
+    @Override
+    public void executeAction(List<TextField> fields) {
+        User createdUser = this.userService.create(
+                new User(Integer.valueOf(fields.get(0).getText()), fields.get(1).getText(), fields.get(2).getText(), fields.get(3).getText()));
+        View.instance().getStatus().successful("Usuario creado correctamente");
+        new EntityListDialog(this.name(), List.of(createdUser));
     }
 }

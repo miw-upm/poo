@@ -6,7 +6,7 @@ import upm.appentrega2.data.models.Rol;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CommandTest {
+class AbstractCommandTest {
 
     @Test
     void testFromValueUser() {

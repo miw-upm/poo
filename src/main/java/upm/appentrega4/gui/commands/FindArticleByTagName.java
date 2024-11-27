@@ -1,12 +1,13 @@
 package upm.appentrega4.gui.commands;
 
+import javafx.scene.control.TextField;
 import upm.appentrega4.data.models.Rol;
-import upm.appentrega4.gui.Command;
+import upm.appentrega4.gui.fx.dialogs.EntityListDialog;
 import upm.appentrega4.services.ArticleService;
 
 import java.util.List;
 
-public class FindArticleByTagName implements Command {
+public class FindArticleByTagName extends AbstractCommand {
     private final ArticleService articleService;
 
     public FindArticleByTagName(ArticleService articleService) {
@@ -34,8 +35,13 @@ public class FindArticleByTagName implements Command {
     }
 
     @Override
-    public List<Object> execute(String[] params) {
-        return this.articleService.findByTagName(params[0])
-                .map(Object.class::cast).toList();
+    public void execute() {
+        this.preparedForm();
+    }
+
+    @Override
+    public void executeAction(List<TextField> fields) {
+        new EntityListDialog(this.name(), this.articleService.findByTagName(fields.get(0).getText())
+                .map(Object.class::cast).toList());
     }
 }

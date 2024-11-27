@@ -1,12 +1,12 @@
 package upm.appentrega4.gui.commands;
 
 import upm.appentrega4.data.models.Rol;
-import upm.appentrega4.gui.Command;
 import upm.appentrega4.gui.Controller;
+import upm.appentrega4.gui.fx.View;
 
 import java.util.List;
 
-public class Logout implements Command {
+public class Logout extends AbstractCommand {
     private final Controller controller;
 
     public Logout(Controller controller) {
@@ -34,8 +34,9 @@ public class Logout implements Command {
     }
 
     @Override
-    public List<Object> execute(String[] params) {
+    public void execute() {
         this.controller.setUser(null);
-        return List.of("Hasta pronto!!!");
+        View.instance().getStatus().successful("Hasta pronto!!!");
     }
+
 }

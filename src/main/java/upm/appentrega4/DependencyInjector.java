@@ -40,7 +40,6 @@ public class DependencyInjector {
 
         this.view = new View();
         this.controller = new Controller();
-        this.controller.add(new Help(controller));
         this.controller.add(new Login(this.controller, this.userService));
         this.controller.add(new Logout(this.controller));
         this.controller.add(new CreateUser(this.userService));

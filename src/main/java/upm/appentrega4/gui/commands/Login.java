@@ -1,14 +1,15 @@
 package upm.appentrega4.gui.commands;
 
+import javafx.scene.control.TextField;
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.data.models.User;
-import upm.appentrega4.gui.Command;
 import upm.appentrega4.gui.Controller;
+import upm.appentrega4.gui.fx.View;
 import upm.appentrega4.services.UserService;
 
 import java.util.List;
 
-public class Login implements Command {
+public class Login extends AbstractCommand {
     private final UserService userService;
     private final Controller controller;
 
@@ -38,9 +39,14 @@ public class Login implements Command {
     }
 
     @Override
-    public List<Object> execute(String[] params) {
-        User userLogged = this.userService.login(Integer.valueOf(params[0]), params[1]);
+    public void execute() {
+        this.preparedForm();
+    }
+
+    @Override
+    public void executeAction(List<TextField> fields) {
+        User userLogged = this.userService.login(Integer.valueOf(fields.get(0).getText()), fields.get(1).getText());
         this.controller.setUser(userLogged);
-        return List.of("Bienvenido, " + userLogged.getName());
+        View.instance().getStatus().successful("Bienvenido, " + userLogged.getName());
     }
 }

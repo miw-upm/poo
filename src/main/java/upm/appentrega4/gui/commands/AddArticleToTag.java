@@ -1,13 +1,15 @@
 package upm.appentrega4.gui.commands;
 
+import javafx.scene.control.TextField;
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.data.models.Tag;
-import upm.appentrega4.gui.Command;
+import upm.appentrega4.gui.fx.View;
+import upm.appentrega4.gui.fx.dialogs.EntityListDialog;
 import upm.appentrega4.services.TagService;
 
 import java.util.List;
 
-public class AddArticleToTag implements Command {
+public class AddArticleToTag extends AbstractCommand {
     private final TagService tagService;
 
     public AddArticleToTag(TagService tagService) {
@@ -35,8 +37,14 @@ public class AddArticleToTag implements Command {
     }
 
     @Override
-    public List<Object> execute(String[] params) {
-        Tag tagUpdated = this.tagService.addArticle(params[0], params[1]);
-        return List.of(tagUpdated);
+    public void execute() {
+        this.preparedForm();
+    }
+
+    @Override
+    public void executeAction(List<TextField> fields) {
+        Tag tagUpdated = this.tagService.addArticle(fields.get(0).getText(), fields.get(1).getText());
+        View.instance().getStatus().successful("Articulo añadido correctamente");
+        new EntityListDialog(this.name(), List.of(tagUpdated));
     }
 }

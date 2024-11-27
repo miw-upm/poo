@@ -1,12 +1,12 @@
 package upm.appentrega4.gui.commands;
 
 import upm.appentrega4.data.models.Rol;
-import upm.appentrega4.gui.Command;
+import upm.appentrega4.gui.fx.dialogs.EntityListDialog;
 import upm.appentrega4.services.ArticleService;
 
 import java.util.List;
 
-public class ListArticles implements Command {
+public class ListArticles extends AbstractCommand {
     private final ArticleService articleService;
 
     public ListArticles(ArticleService articleService) {
@@ -34,8 +34,8 @@ public class ListArticles implements Command {
     }
 
     @Override
-    public List<Object> execute(String[] params) {
-        return this.articleService.findAll()
-                .map(Object.class::cast).toList();
+    public void execute() {
+        new EntityListDialog(this.name(), this.articleService.findAll()
+                .map(Object.class::cast).toList());
     }
 }

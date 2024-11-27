@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import upm.appentrega4.gui.fx.components.GenericTableView;
+import upm.appentrega4.gui.fx.components.EntityTableView;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class GenericTableViewApp extends Application {
                 new Person(2, "Bob", "bob@example.com"),
                 new Person(3, "Charlie", "charlie@example.com")
         );
-        GenericTableView tableView = new GenericTableView(people);
+        EntityTableView tableView = new EntityTableView(people);
 
         // Crear el layout
         VBox root = new VBox(tableView);
