@@ -44,7 +44,7 @@ public class Controller {
         return this.commands.get(key);
     }
 
-    private Rol userRol() {
+    public Rol userRol() {
         if (Objects.isNull(this.user)) {
             return Rol.NONE;
         } else {

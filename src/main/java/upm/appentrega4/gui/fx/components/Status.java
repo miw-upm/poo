@@ -8,6 +8,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import upm.appentrega4.gui.fx.View;
 
 public class Status extends Label {
 
@@ -27,11 +28,13 @@ public class Status extends Label {
     public void successful(String message) {
         this.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
         this.setText("Successful! " + message);
+        View.instance().getContentArea().getChildren().clear();
     }
 
     public void info(String message) {
         this.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         this.setText(message);
+        View.instance().getContentArea().getChildren().clear();
     }
 
     public void error(String message) {

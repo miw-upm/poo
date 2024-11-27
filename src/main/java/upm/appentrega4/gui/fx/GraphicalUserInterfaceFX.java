@@ -4,25 +4,24 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import upm.appentrega4.DependencyInjector;
+import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.gui.Controller;
 import upm.appentrega4.gui.fx.components.Status;
 
 public class GraphicalUserInterfaceFX extends Application {
     private Controller controller;
     private Menu commandMenu;
-    private MenuItem loginItem;
     private MenuItem logoutItem;
-
-    private Label userLabel;
+    private MenuItem loginItem;
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -35,6 +34,7 @@ public class GraphicalUserInterfaceFX extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
         primaryStage.setTitle("App Shop");
         MenuBar menuBar;
 
@@ -46,67 +46,70 @@ public class GraphicalUserInterfaceFX extends Application {
         View.instance().setContentArea(contentArea);
 
         menuBar = new MenuBar();
-        Menu fileMenu = new Menu("File");
-        this.loginItem = new MenuItem("login");
-        this.loginItem.setOnAction(this.loginActionHandler());
-        fileMenu.getItems().add(loginItem);
-        this.logoutItem = new MenuItem("Logout");
-        this.logoutItem.setOnAction(this.logoutActionHandler());
-        this.logoutItem.setDisable(true);
-        fileMenu.getItems().add(logoutItem);
-        MenuItem exitItem = new MenuItem("exit");
-        exitItem.setOnAction(event -> primaryStage.close());
-        fileMenu.getItems().add(exitItem);
-
         this.commandMenu = new Menu("Commands");
-        this.generatedCommandMenu();
-        menuBar.getMenus().addAll(fileMenu, commandMenu);
+        menuBar.getMenus().addAll(this.prepareFileMenu(primaryStage), commandMenu,this.prepareHelpMenu());
 
-        root.setTop(menuBar);
-        root.setCenter(contentArea);
+        Label userLabel = new Label("Not logged");
+        userLabel.textProperty().addListener((observable, oldValue, newValue) -> generatedCommandMenu());
+        userLabel.setAlignment(Pos.CENTER_RIGHT);
+        userLabel.setPadding(new Insets(10));
+        View.instance().setUserLabel(userLabel);
+        HBox topBox = new HBox(menuBar, userLabel);
+        topBox.setAlignment(Pos.CENTER_LEFT);
+        topBox.setSpacing(10);
+        HBox.setHgrow(menuBar, Priority.ALWAYS);
+        topBox.setAlignment(Pos.CENTER);
 
-        VBox bottomArea = new VBox();
         Status status = new Status();
-        this.userLabel = new Label(this.controller.userName());
-        bottomArea.getChildren().add(userLabel);
-        bottomArea.getChildren().add(status);
-        root.setBottom(bottomArea);
         View.instance().setStatus(status);
+
+        root.setTop(topBox);
+        root.setCenter(contentArea);
+        root.setBottom(status);
+
+        this.generatedCommandMenu();
 
         Scene scene = new Scene(root, 500, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
+    private Menu prepareFileMenu(Stage primaryStage) {
+        Menu fileMenu = new Menu("File");
+        loginItem = new MenuItem("login");
+        loginItem.setOnAction(event -> this.controller.command("login").execute());
+        fileMenu.getItems().add(loginItem);
+        logoutItem = new MenuItem("Logout");
+        logoutItem.setOnAction(event -> this.controller.command("logout").execute());
+        fileMenu.getItems().add(logoutItem);
+        MenuItem exitItem = new MenuItem("exit");
+        exitItem.setOnAction(event -> primaryStage.close());
+        fileMenu.getItems().add(exitItem);
+        return fileMenu;
+    }
+
+    private Menu prepareHelpMenu() {
+        Menu helpMenu = new Menu("Help");
+        MenuItem aboutItem = new MenuItem("about");
+        aboutItem.setOnAction(event -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("POO. Curso 2024-25");
+            alert.showAndWait();
+        });
+        helpMenu.getItems().add(aboutItem);
+        return helpMenu;
+    }
+
     private void generatedCommandMenu() {
-        System.out.println(">>>>>>>"+"generatedCommandMenu...");
         this.commandMenu.getItems().clear();
         for (String key : this.controller.keys()) {
             MenuItem menuItem = new MenuItem(key);
             menuItem.setOnAction(this.menuActionHandler(key));
             this.commandMenu.getItems().addAll(menuItem);
         }
-    }
-
-    private EventHandler<ActionEvent> loginActionHandler() {
-        return event -> {
-            System.out.println(">>>>>>>"+"login...");
-                this.controller.command("login").execute();
-                this.loginItem.setDisable(true);
-                this.logoutItem.setDisable(false);
-                this.userLabel.setText(">>>"+this.controller.userName());
-                this.generatedCommandMenu();
-        };
-    }
-
-    private EventHandler<ActionEvent> logoutActionHandler() {
-        return event -> {
-            this.controller.command("logout").execute();
-            this.loginItem.setDisable(false);
-            this.logoutItem.setDisable(true);
-            this.userLabel.setText(this.controller.userName());
-            this.generatedCommandMenu();
-        };
+        boolean isLoggedIn = !Rol.NONE.equals(this.controller.userRol());
+        this.loginItem.setDisable(isLoggedIn);
+        this.logoutItem.setDisable(!isLoggedIn);
     }
 
     private EventHandler<ActionEvent> menuActionHandler(String item) {

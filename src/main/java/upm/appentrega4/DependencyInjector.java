@@ -3,7 +3,6 @@ package upm.appentrega4;
 import upm.appentrega4.data.repositories.*;
 import upm.appentrega4.data.repositories.mysql.*;
 import upm.appentrega4.gui.Controller;
-import upm.appentrega4.gui.View;
 import upm.appentrega4.gui.commands.*;
 import upm.appentrega4.services.ArticleService;
 import upm.appentrega4.services.TagService;
@@ -14,7 +13,6 @@ import java.sql.Connection;
 public class DependencyInjector {
     private static final DependencyInjector instance = new DependencyInjector();
     private final Controller controller;
-    private final View view;
     private final UserRepository userRepository;
     private final ArticleRepository articleRepository;
     private final TagRepository tagRepository;
@@ -38,7 +36,6 @@ public class DependencyInjector {
         this.articleService = new ArticleService(this.articleRepository, this.tagRepository);
         this.tagService = new TagService(this.tagRepository, this.articleRepository);
 
-        this.view = new View();
         this.controller = new Controller();
         this.controller.add(new Login(this.controller, this.userService));
         this.controller.add(new Logout(this.controller));
@@ -60,10 +57,6 @@ public class DependencyInjector {
 
     public Controller getController() {
         return controller;
-    }
-
-    public View getView() {
-        return this.view;
     }
 
     public UserRepository getUserRepository() {

@@ -3,7 +3,9 @@ package upm.appentrega4.gui.commands;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import upm.appentrega4.gui.Command;
 import upm.appentrega4.gui.fx.View;
 
@@ -16,10 +18,14 @@ public abstract class AbstractCommand implements Command {
         View.instance().getContentArea().getChildren().clear();
         List<TextField> fields = new ArrayList<>();
         for (String fieldName : this.params()) {
+            Label label = new Label(fieldName + ":");
+            label.setPrefWidth(60);
             TextField field = new TextField();
             field.setPromptText("Enter " + fieldName);
             fields.add(field);
-            View.instance().getContentArea().getChildren().add(field);
+            HBox fieldRow = new HBox(5);
+            fieldRow.getChildren().addAll(label, field);
+            View.instance().getContentArea().getChildren().add(fieldRow);
         }
         Button submit = new Button("submit");
         submit.setOnAction(this.submitActionHandler(fields));

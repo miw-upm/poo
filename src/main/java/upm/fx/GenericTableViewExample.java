@@ -36,7 +36,7 @@ public class GenericTableViewExample extends Application {
         ObservableList<Object> data = FXCollections.observableArrayList(people);
 
         // Generar columnas dinámicamente
-        TableView<Object> tableView= this.generateColumns(Person.class);
+        TableView<Object> tableView = this.generateColumns(Person.class);
 
         // Asignar los datos a la tabla
         tableView.setItems(data);

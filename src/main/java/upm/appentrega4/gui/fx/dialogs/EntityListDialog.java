@@ -12,7 +12,7 @@ public class EntityListDialog extends Alert {
         this.setTitle("Information");
         this.setHeaderText(header);
         if (content.isEmpty()) {
-            this.getDialogPane().setContent(new Label("Lista vacia"));
+            this.getDialogPane().setContent(new Label("No existen resultados!!!"));
         } else {
             EntityTableView tableView = new EntityTableView(content);
             this.getDialogPane().setContent(tableView);

@@ -37,6 +37,7 @@ public class Logout extends AbstractCommand {
     public void execute() {
         this.controller.setUser(null);
         View.instance().getStatus().successful("Hasta pronto!!!");
+        View.instance().getUserLabel().setText("Not logged");
     }
 
 }
