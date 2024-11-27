@@ -3,10 +3,15 @@ package upm.appentrega4.gui;
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.data.models.User;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 public class Controller {
+    public static final String LOGIN = "login";
+    public static final String LOGOUT = "Logout";
     private final Map<String, Command> commands;
     private User user;
     private Consumer<String> listener;
@@ -38,8 +43,8 @@ public class Controller {
     public List<String> keys() {
         return this.commands.keySet().stream()
                 .filter(aKey -> this.command(aKey).allowedRoles().contains(this.userRol()))
-                .filter(aKey -> !aKey.equals("login"))
-                .filter(aKey -> !aKey.equals("logout"))
+                .filter(aKey -> !aKey.equals(LOGIN))
+                .filter(aKey -> !aKey.equals(LOGOUT))
                 .toList();
     }
 

@@ -11,11 +11,11 @@ public class EntityListDialog extends Alert {
         super(AlertType.INFORMATION);
         this.setTitle("Information");
         this.setHeaderText(header);
-        if (content.isEmpty()) {
+        if (content == null || content.isEmpty()) {
             this.getDialogPane().setContent(new Label("No existen resultados!!!"));
         } else {
-            EntityTableView tableView = new EntityTableView(content);
-            this.getDialogPane().setContent(tableView);
+            EntityTableView entityTableView = new EntityTableView(content);
+            this.getDialogPane().setContent(entityTableView);
         }
         this.showAndWait();
     }

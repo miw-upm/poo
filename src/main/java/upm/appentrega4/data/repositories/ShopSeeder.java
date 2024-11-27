@@ -39,7 +39,7 @@ public class ShopSeeder {
         Article[] articles = {
                 Article.builder().barcode("8412345123410").summary("art1").price(BigDecimal.TEN).provider("prov1").build(),
                 Article.builder().barcode("8412345123420").summary("art2").price(BigDecimal.ONE).provider("prov1").build(),
-                Article.builder().barcode("8412345123430").price(BigDecimal.ONE).build(),
+                Article.builder().barcode("8412345123430").summary("art3").price(BigDecimal.ONE).provider("prov2").build(),
                 new Article("8412345123440", "art4", BigDecimal.TWO, "prov2"),
                 new Article("8412345123450", "art5", new BigDecimal("10.2"), "prov2"),
                 new Article("8412345123460", "art6", BigDecimal.TEN, "prov3"),

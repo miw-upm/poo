@@ -15,7 +15,7 @@ public class Logout extends AbstractCommand {
 
     @Override
     public String name() {
-        return "logout";
+        return Controller.LOGOUT;
     }
 
     @Override

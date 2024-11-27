@@ -24,11 +24,19 @@ public class GraphicalUserInterfaceFX extends Application {
     private MenuItem logoutItem;
     private MenuItem loginItem;
 
-    private  VBox contentArea;
+    private VBox contentArea;
     private Status status;
 
     public static void main(String[] args) {
         Application.launch(args);
+    }
+
+    public static GraphicalUserInterfaceFX getInstance() {
+        return instance;
+    }
+
+    private static void setInstance(GraphicalUserInterfaceFX graphicalUserInterfaceFX) {
+        instance = graphicalUserInterfaceFX;
     }
 
     @Override
@@ -36,40 +44,23 @@ public class GraphicalUserInterfaceFX extends Application {
         this.controller = DependencyInjector.getInstance().getController();
         GraphicalUserInterfaceFX.setInstance(this);
     }
-    public static GraphicalUserInterfaceFX getInstance() {
-        return instance;
-    }
-    private static void setInstance(GraphicalUserInterfaceFX graphicalUserInterfaceFX) {
-        instance = graphicalUserInterfaceFX;
-    }
 
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("App Shop");
+
         MenuBar menuBar;
-
-        BorderPane root = new BorderPane();
-
-        this.contentArea = new VBox();
-        contentArea.setPadding(new Insets(10));
-        contentArea.setSpacing(10);
-
         menuBar = new MenuBar();
         this.commandMenu = new Menu("Commands");
         menuBar.getMenus().addAll(this.prepareFileMenu(primaryStage), commandMenu, this.prepareHelpMenu());
 
-        Label userLabel = new Label(this.controller.userName());
-        this.controller.setListenerToUser((String userName) -> {
-            userLabel.setText(userName);
-            generatedCommandMenu();
-        });
-        userLabel.setAlignment(Pos.CENTER_RIGHT);
-        userLabel.setPadding(new Insets(10));
-        HBox topBox = new HBox(menuBar, userLabel);
-        topBox.setAlignment(Pos.CENTER_LEFT);
-        topBox.setSpacing(10);
-        HBox.setHgrow(menuBar, Priority.ALWAYS);
-        topBox.setAlignment(Pos.CENTER);
+        BorderPane root = new BorderPane();
+
+        HBox topBox = this.prepareTop(menuBar);
+
+        this.contentArea = new VBox();
+        contentArea.setPadding(new Insets(10));
+        contentArea.setSpacing(10);
 
         this.status = new Status();
 
@@ -84,13 +75,29 @@ public class GraphicalUserInterfaceFX extends Application {
         primaryStage.show();
     }
 
+    private HBox prepareTop(MenuBar menuBar) {
+        Label userLabel = new Label(this.controller.userName());
+        this.controller.setListenerToUser((String userName) -> {
+            userLabel.setText(userName);
+            generatedCommandMenu();
+        });
+        userLabel.setAlignment(Pos.CENTER_RIGHT);
+        userLabel.setPadding(new Insets(10));
+        HBox topBox = new HBox(menuBar, userLabel);
+        topBox.setAlignment(Pos.CENTER_LEFT);
+        topBox.setSpacing(10);
+        HBox.setHgrow(menuBar, Priority.ALWAYS);
+        topBox.setAlignment(Pos.CENTER);
+        return topBox;
+    }
+
     private Menu prepareFileMenu(Stage primaryStage) {
         Menu fileMenu = new Menu("File");
-        loginItem = new MenuItem("login");
-        loginItem.setOnAction(event -> this.controller.command("login").execute());
+        loginItem = new MenuItem(Controller.LOGIN);
+        loginItem.setOnAction(event -> this.controller.command(Controller.LOGIN).execute());
         fileMenu.getItems().add(loginItem);
-        logoutItem = new MenuItem("Logout");
-        logoutItem.setOnAction(event -> this.controller.command("logout").execute());
+        logoutItem = new MenuItem(Controller.LOGOUT);
+        logoutItem.setOnAction(event -> this.controller.command(Controller.LOGOUT).execute());
         fileMenu.getItems().add(logoutItem);
         MenuItem exitItem = new MenuItem("exit");
         exitItem.setOnAction(event -> primaryStage.close());
@@ -126,15 +133,11 @@ public class GraphicalUserInterfaceFX extends Application {
         return eventSubmit -> this.controller.command(item).execute();
     }
 
-    public Controller getController() {
-        return controller;
-    }
-
     public VBox getContentArea() {
-        return contentArea;
+        return this.contentArea;
     }
 
     public Status getStatus() {
-        return status;
+        return this.status;
     }
 }

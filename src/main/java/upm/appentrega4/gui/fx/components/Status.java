@@ -27,7 +27,7 @@ public class Status extends Label {
     public void successful(String message) {
         this.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
         this.setText("Successful! " + message);
-       }
+    }
 
     public void info(String message) {
         this.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));

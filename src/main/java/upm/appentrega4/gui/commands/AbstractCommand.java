@@ -37,7 +37,7 @@ public abstract class AbstractCommand implements Command {
             try {
                 this.executeAction(fields);
             } catch (Exception e) {
-                GraphicalUserInterfaceFX.getInstance().getStatus().error("login : " + e.getMessage());
+                GraphicalUserInterfaceFX.getInstance().getStatus().error(this.name() + ": " + e.getMessage());
             }
         };
     }

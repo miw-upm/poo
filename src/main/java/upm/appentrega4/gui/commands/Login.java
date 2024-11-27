@@ -20,7 +20,7 @@ public class Login extends AbstractCommand {
 
     @Override
     public String name() {
-        return "login";
+        return Controller.LOGIN;
     }
 
     @Override
