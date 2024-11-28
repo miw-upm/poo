@@ -1,6 +1,5 @@
 package upm.appentrega4.gui.commands;
 
-import javafx.scene.control.TextField;
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.data.models.Tag;
 import upm.appentrega4.gui.fx.GraphicalUserInterfaceFX;
@@ -42,8 +41,8 @@ public class AddArticleToTag extends AbstractCommand {
     }
 
     @Override
-    public void executeAction(List<TextField> fields) {
-        Tag tagUpdated = this.tagService.addArticle(fields.get(0).getText(), fields.get(1).getText());
+    public void executeAction(List<String> fields) {
+        Tag tagUpdated = this.tagService.addArticle(fields.get(0), fields.get(1));
         GraphicalUserInterfaceFX.getInstance().getStatus().successful("Articulo añadido correctamente");
         new EntityListDialog(this.name(), List.of(tagUpdated));
     }

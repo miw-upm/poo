@@ -1,6 +1,5 @@
 package upm.appentrega4.gui.commands;
 
-import javafx.scene.control.TextField;
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.gui.fx.GraphicalUserInterfaceFX;
 import upm.appentrega4.gui.fx.dialogs.EntityListDialog;
@@ -41,8 +40,8 @@ public class FindTagByArticleBarcode extends AbstractCommand {
     }
 
     @Override
-    public void executeAction(List<TextField> fields) {
-        new EntityListDialog(this.name(), this.tagService.findByArticleBarcode(fields.get(0).getText())
+    public void executeAction(List<String> fields) {
+        new EntityListDialog(this.name(), this.tagService.findByArticleBarcode(fields.get(0))
                 .map(Object.class::cast).toList());
         GraphicalUserInterfaceFX.getInstance().getStatus().successful("Consulta realizada");
     }

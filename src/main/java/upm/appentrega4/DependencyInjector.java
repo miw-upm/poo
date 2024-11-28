@@ -44,7 +44,7 @@ public class DependencyInjector {
         this.controller.add(new ListUsers(this.userService));
         this.controller.add(new CreateArticle(this.articleService));
         this.controller.add(new ListArticles(this.articleService));
-        this.controller.add(new CreateTag(this.tagService));
+        this.controller.add(new CreateTag(this.tagService, this.articleService));
         this.controller.add(new AddArticleToTag(this.tagService));
         this.controller.add(new FindArticleByTagName(this.articleService));
         this.controller.add(new FindTagByArticleBarcode(this.tagService));

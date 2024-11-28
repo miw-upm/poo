@@ -1,6 +1,5 @@
 package upm.appentrega4.gui.commands;
 
-import javafx.scene.control.TextField;
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.data.models.User;
 import upm.appentrega4.gui.Controller;
@@ -44,8 +43,8 @@ public class Login extends AbstractCommand {
     }
 
     @Override
-    public void executeAction(List<TextField> fields) {
-        User userLogged = this.userService.login(Integer.valueOf(fields.get(0).getText()), fields.get(1).getText());
+    public void executeAction(List<String> fields) {
+        User userLogged = this.userService.login(Integer.valueOf(fields.get(0)), fields.get(1));
         this.controller.setUser(userLogged);
         GraphicalUserInterfaceFX.getInstance().getStatus().successful("Bienvenido, " + userLogged.getName());
     }

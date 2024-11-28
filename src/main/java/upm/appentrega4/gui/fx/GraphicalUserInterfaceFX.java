@@ -11,6 +11,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import upm.appentrega4.DependencyInjector;
 import upm.appentrega4.data.models.Rol;
@@ -70,7 +72,7 @@ public class GraphicalUserInterfaceFX extends Application {
 
         this.generatedCommandMenu();
 
-        Scene scene = new Scene(root, 500, 400);
+        Scene scene = new Scene(root, 600, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -83,6 +85,7 @@ public class GraphicalUserInterfaceFX extends Application {
         });
         userLabel.setAlignment(Pos.CENTER_RIGHT);
         userLabel.setPadding(new Insets(10));
+        userLabel.setFont(Font.font("Arial", FontWeight.BOLD, 10));
         HBox topBox = new HBox(menuBar, userLabel);
         topBox.setAlignment(Pos.CENTER_LEFT);
         topBox.setSpacing(10);
