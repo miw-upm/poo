@@ -7,7 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class JavaFXComponentsExample extends Application {
+public class FX3SelectionControlsExample extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -24,6 +24,7 @@ public class JavaFXComponentsExample extends Application {
         ComboBox<String> comboBox = new ComboBox<>();
         comboBox.getItems().addAll("Option 1", "Option 2", "Option 3");
         comboBox.setValue("Option 1"); // Default value
+        comboBox.setEditable(true);
 
         // ChoiceBox
         Label choiceBoxLabel = new Label("Select an Option (ChoiceBox):");

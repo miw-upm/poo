@@ -4,11 +4,12 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import upm.appentrega4.data.models.Entity;
 import upm.appentrega4.gui.fx.components.EntityTableView;
 
 import java.util.List;
 
-public class GenericTableViewApp extends Application {
+public class FX8EntityTableViewExample extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -23,9 +24,9 @@ public class GenericTableViewApp extends Application {
 
         // Crear datos genéricos
         List<Object> people = List.of(
-                new Person(1, "Alice", "alice@example.com"),
-                new Person(2, "Bob", "bob@example.com"),
-                new Person(3, "Charlie", "charlie@example.com")
+                new Person("Alice", "alice@example.com"),
+                new Person("Bob", "bob@example.com"),
+                new Person("Charlie", "charlie@example.com")
         );
         EntityTableView tableView = new EntityTableView(people);
 
@@ -38,19 +39,14 @@ public class GenericTableViewApp extends Application {
         primaryStage.show();
     }
 
-    public static class Person {
-        private final int id;
+    public static class Person extends Entity {
         private final String name;
         private final String email;
 
-        public Person(int id, String name, String email) {
-            this.id = id;
+        public Person(String name, String email) {
+            super.setId(666);
             this.name = name;
             this.email = email;
-        }
-
-        public int getId() {
-            return id;
         }
 
         public String getName() {

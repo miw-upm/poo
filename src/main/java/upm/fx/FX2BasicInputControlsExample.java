@@ -7,7 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class BasicInputControlsExample extends Application {
+public class FX2BasicInputControlsExample extends Application {
 
     public static void main(String[] args) {
         launch(args);

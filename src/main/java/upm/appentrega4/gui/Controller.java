@@ -14,7 +14,7 @@ public class Controller {
     public static final String LOGOUT = "Logout";
     private final Map<String, Command> commands;
     private User user;
-    private Consumer<String> listener;
+    private Consumer<String> userListener;
 
     public Controller() {
         this.commands = new HashMap<>();
@@ -26,8 +26,8 @@ public class Controller {
 
     public void setUser(User user) {
         this.user = user;
-        if (listener != null) {
-            this.listener.accept(this.userName());
+        if (userListener != null) {
+            this.userListener.accept(this.userName());
         }
 
     }
@@ -61,6 +61,6 @@ public class Controller {
     }
 
     public void setListenerToUser(Consumer<String> listener) {
-        this.listener = listener;
+        this.userListener = listener;
     }
 }

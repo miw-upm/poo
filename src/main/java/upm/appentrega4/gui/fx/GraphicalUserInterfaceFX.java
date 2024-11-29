@@ -25,7 +25,6 @@ public class GraphicalUserInterfaceFX extends Application {
     private Menu commandMenu;
     private MenuItem logoutItem;
     private MenuItem loginItem;
-
     private VBox contentArea;
     private Status status;
 
@@ -51,23 +50,22 @@ public class GraphicalUserInterfaceFX extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("App Shop");
 
+        BorderPane root = new BorderPane();
+
         MenuBar menuBar;
         menuBar = new MenuBar();
         this.commandMenu = new Menu("Commands");
         menuBar.getMenus().addAll(this.prepareFileMenu(primaryStage), commandMenu, this.prepareHelpMenu());
 
-        BorderPane root = new BorderPane();
-
         HBox topBox = this.prepareTop(menuBar);
+        root.setTop(topBox);
 
         this.contentArea = new VBox();
         contentArea.setPadding(new Insets(10));
         contentArea.setSpacing(10);
+        root.setCenter(contentArea);
 
         this.status = new Status();
-
-        root.setTop(topBox);
-        root.setCenter(contentArea);
         root.setBottom(status);
 
         this.generatedCommandMenu();

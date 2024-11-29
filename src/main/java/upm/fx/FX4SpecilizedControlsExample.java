@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
-public class JavaFXPickersExample extends Application {
+public class FX4SpecilizedControlsExample extends Application {
 
     public static void main(String[] args) {
         launch(args);

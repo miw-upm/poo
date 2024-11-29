@@ -7,10 +7,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-public class LayoutExample extends Application {
+public class FX1LayoutExample extends Application {
 
     public static void main(String[] args) {
-        launch(args);
+        Application.launch(args);
     }
 
     @Override
