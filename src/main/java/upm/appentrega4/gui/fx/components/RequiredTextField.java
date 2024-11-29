@@ -9,6 +9,9 @@ import javafx.scene.layout.HBox;
 
 public class RequiredTextField extends HBox {
 
+    public static final String CSS_BOLD = "-fx-font-weight: bold; ";
+    public static final String CSS_BLACK = "-fx-text-fill: black; ";
+    public static final String CSS_RED = "-fx-text-fill: red;";
     private final TextField textField;
     private final Label nameLabel;
 
@@ -22,27 +25,26 @@ public class RequiredTextField extends HBox {
         this.minLength = minLength;
 
         this.nameLabel = new Label(name + ":");
-        this.nameLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: black;");
+        this.nameLabel.setStyle(CSS_BOLD + CSS_BLACK);
         this.nameLabel.setPrefWidth(100);
 
         this.textField = new TextField();
         this.textField.setPromptText("Enter " + name);
-        this.textField.setTooltip(new Tooltip("Minimum " + this.minLength));
+        this.textField.setTooltip(new Tooltip("Minimum length" + this.minLength));
 
         this.getChildren().addAll(nameLabel, textField);
 
         textField.textProperty().addListener((obs, oldText, newText) -> {
             if (this.isInvalid()) {
-                textField.setStyle("-fx-text-fill: red;");
+                textField.setStyle(CSS_RED);
             } else {
-                textField.setStyle("-fx-text-fill: black;");
+                textField.setStyle(CSS_BLACK);
             }
         });
     }
 
     private boolean isInvalid() {
-        String text = textField.getText();
-        return text == null || text.length() < minLength;
+        return this.textField.getText() == null || this.textField.getText().length() < minLength;
     }
 
     public BooleanBinding observableInvalid() {
@@ -53,7 +55,7 @@ public class RequiredTextField extends HBox {
     }
 
     public String getText() {
-        return textField.getText();
+        return this.textField.getText();
     }
 
     public void setText(String text) {
@@ -61,10 +63,10 @@ public class RequiredTextField extends HBox {
     }
 
     public int getMinLength() {
-        return minLength;
+        return this.minLength;
     }
 
     public String getName() {
-        return nameLabel.getText();
+        return this.nameLabel.getText();
     }
 }

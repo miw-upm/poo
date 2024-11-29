@@ -1,6 +1,7 @@
 package upm.appentrega4.gui.fx.components;
 
 import javafx.scene.control.TextField;
+import upm.appentrega4.data.models.Article;
 
 public class BarcodeField extends TextField {
 
@@ -10,7 +11,6 @@ public class BarcodeField extends TextField {
 
     @Override
     public void replaceText(int start, int end, String text) {
-        // Validate input before replacing text
         if (isValidInput(text)) {
             super.replaceText(start, end, text);
         }
@@ -18,20 +18,17 @@ public class BarcodeField extends TextField {
 
     @Override
     public void replaceSelection(String text) {
-        // Validate input before replacing selection
         if (isValidInput(text)) {
             super.replaceSelection(text);
         }
     }
 
     private boolean isValidInput(String text) {
-        // Allow only numeric characters and ensure length does not exceed 9 digits
-        return text.matches("\\d*") && (getText().length() + text.length() <= 9);
+        return text.matches("\\d*") && (getText().length() + text.length() <= Article.EUROPEAN_ARTICLE_NUMBER);
     }
 
     public boolean isValidMobileNumber() {
-        // Check if the current text contains exactly 9 digits
-        return getText().length() == 13;
+        return getText().length() == Article.EUROPEAN_ARTICLE_NUMBER;
     }
 }
 
