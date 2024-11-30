@@ -1,4 +1,4 @@
-package upm.appentrega4.gui.fx;
+package upm.doo.fx;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
