@@ -3,8 +3,8 @@ package upm.appentrega4.gui.commands;
 import upm.appentrega4.data.models.Rol;
 import upm.appentrega4.data.models.User;
 import upm.appentrega4.gui.Controller;
-import upm.appentrega4.gui.fx.GraphicalUserInterfaceFX;
 import upm.appentrega4.services.UserService;
+import upm.appentrega4.gui.fx.GraphicalUserInterfaceFX;
 
 import java.util.List;
 

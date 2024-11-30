@@ -1,9 +1,9 @@
 package upm.appentrega4.gui.commands;
 
 import upm.appentrega4.data.models.Rol;
+import upm.appentrega4.services.ArticleService;
 import upm.appentrega4.gui.fx.GraphicalUserInterfaceFX;
 import upm.appentrega4.gui.fx.dialogs.EntityListDialog;
-import upm.appentrega4.services.ArticleService;
 
 import java.util.List;
 
