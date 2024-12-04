@@ -12,22 +12,26 @@ import java.util.List;
 
 public class EntityTableView extends TableView<Object> {
 
+    private static final String IS = "is";
+    private static final String GET = "get";
+
     public EntityTableView(List<Object> content) {
-        ObservableList<Object> data = FXCollections.observableArrayList(content);
-        this.addColumns(content.get(0).getClass().getSuperclass());
-        this.addColumns(content.get(0).getClass());
-        this.setItems(data);
+        if (!content.isEmpty()) {
+            ObservableList<Object> data = FXCollections.observableArrayList(content);
+            this.addColumns(content.get(0).getClass().getSuperclass());
+            this.addColumns(content.get(0).getClass());
+            this.setItems(data);
+        }
     }
 
-
     private void addColumns(Class<?> clazz) {
-        if (clazz == null) return;
+        if (clazz == null) {
+            return;
+        }
 
         for (Method method : clazz.getDeclaredMethods()) {
-            // Consideramos sólo los getters
             if (isGetter(method)) {
                 String fieldName = extractFieldName(method);
-
                 TableColumn<Object, String> column = new TableColumn<>(fieldName);
                 column.setCellValueFactory(item -> {
                     try {
@@ -35,24 +39,26 @@ public class EntityTableView extends TableView<Object> {
                         return new SimpleStringProperty(value != null ? value.toString() : "");
                     } catch (Exception exception) {
                         LogManager.getLogger(this.getClass()).error(exception::getMessage);
-                        return new SimpleStringProperty("");
+                        return new SimpleStringProperty("Error");
                     }
                 });
-
                 this.getColumns().add(column);
             }
         }
     }
 
     private boolean isGetter(Method method) {
-        return method.getName().startsWith("get") &&
-                method.getParameterCount() == 0 &&
-                !method.getReturnType().equals(void.class);
+        boolean isGetter = method.getName().startsWith(GET) && !method.getReturnType().equals(void.class);
+        boolean isBooleanGetter = method.getName().startsWith(IS) &&
+                (method.getReturnType().equals(boolean.class) || method.getReturnType().equals(Boolean.class));
+        return method.getParameterCount() == 0 && (isGetter || isBooleanGetter);
     }
 
     private String extractFieldName(Method getter) {
-        // Convierte el nombre del getter en el nombre del campo (por ejemplo, getName -> name)
-        String name = getter.getName().substring(3); // Elimina "get"
-        return Character.toLowerCase(name.charAt(0)) + name.substring(1);
+        if (getter.getName().startsWith(IS)) {
+            return getter.getName().substring(IS.length());
+        } else {
+            return getter.getName().substring(GET.length());
+        }
     }
 }
