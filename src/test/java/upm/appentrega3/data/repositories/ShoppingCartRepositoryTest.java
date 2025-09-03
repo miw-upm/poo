@@ -18,7 +18,7 @@ class ShoppingCartRepositoryTest {
 
     @Test
     void testFindAll() {
-        assertTrue(this.shoppingCartRepository.findAll().size() > 0);
+        assertTrue(!this.shoppingCartRepository.findAll().isEmpty());
     }
 
     @Test

@@ -26,23 +26,23 @@ public class Point {
     }
 
     public void translateOrigin(Point point) {
-        this.x -= point.getX();
-        this.y -= point.getY();
+        this.x -= point.x;
+        this.y -= point.y;
     }
 
     public int getX() {
-        return x;
+        return this.x;
     }
 
     public int getY() {
-        return y;
+        return this.y;
     }
 
     @Override
     public String toString() {
         return "Point{" +
-                "x=" + x +
-                ", y=" + y +
+                "x=" + this.x +
+                ", y=" + this.y +
                 '}';
     }
 }
