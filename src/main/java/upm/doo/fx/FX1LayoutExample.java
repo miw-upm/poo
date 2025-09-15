@@ -39,7 +39,6 @@ public class FX1LayoutExample extends Application {
         gridPane.add(new Button("Botón 3,2"), 1, 0);
 
 
-
         // StackPane (Overlapping Layout)
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(new Label("Etiqueta en el fondo"), new Button("Botón encima"));
