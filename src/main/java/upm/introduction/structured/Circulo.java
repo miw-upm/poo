@@ -1,7 +1,7 @@
 package upm.introduction.structured;
 
 public class Circulo {
-    private double radio;
+    private final double radio;
 
     public Circulo(double radio) {
         this.radio = radio;
