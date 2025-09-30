@@ -18,8 +18,12 @@ public class View {
         System.out.println(PURPLE.apply(this.line(message), BOLD));
     }
 
+    public void showTitle(String message){
+        System.out.println(AnsiCode.BLACK.apply(message, AnsiCode.BACKGROUND_WHITE, AnsiCode.BOLD));
+    }
+
     public void showError(String message) {
-        System.out.println(BLACK.apply(FIRE + this.line(message), BACKGROUND_RED));
+        System.out.println(RED.apply(FIRE + this.line(message)));
     }
 
     public void showCommandPrompt() {

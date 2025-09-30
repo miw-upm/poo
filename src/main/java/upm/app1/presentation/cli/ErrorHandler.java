@@ -3,24 +3,17 @@ package upm.app1.presentation.cli;
 import upm.app1.presentation.view.View;
 
 public class ErrorHandler {
-    private final CommandLineInterface commandLineInterface;
-    private final View view;
 
-    public ErrorHandler(CommandLineInterface commandLineInterface, View view) {
-        this.commandLineInterface = commandLineInterface;
-        this.view = view;
-        this.view.showImportant("App Tienda UPM.");
-    }
-
-    public void handlesErrors() {
+    public void handlesErrors(CommandLineInterface commandLineInterface, View view) {
+        view.showTitle("App Tienda UPM");
         boolean exit = false;
         while (!exit) {
             try {
-                exit = this.commandLineInterface.runCommands();
+                exit = commandLineInterface.runCommands();
             } catch (Exception e) {
-                this.view.showError(">>> ERROR (" + e.getClass().getSimpleName() + ") >>> " + e.getMessage());
+                view.showError("ERROR (" + e.getClass().getSimpleName() + ") >>> " + e.getMessage());
             }
         }
-        this.view.showImportant("Hasta pronto!");
+        view.showTitle("Hasta pronto!");
     }
 }

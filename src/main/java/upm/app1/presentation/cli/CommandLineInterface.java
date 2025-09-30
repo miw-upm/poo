@@ -42,7 +42,7 @@ public class CommandLineInterface {
             case CREATE_USER:
                 this.createUser(scanner);
                 break;
-            case FIND_ALL_USERS:
+            case LIST_USERS:
                 this.findAllUsers();
                 break;
             case HELP:

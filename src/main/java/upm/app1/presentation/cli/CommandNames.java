@@ -2,7 +2,7 @@ package upm.app1.presentation.cli;
 
 public enum CommandNames {
     CREATE_USER("create-user", "<mobile>,<name>,<address>", "Se crea un usuario"),
-    FIND_ALL_USERS("find-all-users", "", "Muestra todos los usuarios"),
+    LIST_USERS("list-users", "", "Muestra todos los usuarios"),
     HELP("help", "", "Muestra la ayuda"),
     EXIT("exit", "", "Termina la ejecución");
 

@@ -21,10 +21,11 @@ public class UserRepositoryMap {
         return entity;
     }
 
-    public User update(User entity) {
-        if (this.map.containsKey(entity.getId())) {
-            this.map.put(entity.getId(), entity);
+    public User update(Integer id, User entity) {
+        if (!this.map.containsKey(id)) {
+            throw new RuntimeException("El id no existe: " + id);
         }
+        this.map.put(entity.getId(), entity);
         return entity;
     }
 
