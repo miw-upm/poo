@@ -18,7 +18,7 @@ public class View {
         System.out.println(PURPLE.apply(this.line(message), BOLD));
     }
 
-    public void showTitle(String message){
+    public void showTitle(String message) {
         System.out.println(AnsiCode.BLACK.apply(message, AnsiCode.BACKGROUND_WHITE, AnsiCode.BOLD));
     }
 
