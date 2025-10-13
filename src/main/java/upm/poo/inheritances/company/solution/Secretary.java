@@ -14,7 +14,7 @@ public class Secretary extends Staff {
 
     @Override
     public double salary() {
-        return this.category.getBase() * this.getHours();
+        return (double) this.category.getBase() * this.getHours();
     }
 
     @Override

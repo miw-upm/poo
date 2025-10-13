@@ -28,7 +28,7 @@ public class Technical {
     }
 
     public double salary() {
-        return this.hours * this.level / 4;
+        return (double) (this.hours * this.level) / 4;
     }
 
     public double retention() {

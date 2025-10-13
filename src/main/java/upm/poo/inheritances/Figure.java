@@ -4,7 +4,7 @@ public abstract class Figure {
 
     private final String name;
 
-    public Figure(String name) {
+    protected Figure(String name) {
         this.name = name;
     }
 

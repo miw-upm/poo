@@ -1,6 +1,6 @@
 package upm.poo.interfaces;
 
-public class MyClass implements MyInterface {
+public class Server implements MyInterface {
     @Override
     public String echo(int param) {
         return "param: " + param;
@@ -9,5 +9,10 @@ public class MyClass implements MyInterface {
     @Override
     public long round(double param) {
         return Math.round(param);
+    }
+
+    @Override
+    public String defaultMethod() {
+        return "defaultMethod of SERVER";
     }
 }

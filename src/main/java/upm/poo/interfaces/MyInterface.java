@@ -13,6 +13,6 @@ public interface MyInterface {
     }
 
     default String defaultMethod2(MyInterface myInterface) {
-        return "Default method 2: " + myInterface.echo(666);
+        return "Default method 2: " + myInterface.echo(666) + myInterface.round(666);
     }
 }

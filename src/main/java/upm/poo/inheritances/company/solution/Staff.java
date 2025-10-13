@@ -5,7 +5,7 @@ public abstract class Staff {
     private final String name;
     private Integer hours;
 
-    public Staff(String name) {
+    protected Staff(String name) {
         this.name = name;
     }
 
