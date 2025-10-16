@@ -26,9 +26,6 @@ public abstract class GenericRepositoryMap<T extends Entity> implements GenericR
 
     @Override
     public T update(Integer id, T entity) {
-        if (id == null) {
-            throw new RuntimeException("No se puede actualizar una entidad cuando su id es null");
-        }
         if (!this.map.containsKey(id)) {
             throw new RuntimeException("El id no existe: " + id);
         }
