@@ -2,6 +2,7 @@ package upm.app2.data.repositories.map;
 
 import upm.app2.data.models.Entity;
 import upm.app2.data.repositories.GenericRepository;
+import upm.app2.data.repositories.exceptions.EntityNotFoundException;
 
 import java.util.*;
 
@@ -27,7 +28,7 @@ public abstract class GenericRepositoryMap<T extends Entity> implements GenericR
     @Override
     public T update(Integer id, T entity) {
         if (!this.map.containsKey(id)) {
-            throw new RuntimeException("El id no existe: " + id);
+            throw new EntityNotFoundException("Para actualizar, la id debe existir previamente: " + id);
         }
         this.map.put(entity.getId(), entity);
         return entity;
