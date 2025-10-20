@@ -1,4 +1,4 @@
-package upm.app1.presentation.cli;
+package upm.app2.presentation.cli;
 
 public enum CommandNames {
     CREATE_USER("create-user", "<mobile>,<name>,<address>", "Se crea un usuario"),
@@ -10,9 +10,9 @@ public enum CommandNames {
     private final String parameters;
     private final String help;
 
-    CommandNames(String value, String parameters, String help) {
+    CommandNames(String value, String parametters, String help) {
         this.value = value;
-        this.parameters = parameters;
+        this.parameters = parametters;
         this.help = help;
     }
 
