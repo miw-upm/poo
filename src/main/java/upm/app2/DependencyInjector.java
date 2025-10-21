@@ -37,7 +37,6 @@ public class DependencyInjector {
         this.commandLineInterface.add(new ListUsers(this.view, this.userService));
 
         this.errorHandler = new ErrorHandler();
-        this.errorHandler.handlesErrors(this.commandLineInterface, this.view);
     }
 
     public static DependencyInjector getInstance() {
