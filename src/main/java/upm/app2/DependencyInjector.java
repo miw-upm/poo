@@ -13,6 +13,7 @@ import upm.app2.presentation.view.View;
 import upm.app2.services.UserService;
 
 public class DependencyInjector {
+    private static final DependencyInjector instance = new DependencyInjector();
     private final ErrorHandler errorHandler;
     private final View view;
     private final CommandLineInterface commandLineInterface;
@@ -20,7 +21,7 @@ public class DependencyInjector {
     private final UserRepository userRepository;
     private final Seeder seeder;
 
-    public DependencyInjector() {
+    private DependencyInjector() {
         this.userRepository = new UserRepositoryMap();
 
         this.seeder = new Seeder(this.userRepository);
@@ -37,6 +38,10 @@ public class DependencyInjector {
 
         this.errorHandler = new ErrorHandler();
         this.errorHandler.handlesErrors(this.commandLineInterface, this.view);
+    }
+
+    public static DependencyInjector getInstance() {
+        return DependencyInjector.instance;
     }
 
     public void run() {

@@ -8,7 +8,7 @@ import java.util.*;
 
 public class CommandLineInterface {
     public static final String EXIT = "exit";
-    private static final String COMMAND_DELIMITER_EXPRESSION = "[" + Delimiters.COMMAND_PARAM_SEPARATOR.getValue() + "\\r\\n]";
+    private static final String COMMAND_DELIMITER_EXPRESSION = "[" + Command.COMMAND_PARAM_SEPARATOR + "\\r\\n]";
     private final Map<String, Command> commands;
     private final View view;
 
@@ -50,7 +50,7 @@ public class CommandLineInterface {
         if (expectedParams.isEmpty()) {
             return new String[0];
         }
-        String[] foundParams = scanner.next().split(Delimiters.PARAM_SEPARATOR.getValue());
+        String[] foundParams = scanner.next().split(Command.PARAM_SEPARATOR);
         if (expectedParams.size() != foundParams.length) {
             throw new BadRequestException("Parámetros esperados: " + expectedParams +
                     ", encontrados " + Arrays.toString(foundParams));
