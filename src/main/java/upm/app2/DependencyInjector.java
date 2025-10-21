@@ -5,6 +5,10 @@ import upm.app2.data.repositories.UserRepository;
 import upm.app2.data.repositories.map.UserRepositoryMap;
 import upm.app2.presentation.cli.CommandLineInterface;
 import upm.app2.presentation.cli.ErrorHandler;
+import upm.app2.presentation.cli.commands.CreateUser;
+import upm.app2.presentation.cli.commands.Exit;
+import upm.app2.presentation.cli.commands.Help;
+import upm.app2.presentation.cli.commands.ListUsers;
 import upm.app2.presentation.view.View;
 import upm.app2.services.UserService;
 
@@ -18,11 +22,19 @@ public class DependencyInjector {
 
     public DependencyInjector() {
         this.userRepository = new UserRepositoryMap();
+
         this.seeder = new Seeder(this.userRepository);
         this.seeder.seed();
+
         this.userService = new UserService(this.userRepository);
+
         this.view = new View();
-        this.commandLineInterface = new CommandLineInterface(this.view, this.userService);
+        this.commandLineInterface = new CommandLineInterface(this.view);
+        this.commandLineInterface.add(new Help(this.commandLineInterface));
+        this.commandLineInterface.add(new Exit());
+        this.commandLineInterface.add(new CreateUser(this.view, this.userService));
+        this.commandLineInterface.add(new ListUsers(this.view, this.userService));
+
         this.errorHandler = new ErrorHandler();
         this.errorHandler.handlesErrors(this.commandLineInterface, this.view);
     }

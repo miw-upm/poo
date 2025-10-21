@@ -4,7 +4,6 @@ import java.util.List;
 
 import static upm.app2.presentation.view.AnsiCode.*;
 
-
 public class View {
 
     private String line(String message) {

@@ -1,71 +1,68 @@
 package upm.app2.presentation.cli;
 
-import upm.app2.data.models.User;
+import upm.app2.presentation.cli.exceptions.BadRequestException;
+import upm.app2.presentation.cli.exceptions.CommandException;
 import upm.app2.presentation.view.View;
-import upm.app2.services.UserService;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class CommandLineInterface {
-    private static final String COMMAND_PARAM_SEPARATOR = "#";
-    private static final String PARAM_SEPARATOR = ",";
-    private static final String INPUT_DELIMITER = "[" + COMMAND_PARAM_SEPARATOR + "\\r\\n]";
-
+    public static final String EXIT = "exit";
+    private static final String COMMAND_DELIMITER_EXPRESSION = "[" + Delimiters.COMMAND_PARAM_SEPARATOR.getValue() + "\\r\\n]";
+    private final Map<String, Command> commands;
     private final View view;
-    private final UserService userService;
 
-    public CommandLineInterface(View view, UserService userService) {
+    public CommandLineInterface(View view) {
         this.view = view;
-        this.userService = userService;
+        this.commands = new HashMap<>();
     }
 
-    private void help() {
-        for (CommandNames command : CommandNames.values()) {
-            this.view.show(command.getHelp());
-        }
+    public void add(Command command) {
+        this.commands.put(command.name(), command);
     }
 
     public boolean runCommands() {
-        Scanner scanner = new Scanner(System.in).useDelimiter(INPUT_DELIMITER);
-        boolean exit = false;
-        while (!exit) {
+        Scanner scanner = new Scanner(System.in).useDelimiter(COMMAND_DELIMITER_EXPRESSION);
+        boolean exit;
+        do {
             exit = runCommand(scanner);
-        }
+        } while (!exit);
         return true;
     }
 
-    private boolean runCommand(Scanner scanner) {
+    public boolean runCommand(Scanner scanner) {
         this.view.showCommandPrompt();
-        CommandNames command = CommandNames.fromValue(scanner.next());
-        boolean exit = false;
-        switch (command) {
-            case CREATE_USER:
-                this.createUser(scanner);
-                break;
-            case LIST_USERS:
-                this.findAllUsers();
-                break;
-            case HELP:
-                this.help();
-                break;
-            case EXIT:
-                exit = true;
-                break;
+        String command = scanner.next();
+        if (!this.commands.containsKey(command)) {
+            throw new CommandException("Comando '" + command + "' no existe.");
         }
-        return exit;
+        String[] params = this.scanParamsIfNeededAssured(scanner, command);
+        if (EXIT.equals(command)) {
+            return true;
+        } else {
+            this.commands.get(command).execute(params);
+        }
+        return false;
     }
 
-    private void findAllUsers() {
-        this.view.showList("Usuarios", this.userService.findAll());
+    private String[] scanParamsIfNeededAssured(Scanner scanner, String command) {
+        List<String> expectedParams = commands.get(command).params();
+        if (expectedParams.isEmpty()) {
+            return new String[0];
+        }
+        String[] foundParams = scanner.next().split(Delimiters.PARAM_SEPARATOR.getValue());
+        if (expectedParams.size() != foundParams.length) {
+            throw new BadRequestException("Parámetros esperados: " + expectedParams +
+                    ", encontrados " + Arrays.toString(foundParams));
+        }
+        return foundParams;
+
     }
 
-    private void createUser(Scanner scanner) {
-        String[] values = scanner.next().split(PARAM_SEPARATOR);
-        if (values.length != 3) {
-            throw new IllegalArgumentException(CommandNames.CREATE_USER.getHelp());
+    public void help() {
+        for (Command command : this.commands.values()) {
+            this.view.showImportant(command.help());
         }
-        User createdUser = this.userService.create(new User(Integer.valueOf(values[0]), values[1], values[2]));
-        this.view.show(createdUser.toString());
     }
 
 }

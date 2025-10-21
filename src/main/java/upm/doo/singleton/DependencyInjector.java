@@ -1,7 +1,7 @@
 package upm.doo.singleton;
 
 public class DependencyInjector {
-    private static DependencyInjector instance = new DependencyInjector();
+    private static final DependencyInjector instance = new DependencyInjector();
 
     private DependencyInjector() {
         //TODO
@@ -11,7 +11,7 @@ public class DependencyInjector {
         return DependencyInjector.instance;
     }
 
-    public void run(){
+    public void run() {
         //TODO
     }
 }

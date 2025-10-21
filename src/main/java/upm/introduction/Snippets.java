@@ -2,16 +2,15 @@ package upm.introduction;
 
 public class Snippets {
 
-    public void m(){
+    public void m() {
 
         Integer i = 10;
 
-        if (i==null){
+        if (i == null) {
             throw new RuntimeException("....");
         }
 
         //...continua
-
 
 
     }
