@@ -16,11 +16,6 @@ public class ListUsers implements Command {
     }
 
     @Override
-    public void execute(String[] params) {
-        this.view.showList("Usuarios", this.userService.findAll());
-    }
-
-    @Override
     public String name() {
         return "list-users";
     }
@@ -35,4 +30,8 @@ public class ListUsers implements Command {
         return "Lista todos los usuarios";
     }
 
+    @Override
+    public void execute(String[] params) {
+        this.view.showList("Usuarios", this.userService.findAll());
+    }
 }
