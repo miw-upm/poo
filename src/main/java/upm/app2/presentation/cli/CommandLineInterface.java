@@ -8,7 +8,7 @@ import java.util.*;
 
 public class CommandLineInterface {
     public static final String EXIT = "exit";
-    private static final String COMMAND_DELIMITER_EXPRESSION = "[" + Command.COMMAND_PARAM_SEPARATOR + "\\r\\n]";
+    private static final String COMMAND_DELIMITER_EXPRESSION = "[" + Command.COMMAND_SEPARATOR + "\\r\\n]";
     private final Map<String, Command> commands;
     private final View view;
 
@@ -56,7 +56,6 @@ public class CommandLineInterface {
                     ", encontrados " + Arrays.toString(foundParams));
         }
         return foundParams;
-
     }
 
     public void help() {

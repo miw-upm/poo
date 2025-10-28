@@ -13,11 +13,12 @@ public class Article extends Entity {
     private LocalDate registrationDate;
     private String provider;
 
-    public Article(String barcode, String summary, BigDecimal price, String provider) {
-        this.setBarcode(barcode);
-        this.summary = summary;
-        this.price = price;
-        this.provider = provider;
+    public Article() {
+        //Empty
+    }
+
+    public static Article.Builder builder() {
+        return new Article.Builder();
     }
 
     public String getBarcode() {
@@ -72,5 +73,37 @@ public class Article extends Entity {
                 ", registrationDate=" + registrationDate +
                 ", provider='" + provider + '\'' +
                 "} " + super.toString();
+    }
+
+    public static class Builder {
+        private final Article article;
+
+        public Builder() {
+            this.article = new Article();
+        }
+
+        public Article.Builder barcode(String barcode) {
+            this.article.setBarcode(barcode);
+            return this;
+        }
+
+        public Article.Builder summary(String summary) {
+            this.article.summary = summary;
+            return this;
+        }
+
+        public Article.Builder price(BigDecimal price) {
+            this.article.price = price;
+            return this;
+        }
+
+        public Article.Builder provider(String provider) {
+            this.article.provider = provider;
+            return this;
+        }
+
+        public Article build() {
+            return this.article;
+        }
     }
 }

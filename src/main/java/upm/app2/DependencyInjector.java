@@ -1,7 +1,11 @@
 package upm.app2;
 
+import upm.app2.data.repositories.ArticleRepository;
 import upm.app2.data.repositories.Seeder;
+import upm.app2.data.repositories.ShoppingCartRepository;
 import upm.app2.data.repositories.UserRepository;
+import upm.app2.data.repositories.map.ArticleRepositoryMap;
+import upm.app2.data.repositories.map.ShoppingCartRepositoryMap;
 import upm.app2.data.repositories.map.UserRepositoryMap;
 import upm.app2.presentation.cli.CommandLineInterface;
 import upm.app2.presentation.cli.ErrorHandler;
@@ -18,13 +22,18 @@ public class DependencyInjector {
     private final View view;
     private final CommandLineInterface commandLineInterface;
     private final UserService userService;
+    private final ArticleRepository articleRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
     private final UserRepository userRepository;
+
     private final Seeder seeder;
 
     private DependencyInjector() {
         this.userRepository = new UserRepositoryMap();
+        this.articleRepository = new ArticleRepositoryMap();
+        this.shoppingCartRepository = new ShoppingCartRepositoryMap();
 
-        this.seeder = new Seeder(this.userRepository);
+        this.seeder = new Seeder(this.userRepository, this.articleRepository, this.shoppingCartRepository);
         this.seeder.seed();
 
         this.userService = new UserService(this.userRepository);
@@ -65,6 +74,14 @@ public class DependencyInjector {
 
     public UserRepository getUserRepository() {
         return userRepository;
+    }
+
+    public ArticleRepository getArticleRepository() {
+        return articleRepository;
+    }
+
+    public ShoppingCartRepository getShoppingCartRepository() {
+        return shoppingCartRepository;
     }
 
     public Seeder getSeeder() {
