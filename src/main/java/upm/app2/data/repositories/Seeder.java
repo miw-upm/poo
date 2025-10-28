@@ -33,7 +33,7 @@ public class Seeder {
         Article[] articles = {
                 Article.builder().barcode("8412345123410").summary("art1").price(BigDecimal.TEN).provider("prov1").build(),
                 Article.builder().barcode("8412345123420").summary("art2").price(BigDecimal.ONE).provider("prov1").build(),
-                Article.builder().barcode("8412345123430").price(BigDecimal.ONE).build(),
+                Article.builder().barcode("8412345123430").price(BigDecimal.TEN).build(),
                 Article.builder().barcode("8412345123440").summary("art4").price(BigDecimal.TWO).provider("prov2").build(),
                 Article.builder().barcode("8412345123450").summary("art5").price(new BigDecimal("10.2")).provider("prov2").build(),
                 Article.builder().barcode("8412345123460").summary("art5").price(BigDecimal.TEN).provider("prov3").build(),
@@ -46,8 +46,8 @@ public class Seeder {
         ArticleItem[] articleItems = {
                 new ArticleItem(articles[0], 1, new BigDecimal("11.346")),
                 new ArticleItem(articles[1], 2, BigDecimal.TEN),
-                new ArticleItem(articles[1], 3, BigDecimal.ZERO),
-                new ArticleItem(articles[2], 4, BigDecimal.ONE)
+                new ArticleItem(articles[1], 1, BigDecimal.ONE),
+                new ArticleItem(articles[2], 20, BigDecimal.ZERO)
         };
         ShoppingCart[] carts = {
                 new ShoppingCart(users[0], LocalDateTime.now()),

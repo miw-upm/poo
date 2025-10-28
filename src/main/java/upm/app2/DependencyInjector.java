@@ -9,10 +9,7 @@ import upm.app2.data.repositories.map.ShoppingCartRepositoryMap;
 import upm.app2.data.repositories.map.UserRepositoryMap;
 import upm.app2.presentation.cli.CommandLineInterface;
 import upm.app2.presentation.cli.ErrorHandler;
-import upm.app2.presentation.cli.commands.CreateUser;
-import upm.app2.presentation.cli.commands.Exit;
-import upm.app2.presentation.cli.commands.Help;
-import upm.app2.presentation.cli.commands.ListUsers;
+import upm.app2.presentation.cli.commands.*;
 import upm.app2.presentation.view.View;
 import upm.app2.services.UserService;
 
@@ -36,7 +33,7 @@ public class DependencyInjector {
         this.seeder = new Seeder(this.userRepository, this.articleRepository, this.shoppingCartRepository);
         this.seeder.seed();
 
-        this.userService = new UserService(this.userRepository);
+        this.userService = new UserService(this.userRepository, this.shoppingCartRepository);
 
         this.view = new View();
         this.commandLineInterface = new CommandLineInterface(this.view);
@@ -44,6 +41,7 @@ public class DependencyInjector {
         this.commandLineInterface.add(new Exit());
         this.commandLineInterface.add(new CreateUser(this.view, this.userService));
         this.commandLineInterface.add(new ListUsers(this.view, this.userService));
+        this.commandLineInterface.add(new FindUserMobilesByCartGreater100(this.view, this.userService));
 
         this.errorHandler = new ErrorHandler();
     }
