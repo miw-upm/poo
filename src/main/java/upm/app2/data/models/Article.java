@@ -17,6 +17,13 @@ public class Article extends Entity {
         //Empty
     }
 
+    public Article(String barcode, String summary, BigDecimal price, String provider) {
+        this.barcode = barcode;
+        this.summary = summary;
+        this.price = price;
+        this.provider = provider;
+    }
+
     public static Article.Builder builder() {
         return new Article.Builder();
     }

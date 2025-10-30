@@ -44,7 +44,7 @@ public class MysqlTables {
     private Connection createConnectionMySql() {
         try {
             Class.forName(MysqlTables.DRIVER);
-           return DriverManager.getConnection(URL + DATABASE, USER, PASSWORD);
+            return DriverManager.getConnection(URL + DATABASE, USER, PASSWORD);
         } catch (ClassNotFoundException e) {
             throw new UnsupportedOperationException("Driver error: '" + MysqlTables.DRIVER + "'. " + e.getMessage());
         } catch (SQLException e) {
@@ -65,7 +65,7 @@ public class MysqlTables {
              Statement statement = connectionTmp.createStatement()) {
             statement.executeUpdate("DROP DATABASE IF EXISTS " + DATABASE + ";");
         } catch (SQLException e) {
-            throw new UnsupportedOperationException("Drop Database Error. "+e);
+            throw new UnsupportedOperationException("Drop Database Error. " + e);
         }
     }
 
@@ -89,82 +89,82 @@ public class MysqlTables {
 
     public void createUserTable() {
         final String sql = """
-            CREATE TABLE IF NOT EXISTS `UserApp` (
-              `id` INT NOT NULL AUTO_INCREMENT,
-              `mobile` INT UNIQUE NOT NULL,
-              `password` VARCHAR(20),
-              `name` VARCHAR(20),
-              `address` VARCHAR(50),
-              `rol` VARCHAR(20),
-              PRIMARY KEY (`id`)
-            );
-            """;
+                CREATE TABLE IF NOT EXISTS `UserApp` (
+                  `id` INT NOT NULL AUTO_INCREMENT,
+                  `mobile` INT UNIQUE NOT NULL,
+                  `password` VARCHAR(20),
+                  `name` VARCHAR(20),
+                  `address` VARCHAR(50),
+                  `rol` VARCHAR(20),
+                  PRIMARY KEY (`id`)
+                );
+                """;
         this.executeUpdate(sql);
     }
 
     public void createArticleTable() {
         final String sql = """
-            CREATE TABLE IF NOT EXISTS `Article` (
-              `id` INT NOT NULL AUTO_INCREMENT,
-              `barcode` VARCHAR(20) UNIQUE NOT NULL,
-              `summary` VARCHAR(20),
-              `price` DECIMAL(5,2),
-              `registrationDate` DATE,
-              `provider` VARCHAR(20),
-              PRIMARY KEY (`id`)
-            );
-            """;
+                CREATE TABLE IF NOT EXISTS `Article` (
+                  `id` INT NOT NULL AUTO_INCREMENT,
+                  `barcode` VARCHAR(20) UNIQUE NOT NULL,
+                  `summary` VARCHAR(20),
+                  `price` DECIMAL(5,2),
+                  `registrationDate` DATE,
+                  `provider` VARCHAR(20),
+                  PRIMARY KEY (`id`)
+                );
+                """;
         this.executeUpdate(sql);
     }
 
     public void createShoppingCartTable() {
         final String sql = """
-            CREATE TABLE IF NOT EXISTS `ShoppingCart` (
-              `id` INT NOT NULL AUTO_INCREMENT,
-              `user_id` INT NOT NULL,
-              `creationDate` TIMESTAMP,
-              PRIMARY KEY (`id`),
-              FOREIGN KEY (`user_id`) REFERENCES `UserApp`(`id`)
-            );
-            """;
+                CREATE TABLE IF NOT EXISTS `ShoppingCart` (
+                  `id` INT NOT NULL AUTO_INCREMENT,
+                  `user_id` INT NOT NULL,
+                  `creationDate` TIMESTAMP,
+                  PRIMARY KEY (`id`),
+                  FOREIGN KEY (`user_id`) REFERENCES `UserApp`(`id`)
+                );
+                """;
         this.executeUpdate(sql);
     }
 
     public void createArticleItemTable() {
         final String sql = """
-            CREATE TABLE IF NOT EXISTS `ArticleItem` (
-              `id` INT NOT NULL AUTO_INCREMENT,
-              `shoppingCart_id` INT NOT NULL,
-              `article_id` INT NOT NULL,
-              `amount` INT,
-              `discount` DECIMAL(4,2),
-              PRIMARY KEY (`id`),
-              FOREIGN KEY (`shoppingCart_id`) REFERENCES `ShoppingCart`(`id`) ON DELETE CASCADE,
-              FOREIGN KEY (`article_id`) REFERENCES `Article`(`id`)
-            );
-            """;
+                CREATE TABLE IF NOT EXISTS `ArticleItem` (
+                  `id` INT NOT NULL AUTO_INCREMENT,
+                  `shoppingCart_id` INT NOT NULL,
+                  `article_id` INT NOT NULL,
+                  `amount` INT,
+                  `discount` DECIMAL(4,2),
+                  PRIMARY KEY (`id`),
+                  FOREIGN KEY (`shoppingCart_id`) REFERENCES `ShoppingCart`(`id`) ON DELETE CASCADE,
+                  FOREIGN KEY (`article_id`) REFERENCES `Article`(`id`)
+                );
+                """;
         this.executeUpdate(sql);
     }
 
     public void createTag() {
         final String tag = """
-            CREATE TABLE IF NOT EXISTS `Tag` (
-              `id` INT NOT NULL AUTO_INCREMENT,
-              `name` VARCHAR(20) UNIQUE NOT NULL,
-              `description` VARCHAR(20),
-              PRIMARY KEY (`id`)
-            );
-            """;
+                CREATE TABLE IF NOT EXISTS `Tag` (
+                  `id` INT NOT NULL AUTO_INCREMENT,
+                  `name` VARCHAR(20) UNIQUE NOT NULL,
+                  `description` VARCHAR(20),
+                  PRIMARY KEY (`id`)
+                );
+                """;
 
         final String tagArticle = """
-            CREATE TABLE IF NOT EXISTS `Tag_Article` (
-              `tag_id` INT NOT NULL,
-              `article_id` INT NOT NULL,
-              PRIMARY KEY (`tag_id`, `article_id`),
-              FOREIGN KEY (`tag_id`) REFERENCES `Tag`(`id`),
-              FOREIGN KEY (`article_id`) REFERENCES `Article`(`id`)
-            );
-            """;
+                CREATE TABLE IF NOT EXISTS `Tag_Article` (
+                  `tag_id` INT NOT NULL,
+                  `article_id` INT NOT NULL,
+                  PRIMARY KEY (`tag_id`, `article_id`),
+                  FOREIGN KEY (`tag_id`) REFERENCES `Tag`(`id`),
+                  FOREIGN KEY (`article_id`) REFERENCES `Article`(`id`)
+                );
+                """;
         this.executeUpdate(tag);
         this.executeUpdate(tagArticle);
     }

@@ -33,8 +33,8 @@ public class UserService {
 
     public List<Integer> findUserMobilesByCartGreater100() {
         List<Integer> mobiles = new ArrayList<>();
-        for(ShoppingCart shoppingCart: this.shoppingCartRepository.findAll()){
-            if (shoppingCart.total().compareTo(new BigDecimal("100")) > 0){
+        for (ShoppingCart shoppingCart : this.shoppingCartRepository.findAll()) {
+            if (shoppingCart.total().compareTo(new BigDecimal("100")) > 0) {
                 mobiles.add(shoppingCart.getUser().getMobile());
             }
         }

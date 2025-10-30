@@ -4,14 +4,17 @@ import upm.app2.data.repositories.ArticleRepository;
 import upm.app2.data.repositories.Seeder;
 import upm.app2.data.repositories.ShoppingCartRepository;
 import upm.app2.data.repositories.UserRepository;
-import upm.app2.data.repositories.map.ArticleRepositoryMap;
-import upm.app2.data.repositories.map.ShoppingCartRepositoryMap;
-import upm.app2.data.repositories.map.UserRepositoryMap;
+import upm.app2.data.repositories.mysql.ArticleRepositorySql;
+import upm.app2.data.repositories.mysql.RepositoryMysql;
+import upm.app2.data.repositories.mysql.ShoppingCartRepositorySql;
+import upm.app2.data.repositories.mysql.UserRepositorySql;
 import upm.app2.presentation.cli.CommandLineInterface;
 import upm.app2.presentation.cli.ErrorHandler;
 import upm.app2.presentation.cli.commands.*;
 import upm.app2.presentation.view.View;
 import upm.app2.services.UserService;
+
+import java.sql.Connection;
 
 public class DependencyInjector {
     private static final DependencyInjector instance = new DependencyInjector();
@@ -26,9 +29,10 @@ public class DependencyInjector {
     private final Seeder seeder;
 
     private DependencyInjector() {
-        this.userRepository = new UserRepositoryMap();
-        this.articleRepository = new ArticleRepositoryMap();
-        this.shoppingCartRepository = new ShoppingCartRepositoryMap();
+        Connection connection = new RepositoryMysql().createConnection();
+        this.userRepository = new UserRepositorySql(connection);
+        this.articleRepository = new ArticleRepositorySql(connection);
+        this.shoppingCartRepository = new ShoppingCartRepositorySql(connection, (UserRepositorySql) this.userRepository, (ArticleRepositorySql) this.articleRepository);
 
         this.seeder = new Seeder(this.userRepository, this.articleRepository, this.shoppingCartRepository);
         this.seeder.seed();
