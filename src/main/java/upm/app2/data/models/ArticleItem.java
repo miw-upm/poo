@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class ArticleItem {
+    private static final BigDecimal ONE_HUNDRED = new BigDecimal("100");
     private Article article;
     private Integer amount;
     private BigDecimal discount;
@@ -15,10 +16,15 @@ public class ArticleItem {
     }
 
     public BigDecimal totalUnit() {
-        this.discount = discount.setScale(6, RoundingMode.HALF_UP);
+        BigDecimal normalizedDiscount = discount.setScale(6, RoundingMode.HALF_UP);
         BigDecimal totalUnit = this.article.getPrice().multiply(
-                BigDecimal.ONE.subtract(this.discount.divide(new BigDecimal("100"), RoundingMode.HALF_UP)));
+                BigDecimal.ONE.subtract(normalizedDiscount.divide(ONE_HUNDRED, RoundingMode.HALF_UP)));
         return totalUnit.setScale(2, RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal total() {
+        return totalUnit().multiply(new BigDecimal(amount))
+                .setScale(2, RoundingMode.HALF_UP);
     }
 
     public Article getArticle() {

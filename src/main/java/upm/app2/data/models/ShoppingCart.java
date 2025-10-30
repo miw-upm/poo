@@ -19,7 +19,7 @@ public class ShoppingCart extends Entity {
     public BigDecimal total() {
         BigDecimal total = BigDecimal.ZERO;
         for (ArticleItem articleItem : this.articleItems) {
-            total = total.add(articleItem.totalUnit());
+            total = total.add(articleItem.total());
         }
         return total;
     }

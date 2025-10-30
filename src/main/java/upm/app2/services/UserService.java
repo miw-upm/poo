@@ -9,6 +9,7 @@ import upm.app2.services.exceptions.DuplicateException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class UserService {
     private final UserRepository userRepository;
@@ -33,11 +34,16 @@ public class UserService {
     public List<Integer> findUserMobilesByCartGreater100() {
         List<Integer> mobiles = new ArrayList<>();
         for(ShoppingCart shoppingCart: this.shoppingCartRepository.findAll()){
-            System.out.println(">>>: " + shoppingCart);
             if (shoppingCart.total().compareTo(new BigDecimal("100")) > 0){
                 mobiles.add(shoppingCart.getUser().getMobile());
             }
         }
         return mobiles;
+    }
+
+    public Stream<Integer> findUserMobilesByCartGreater100Functional() {
+        return this.shoppingCartRepository.findAll().stream()
+                .filter(cart -> cart.total().compareTo(new BigDecimal("100")) > 0)
+                .map(cart -> cart.getUser().getMobile());
     }
 }

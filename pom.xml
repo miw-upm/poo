@@ -38,8 +38,8 @@
         <!-- Logs -->
         <log4j.version>2.25.1</log4j.version>
         <!-- Database -->
-        <mysql-connector-java.version>8.0.33</mysql-connector-java.version>
-        <h2.version>2.3.232</h2.version>
+        <mysql-connector-j.version>9.4.0</mysql-connector-j.version>
+        <h2.version>2.4.240</h2.version>
     </properties>
 
     <dependencies>
@@ -68,9 +68,9 @@
         </dependency>
         <!-- Databases -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql-connector-java.version}</version>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>${mysql-connector-j.version}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
