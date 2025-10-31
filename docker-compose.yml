@@ -1,5 +1,4 @@
 services:
-
   mysql:
     image: mysql:8.4
     container_name: mysql-server
@@ -11,24 +10,17 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-    networks:
-      - poonet
 
 volumes:
   mysql_data:
     name: "mysql-data"
 
-networks:
-  poonet:
-    external: true
-
-# Crear la red. Solo una vez
-# docker network create poonet
-# Construir todas las BD
-#> docker compose -f docker-compose-db.yml -p databases up -d
+# Construir Bases de Datos
+#> docker compose -p databases up -d
 
 # CONSOLA & COMANDOS MySQL
 #> docker exec -it mysql-server mysql -u root -p
+
 #  show databases;
 #  create database poo;
 #  drop database poo;
