@@ -12,16 +12,19 @@ import upm.app2.presentation.cli.CommandLineInterface;
 import upm.app2.presentation.cli.ErrorHandler;
 import upm.app2.presentation.cli.commands.*;
 import upm.app2.presentation.view.View;
+import upm.app2.services.ShoppingCartService;
 import upm.app2.services.UserService;
 
 import java.sql.Connection;
 
 public class DependencyInjector {
     private static final DependencyInjector instance = new DependencyInjector();
+
     private final ErrorHandler errorHandler;
     private final View view;
     private final CommandLineInterface commandLineInterface;
     private final UserService userService;
+    private final ShoppingCartService shoppingCartService;
     private final ArticleRepository articleRepository;
     private final ShoppingCartRepository shoppingCartRepository;
     private final UserRepository userRepository;
@@ -38,6 +41,7 @@ public class DependencyInjector {
         this.seeder.seed();
 
         this.userService = new UserService(this.userRepository, this.shoppingCartRepository);
+        this.shoppingCartService = new ShoppingCartService(userRepository, articleRepository, shoppingCartRepository);
 
         this.view = new View();
         this.commandLineInterface = new CommandLineInterface(this.view);
@@ -46,6 +50,8 @@ public class DependencyInjector {
         this.commandLineInterface.add(new CreateUser(this.view, this.userService));
         this.commandLineInterface.add(new ListUsers(this.view, this.userService));
         this.commandLineInterface.add(new FindUserMobilesByCartGreater100(this.view, this.userService));
+        this.commandLineInterface.add(new CreateShoppingCart(this.view, this.shoppingCartService));
+        this.commandLineInterface.add(new AddShoppingCart(this.view, this.shoppingCartService));
 
         this.errorHandler = new ErrorHandler();
     }
@@ -84,6 +90,10 @@ public class DependencyInjector {
 
     public ShoppingCartRepository getShoppingCartRepository() {
         return shoppingCartRepository;
+    }
+
+    public ShoppingCartService getShoppingCartService() {
+        return shoppingCartService;
     }
 
     public Seeder getSeeder() {
