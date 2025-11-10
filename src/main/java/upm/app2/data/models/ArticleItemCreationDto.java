@@ -1,5 +1,7 @@
 package upm.app2.data.models;
 
+import upm.app2.data.models.exceptions.InvalidAttributeException;
+
 import java.math.BigDecimal;
 
 // Implemented: getters, toString, equals & hashCode
@@ -9,7 +11,7 @@ public record ArticleItemCreationDto(
         BigDecimal discount) {
     public ArticleItemCreationDto {
         if (amount <= 0) {
-            throw new IllegalArgumentException("La cantidad no puede ser negativa o cero");
+            throw new InvalidAttributeException("La cantidad no puede ser negativa o cero: " + amount);
         }
     }
 }
