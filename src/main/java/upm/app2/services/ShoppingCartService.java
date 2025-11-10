@@ -19,22 +19,22 @@ public class ShoppingCartService {
         this.articleRepository = articleRepository;
     }
 
-    public ShoppingCart create(Integer userId, ArticleItemCreation articleItemCreation) {
+    public ShoppingCart create(Integer userId, ArticleItemCreationDto dto) {
         User user = this.userRepository.read(userId)
                 .orElseThrow(() -> new NotFoundException("No se encuentra la id de usuario: " + userId));
-        Article article = this.articleRepository.read(articleItemCreation.articleId())
-                .orElseThrow(() -> new NotFoundException("No se encuentra el barcode de article: " + articleItemCreation.articleId()));
+        Article article = this.articleRepository.read(dto.articleId())
+                .orElseThrow(() -> new NotFoundException("No se encuentra el barcode de article: " + dto.articleId()));
         ShoppingCart cart = new ShoppingCart(user, LocalDateTime.now());
-        cart.add(new ArticleItem(article, articleItemCreation.amount(), articleItemCreation.discount()));
+        cart.add(new ArticleItem(article, dto.amount(), dto.discount()));
         return shoppingCartRepository.create(cart);
     }
 
-    public ShoppingCart add(Integer id, ArticleItemCreation articleItemCreation) {
+    public ShoppingCart add(Integer id, ArticleItemCreationDto dto) {
         ShoppingCart cart = this.shoppingCartRepository.read(id)
                 .orElseThrow(() -> new NotFoundException("No se encuentra la id de carrito: " + id));
-        Article article = this.articleRepository.read(articleItemCreation.articleId())
-                .orElseThrow(() -> new NotFoundException("No se encuentra el barcode de article: " + articleItemCreation.articleId()));
-        cart.add(new ArticleItem(article, articleItemCreation.amount(), articleItemCreation.discount()));
+        Article article = this.articleRepository.read(dto.articleId())
+                .orElseThrow(() -> new NotFoundException("No se encuentra el barcode de article: " + dto.articleId()));
+        cart.add(new ArticleItem(article, dto.amount(), dto.discount()));
         return this.shoppingCartRepository.update(cart.getId(), cart);
     }
 }
