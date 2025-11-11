@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.Optional;
 
@@ -66,7 +67,7 @@ public class FX7ModalDialogExample extends Application {
         });
 
         Optional<String> result = dialog.showAndWait();
-        result.ifPresent(System.out::println); // Imprimir el resultado si existe
+        result.ifPresent(LogManager.getLogger(this.getClass())::info); // Imprimir el resultado si existe
     }
 }
 

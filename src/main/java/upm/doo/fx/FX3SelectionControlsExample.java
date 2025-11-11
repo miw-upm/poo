@@ -42,10 +42,11 @@ public class FX3SelectionControlsExample extends Application {
         Label tableViewLabel = new Label("View Table Data:");
         TableView<Person> tableView = new TableView<>();
         TableColumn<Person, String> firstNameCol = new TableColumn<>("First Name");
-        firstNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFirstName()));
+        firstNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().firstName()));
         TableColumn<Person, String> lastNameCol = new TableColumn<>("Last Name");
-        lastNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLastName()));
-        tableView.getColumns().addAll(firstNameCol, lastNameCol);
+        lastNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().lastName()));
+        tableView.getColumns().add(firstNameCol);
+        tableView.getColumns().add(lastNameCol);
         tableView.getItems().addAll(
                 new Person("John", "Doe"),
                 new Person("Jane", "Smith"),
@@ -57,10 +58,13 @@ public class FX3SelectionControlsExample extends Application {
         TreeItem<String> rootNode = new TreeItem<>("Root");
         rootNode.setExpanded(true);
         TreeItem<String> branch1 = new TreeItem<>("Branch 1");
-        branch1.getChildren().addAll(new TreeItem<>("Leaf 1.1"), new TreeItem<>("Leaf 1.2"));
+        branch1.getChildren().add(new TreeItem<>("Leaf 1.1"));
+        branch1.getChildren().add(new TreeItem<>("Leaf 1.2"));
         TreeItem<String> branch2 = new TreeItem<>("Branch 2");
-        branch2.getChildren().addAll(new TreeItem<>("Leaf 2.1"), new TreeItem<>("Leaf 2.2"));
-        rootNode.getChildren().addAll(branch1, branch2);
+        branch2.getChildren().add(new TreeItem<>("Leaf 2.1"));
+        branch2.getChildren().add(new TreeItem<>("Leaf 2.2"));
+        rootNode.getChildren().add(branch1);
+        rootNode.getChildren().add(branch2);
         TreeView<String> treeView = new TreeView<>(rootNode);
 
         // Add Components to the Layout
@@ -80,22 +84,7 @@ public class FX3SelectionControlsExample extends Application {
     }
 
     // Person class for TableView
-    public static class Person {
-        private final String firstName;
-        private final String lastName;
-
-        public Person(String firstName, String lastName) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-        }
-
-        public String getFirstName() {
-            return firstName;
-        }
-
-        public String getLastName() {
-            return lastName;
-        }
+    public record Person(String firstName, String lastName) {
     }
 }
 

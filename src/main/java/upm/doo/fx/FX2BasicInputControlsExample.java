@@ -46,18 +46,28 @@ public class FX2BasicInputControlsExample extends Application {
         Button submitButton = new Button("Submit");
 
         // Event handling for the button
-        submitButton.setOnAction(event -> {
+        submitButton.setOnAction(event -> {  //Patrón Observer, versión con Lambda
             String username = nameField.getText();
             String password = passwordField.getText();
             boolean rememberMe = rememberMeCheckBox.isSelected();
-            String gender = ((RadioButton) genderGroup.getSelectedToggle()).getText();
-
+            Toggle selectedToggle = genderGroup.getSelectedToggle();
+            String gender = "";
+            if (selectedToggle != null) {
+                gender = ((RadioButton) selectedToggle).getText();
+            } else {
+                gender = "No seleccionado";
+            }
             // Display the input in a dialog box
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("User Input");
             alert.setHeaderText("Form Submitted!");
             alert.setContentText("Username: " + username + "\nPassword: " + password
                     + "\nRemember Me: " + rememberMe + "\nGender: " + gender);
+            alert.setOnShown(e -> {
+                Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+                alertStage.setX(primaryStage.getX() + 200);
+                alertStage.setY(primaryStage.getY() + 150);
+            });
             alert.showAndWait();
         });
 

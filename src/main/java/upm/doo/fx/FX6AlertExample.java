@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
 
 public class FX6AlertExample extends Application {
 
@@ -17,8 +18,8 @@ public class FX6AlertExample extends Application {
         // Crear un Alert de tipo información
         Alert infoAlert = new Alert(AlertType.INFORMATION);
         infoAlert.setTitle("Información");
-        infoAlert.setHeaderText("Esto es un encabezado opcional");
-        infoAlert.setContentText("Este es el contenido del mensaje.");
+        infoAlert.setHeaderText("Encabezado de información");
+        infoAlert.setContentText("Contenido de Información");
         infoAlert.showAndWait(); // Esperar hasta que el usuario cierre el cuadro
 
         // Crear un Alert de confirmación
@@ -30,9 +31,9 @@ public class FX6AlertExample extends Application {
         // Manejar la respuesta del usuario
         confirmAlert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                System.out.println("El usuario confirmó la acción.");
+                LogManager.getLogger(this.getClass()).info("El usuario confirmó la acción.");
             } else {
-                System.out.println("El usuario canceló la acción.");
+                LogManager.getLogger(this.getClass()).info("El usuario canceló la acción.");
             }
         });
         // Crear un Alert de tipo warning
@@ -45,8 +46,8 @@ public class FX6AlertExample extends Application {
         // Crear un Alert de tipo error
         Alert errorAlert = new Alert(AlertType.ERROR);
         errorAlert.setTitle("Aviso");
-        errorAlert.setHeaderText("Esto es un encabezado opcional");
-        errorAlert.setContentText("Este es el contenido del mensaje.");
+        errorAlert.setHeaderText("Encabezado del ERROR");
+        errorAlert.setContentText("Contenido del ERROR.");
         errorAlert.showAndWait(); // Esperar hasta que el usuario cierre el cuadro
     }
 }
