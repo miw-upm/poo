@@ -1,5 +1,6 @@
 package upm.app2.gui;
 
+import javafx.scene.layout.BorderPane;
 import upm.app2.data.repositories.ArticleRepository;
 import upm.app2.data.repositories.Seeder;
 import upm.app2.data.repositories.ShoppingCartRepository;
@@ -9,7 +10,7 @@ import upm.app2.data.repositories.mysql.RepositoryMysql;
 import upm.app2.data.repositories.mysql.ShoppingCartRepositorySql;
 import upm.app2.data.repositories.mysql.UserRepositorySql;
 import upm.app2.gui.commands.*;
-import upm.app2.gui.fx.GraphicalUserInterfaceFX;
+import upm.app2.gui.fx.components.Status;
 import upm.app2.services.ArticleService;
 import upm.app2.services.ShoppingCartService;
 import upm.app2.services.UserService;
@@ -22,7 +23,6 @@ import java.util.Map;
 public class GuiDependencyInjector {
     private static GuiDependencyInjector instance;
 
-    private final GraphicalUserInterfaceFX view;
     private final Map<String, List<Command>> commandsByGroup = new HashMap<>();
     private final UserService userService;
     private final ArticleService articleService;
@@ -31,8 +31,7 @@ public class GuiDependencyInjector {
     private final ShoppingCartRepository shoppingCartRepository;
     private final UserRepository userRepository;
 
-    private GuiDependencyInjector(GraphicalUserInterfaceFX view) {
-        this.view = view;
+    private GuiDependencyInjector(BorderPane contentArea, Status status) {
         Connection connection = new RepositoryMysql().createConnection();
         this.userRepository = new UserRepositorySql(connection);
         this.articleRepository = new ArticleRepositorySql(connection);
@@ -45,29 +44,25 @@ public class GuiDependencyInjector {
         this.shoppingCartService = new ShoppingCartService(userRepository, articleRepository, shoppingCartRepository);
 
         this.commandsByGroup.put("users", List.of(
-                new CreateUser(this.view, this.userService),
+                new CreateUser(contentArea, status, this.userService),
                 new ListUsers(this.userService),
                 new FindUserMobilesByCartGreater100(this.userService)
         ));
         this.commandsByGroup.put("carts", List.of(
-                new CreateShoppingCart(this.view, this.userService, this.articleService, this.shoppingCartService),
-                new AddShoppingCart(this.view, this.articleService, this.shoppingCartService),
+                new CreateShoppingCart(contentArea, status, this.userService, this.articleService, this.shoppingCartService),
+                new AddShoppingCart(contentArea, status, this.articleService, this.shoppingCartService),
                 new ListShoppingCarts(this.shoppingCartService)
         ));
     }
 
-    public static void createInstance(GraphicalUserInterfaceFX view) {
+    public static void createInstance(BorderPane contentArea, Status status) {
         if (instance == null) {
-            instance = new GuiDependencyInjector(view);
+            instance = new GuiDependencyInjector(contentArea, status);
         }
     }
 
     public static GuiDependencyInjector getInstance() {
         return GuiDependencyInjector.instance;
-    }
-
-    public GraphicalUserInterfaceFX getView() {
-        return view;
     }
 
     public UserService getUserService() {

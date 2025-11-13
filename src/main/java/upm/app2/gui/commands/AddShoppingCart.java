@@ -1,9 +1,10 @@
 package upm.app2.gui.commands;
 
+import javafx.scene.layout.BorderPane;
 import upm.app2.data.models.ArticleItemCreationDto;
 import upm.app2.data.models.ShoppingCart;
 import upm.app2.gui.Command;
-import upm.app2.gui.fx.GraphicalUserInterfaceFX;
+import upm.app2.gui.fx.components.Status;
 import upm.app2.gui.fx.components.entries.EntryComboBox;
 import upm.app2.gui.fx.components.entries.EntryIntegerSpinner;
 import upm.app2.gui.fx.components.entries.GenericContentArea;
@@ -16,15 +17,18 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class AddShoppingCart implements Command {
-    private final GraphicalUserInterfaceFX view;
+    private final BorderPane contentArea;
+    private final Status status;
     private final ArticleService articleService;
     private final ShoppingCartService shoppingCartService;
 
-    public AddShoppingCart(GraphicalUserInterfaceFX view, ArticleService articleService, ShoppingCartService shoppingCartService) {
-        this.view = view;
+    public AddShoppingCart(BorderPane contentArea, Status status, ArticleService articleService, ShoppingCartService shoppingCartService) {
+        this.contentArea = contentArea;
+        this.status = status;
         this.articleService = articleService;
         this.shoppingCartService = shoppingCartService;
     }
+
 
     @Override
     public String name() {
@@ -48,14 +52,14 @@ public class AddShoppingCart implements Command {
                             new BigDecimal(params.get(3))
                     )
             );
-            this.view.getStatus().successful(createdCart.toString());
+            this.status.successful(createdCart.toString());
         };
-        GenericContentArea content = new GenericContentArea(consumer, this.view.getStatus());
+        GenericContentArea content = new GenericContentArea(consumer, this.status);
         content.addEntryField("shoppingCart", new EntryComboBox<>("Select an shopping cart", carts));
         content.addEntryField("article", new EntryComboBox<>("Select an article", articles));
         content.addEntryField("amount", new EntryIntegerSpinner(1, 100));
         content.addEntryField("discount", new EntryIntegerSpinner(0, 100));
-        this.view.setContentArea(content);
+        this.contentArea.setCenter(content);
     }
 
 }

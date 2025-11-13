@@ -1,7 +1,6 @@
 package upm.app2.gui.fx;
 
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
@@ -28,16 +27,18 @@ public class GraphicalUserInterfaceFX extends Application {
     }
 
     @Override
-    public void init() {
-        GuiDependencyInjector.createInstance(this);
-    }
-
-    @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("UPM© Shop App");
 
         this.root = new BorderPane();
         this.root.getStyleClass().add("app-root");
+
+        this.root.setCenter(new VBox());
+
+        this.status = new Status();
+        this.root.setBottom(status);
+
+        GuiDependencyInjector.createInstance(this.root, this.status);
 
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().addAll(
@@ -46,11 +47,6 @@ public class GraphicalUserInterfaceFX extends Application {
                 this.prepareHelpMenu()
         );
         this.root.setTop(menuBar);
-
-        this.setContentArea(new VBox());
-
-        this.status = new Status();
-        this.root.setBottom(status);
 
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         scene.getStylesheets().add(
@@ -99,13 +95,4 @@ public class GraphicalUserInterfaceFX extends Application {
         return commandMenu;
     }
 
-    public void setContentArea(VBox vBox) {
-        vBox.getStyleClass().add("content-area");
-        this.root.setCenter(vBox);
-    }
-
-
-    public Status getStatus() {
-        return this.status;
-    }
 }
