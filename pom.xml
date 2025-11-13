@@ -116,7 +116,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>upm.doo.fx.FX7ModalDialogExample</mainClass>
+                    <mainClass>upm.app2.gui.fx.GraphicalUserInterfaceFX</mainClass>
                 </configuration>
             </plugin>
         </plugins>

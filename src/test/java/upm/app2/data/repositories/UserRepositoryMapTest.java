@@ -1,8 +1,8 @@
 package upm.app2.data.repositories;
 
 import org.junit.jupiter.api.Test;
-import upm.app2.DependencyInjector;
 import upm.app2.data.models.User;
+import upm.app2.presentation.CliDependencyInjector;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserRepositoryMapTest {
 
-    private final UserRepository userRepository = DependencyInjector.getInstance().getUserRepository();
+    private final UserRepository userRepository = CliDependencyInjector.getInstance().getUserRepository();
 
     @Test
     void testCreateAndRead() {

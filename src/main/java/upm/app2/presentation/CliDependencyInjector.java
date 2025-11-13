@@ -1,4 +1,4 @@
-package upm.app2;
+package upm.app2.presentation;
 
 import upm.app2.data.repositories.ArticleRepository;
 import upm.app2.data.repositories.Seeder;
@@ -17,8 +17,8 @@ import upm.app2.services.UserService;
 
 import java.sql.Connection;
 
-public class DependencyInjector {
-    private static final DependencyInjector instance = new DependencyInjector();
+public class CliDependencyInjector {
+    private static final CliDependencyInjector instance = new CliDependencyInjector();
 
     private final ErrorHandler errorHandler;
     private final View view;
@@ -31,7 +31,7 @@ public class DependencyInjector {
 
     private final Seeder seeder;
 
-    private DependencyInjector() {
+    private CliDependencyInjector() {
         Connection connection = new RepositoryMysql().createConnection();
         this.userRepository = new UserRepositorySql(connection);
         this.articleRepository = new ArticleRepositorySql(connection);
@@ -56,8 +56,8 @@ public class DependencyInjector {
         this.errorHandler = new ErrorHandler();
     }
 
-    public static DependencyInjector getInstance() {
-        return DependencyInjector.instance;
+    public static CliDependencyInjector getInstance() {
+        return CliDependencyInjector.instance;
     }
 
     public void run() {

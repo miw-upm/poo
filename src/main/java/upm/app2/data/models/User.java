@@ -13,6 +13,10 @@ public class User extends Entity {
         this.address = address;
     }
 
+    public User() {
+        this(null, null, null);
+    }
+
     public Integer getMobile() {
         return this.mobile;
     }

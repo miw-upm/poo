@@ -1,8 +1,8 @@
 package upm.app2.services;
 
 import org.junit.jupiter.api.Test;
-import upm.app2.DependencyInjector;
 import upm.app2.data.models.User;
+import upm.app2.presentation.CliDependencyInjector;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserServiceTest {
 
-    private final UserService userService = DependencyInjector.getInstance().getUserService();
+    private final UserService userService = CliDependencyInjector.getInstance().getUserService();
 
     @Test
     void testCreateMobileException() {

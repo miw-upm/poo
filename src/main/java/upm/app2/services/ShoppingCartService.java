@@ -7,6 +7,7 @@ import upm.app2.data.repositories.UserRepository;
 import upm.app2.services.exceptions.NotFoundException;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ShoppingCartService {
     private final UserRepository userRepository;
@@ -27,6 +28,10 @@ public class ShoppingCartService {
         ShoppingCart cart = new ShoppingCart(user, LocalDateTime.now());
         cart.add(new ArticleItem(article, dto.amount(), dto.discount()));
         return shoppingCartRepository.create(cart);
+    }
+
+    public List<ShoppingCart> findAll() {
+        return this.shoppingCartRepository.findAll();
     }
 
     public ShoppingCart add(Integer id, ArticleItemCreationDto dto) {

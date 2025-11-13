@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Article extends Entity {
-    private static final int EUROPEAN_ARTICLE_NUMBER = 13;
+    public static final int EUROPEAN_ARTICLE_NUMBER = 13;
     private String barcode;
     private String summary;
     private BigDecimal price;
