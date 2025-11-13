@@ -16,9 +16,16 @@ public class EntityListDialog extends Alert {
             Boolean.class, Byte.class, Short.class, Integer.class, Long.class,
             Float.class, Double.class, Character.class, String.class
     );
+    private static final double LIST_VIEW_WIDTH = 600;
+    private static final double LIST_VIEW_HEIGHT = 300;
+    private static final double TABLE_DIALOG_WIDTH = 800;
+    private static final double TABLE_DIALOG_HEIGHT = 500;
+    private static final double TABLE_STAGE_WIDTH = TABLE_DIALOG_WIDTH + 50;
+    private static final double TABLE_STAGE_HEIGHT = TABLE_DIALOG_HEIGHT + 50;
 
     public <T> EntityListDialog(String header, List<T> content) {
         super(AlertType.INFORMATION);
+        getDialogPane().getStyleClass().add("entity-dialog");
         this.setTitle("Information");
         this.setHeaderText(header);
         if (content == null || content.isEmpty()) {
@@ -29,18 +36,18 @@ public class EntityListDialog extends Alert {
                             content.stream().map(String::valueOf).toList()
                     )
             );
-            listView.setPrefWidth(600);
-            listView.setPrefHeight(300);
+            listView.setPrefWidth(LIST_VIEW_WIDTH);
+            listView.setPrefHeight(LIST_VIEW_HEIGHT);
             getDialogPane().setMinWidth(Region.USE_PREF_SIZE);
             getDialogPane().setContent(listView);
         } else {
             EntityTableView<T> entityTableView = new EntityTableView<>(content);
             this.getDialogPane().setContent(entityTableView);
-            this.getDialogPane().setPrefWidth(800);
-            this.getDialogPane().setPrefHeight(500);
+            this.getDialogPane().setPrefWidth(TABLE_DIALOG_WIDTH);
+            this.getDialogPane().setPrefHeight(TABLE_DIALOG_HEIGHT);
             Stage stage = (Stage) this.getDialogPane().getScene().getWindow();
-            stage.setWidth(850);
-            stage.setHeight(550);
+            stage.setWidth(TABLE_STAGE_WIDTH);
+            stage.setHeight(TABLE_STAGE_HEIGHT);
         }
         this.showAndWait();
     }

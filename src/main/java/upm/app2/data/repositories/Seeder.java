@@ -33,10 +33,10 @@ public class Seeder {
         Article[] articles = {
                 Article.builder().barcode("8412345123410").summary("art1").price(BigDecimal.TEN).provider("prov1").build(),
                 Article.builder().barcode("8412345123420").summary("art2").price(BigDecimal.ONE).provider("prov1").build(),
-                Article.builder().barcode("8412345123430").price(BigDecimal.TEN).build(),
+                Article.builder().barcode("8412345123430").summary("art3").price(BigDecimal.TEN).build(),
                 Article.builder().barcode("8412345123440").summary("art4").price(BigDecimal.TWO).provider("prov2").build(),
                 Article.builder().barcode("8412345123450").summary("art5").price(new BigDecimal("10.2")).provider("prov2").build(),
-                Article.builder().barcode("8412345123460").summary("art5").price(BigDecimal.TEN).provider("prov3").build(),
+                Article.builder().barcode("8412345123460").summary("art6").price(BigDecimal.TEN).provider("prov3").build(),
         };
         for (int i = 0; i < articles.length; i++) {
             articles[i].setRegistrationDate(LocalDate.now());

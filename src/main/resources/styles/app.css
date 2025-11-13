@@ -1,0 +1,140 @@
+/* Fuente por defecto */
+.root {
+    -fx-font-family: "Arial";
+    -fx-font-size: 11px;
+    -fx-background-color: -color-neutral-lighter;
+}
+
+/* Paleta de colores global */
+* {
+    -color-primary:         #546E7A;   /* gris azulado medio */
+    -color-primary-light:   #CFD8DC;   /* gris azulado claro */
+    -color-primary-dark:    #37474F;   /* gris azulado profundo */
+
+    -color-accent:          #FFB74D;   /* naranja suave */
+
+    -color-neutral-lighter: #EEF1F3;   /* casi blanco */
+    -color-neutral-light:   #ECEFF1;   /* gris azulado muy suave */
+    -color-neutral-medium:  #B0BEC5;   /* gris azulado medio */
+
+    -color-success-light:   #C8E6C9;   /* verde pastel */
+    -color-success-dark:    #1B5E20;   /* verde oscuro neutro */
+
+    -color-error-light:     #FFCDD2;   /* rojo pastel */
+    -color-error-dark:      #B71C1C;   /* rojo oscuro neutro */
+}
+
+/* Menús */
+.menu-bar {
+    -fx-background-color: -color-primary;
+}
+
+.menu-bar .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.context-menu {
+    -fx-background-color: -color-neutral-lighter;
+}
+
+.context-menu .menu-item .label {
+    -fx-text-fill: black;
+}
+
+
+.context-menu .menu-item:hover {
+    -fx-background-color: -color-primary-light;
+}
+
+/* Área central */
+.content-area {
+    -fx-padding: 10;
+    -fx-spacing: 10;
+}
+
+/* Status bar */
+.status-bar {
+    -fx-padding: 8;
+    -fx-font-weight: bold;
+}
+
+.status-info {
+    -fx-background-color: -color-neutral-medium;
+    -fx-text-fill: -color-primary-dark;
+}
+
+.status-success {
+    -fx-background-color: -color-success-light;
+    -fx-text-fill: -color-success-dark;
+}
+
+.status-error {
+    -fx-background-color: -color-error-light;
+    -fx-text-fill: -color-error-dark;
+}
+
+/* TitleLabel */
+.title-label {
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+}
+
+/* Formularios */
+.generic-content-area {
+    -fx-padding: 12;
+    -fx-spacing: 10;
+}
+
+.form-grid {
+    -fx-hgap: 8;
+    -fx-vgap: 8;
+}
+
+.form-buttons {
+    -fx-padding: 6 0 0 0;
+    -fx-spacing: 8;
+}
+
+/* TextFields */
+.form-textfield {
+    -fx-padding: 4;
+}
+
+/* Botones */
+.form-button {
+    -fx-padding: 6 12;
+    -fx-background-radius: 4;
+}
+
+.form-button-primary {
+    -fx-background-color: -color-primary;
+    -fx-text-fill: white;
+}
+
+.form-button-secondary {
+    -fx-background-color: -color-neutral-medium;
+    -fx-text-fill: black;
+}
+
+/* Tablas */
+
+.entity-table {
+    -fx-padding: 8;
+    -fx-table-cell-border-color: -color-neutral-medium;
+    -fx-border-color: -color-neutral-medium;
+    -fx-border-width: 1;
+}
+
+.entity-table .column-header-background {
+    -fx-background-color: -color-primary-light;
+}
+
+/*  Diálogos */
+
+.entity-dialog {
+    -fx-padding: 10;
+    -fx-border-color: -color-neutral-medium;
+    -fx-border-width: 1;
+}
+

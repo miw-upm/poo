@@ -15,8 +15,11 @@ import upm.app2.gui.GuiDependencyInjector;
 import upm.app2.gui.fx.components.Status;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 public class GraphicalUserInterfaceFX extends Application {
+    private static final double WINDOW_WIDTH = 600;
+    private static final double WINDOW_HEIGHT = 400;
     private Status status;
     private BorderPane root;
 
@@ -34,10 +37,14 @@ public class GraphicalUserInterfaceFX extends Application {
         primaryStage.setTitle("UPM© Shop App");
 
         this.root = new BorderPane();
+        this.root.getStyleClass().add("app-root");
 
-        MenuBar menuBar;
-        menuBar = new MenuBar();
-        menuBar.getMenus().addAll(this.prepareFileMenu(primaryStage), this.prepareCommandMenu(), this.prepareHelpMenu());
+        MenuBar menuBar = new MenuBar();
+        menuBar.getMenus().addAll(
+                this.prepareFileMenu(primaryStage),
+                this.prepareCommandMenu(),
+                this.prepareHelpMenu()
+        );
         this.root.setTop(menuBar);
 
         this.setContentArea(new VBox());
@@ -45,7 +52,10 @@ public class GraphicalUserInterfaceFX extends Application {
         this.status = new Status();
         this.root.setBottom(status);
 
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        scene.getStylesheets().add(
+                Objects.requireNonNull(getClass().getResource("/styles/app.css")).toExternalForm()
+        );
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -90,10 +100,10 @@ public class GraphicalUserInterfaceFX extends Application {
     }
 
     public void setContentArea(VBox vBox) {
-        vBox.setPadding(new Insets(10));
-        vBox.setSpacing(10);
+        vBox.getStyleClass().add("content-area");
         this.root.setCenter(vBox);
     }
+
 
     public Status getStatus() {
         return this.status;

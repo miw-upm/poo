@@ -1,44 +1,39 @@
 package upm.app2.gui.fx.components;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 public class Status extends Label {
-    private static final String DEFAULT_FONT_FAMILY = "Arial";
-    private static final double DEFAULT_FONT_SIZE = 11;
-    private static final Insets BUTTONS_PADDING = new Insets(10);
+    private static final String STYLE_BAR = "status-bar";
+    private static final String STYLE_INFO = "status-info";
+    private static final String STYLE_SUCCESS = "status-success";
+    private static final String STYLE_ERROR = "status-error";
 
     public Status() {
-        super("Status");
-        this.initializeStyle();
-    }
-
-    private void initializeStyle() {
-        this.info("Status");
-        this.setFont(Font.font(DEFAULT_FONT_FAMILY, FontWeight.BOLD, DEFAULT_FONT_SIZE));
-        this.setPadding(BUTTONS_PADDING);
-        this.setTextFill(Color.BLACK);
-        this.setMaxWidth(Double.MAX_VALUE);
+        getStyleClass().add(STYLE_BAR);
+        setMaxWidth(Double.MAX_VALUE);
+        updateStyle(STYLE_INFO);
+        info("Status");
     }
 
     public void successful(String message) {
-        this.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
-        this.setText("✓ Successful! " + message);
+        updateStyle(STYLE_SUCCESS);
+        setText("✔ " + message);
     }
 
     public void info(String message) {
-        this.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        this.setText("ℹ " + message);
+        updateStyle(STYLE_INFO);
+        setText("ⓘ " + message);
     }
 
     public void error(String message) {
-        this.setBackground(new Background(new BackgroundFill(Color.LIGHTSALMON, CornerRadii.EMPTY, Insets.EMPTY)));
-        this.setText("⚠ ERROR! " + message);
+        updateStyle(STYLE_ERROR);
+        setText("✘ " + message);
+    }
+
+    private void updateStyle(String newStyle) {
+        getStyleClass().removeAll(STYLE_INFO, STYLE_SUCCESS, STYLE_ERROR);
+        if (!getStyleClass().contains(newStyle)) {
+            getStyleClass().add(newStyle);
+        }
     }
 }

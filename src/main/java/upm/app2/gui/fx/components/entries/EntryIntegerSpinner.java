@@ -7,9 +7,7 @@ public class EntryIntegerSpinner extends Spinner<Integer> implements EntryField 
     private final int min;
 
     public EntryIntegerSpinner(int min, int max) {
-        super();
         this.min = min;
-
         SpinnerValueFactory<Integer> factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(min, max, min);
         this.setValueFactory(factory);
         this.setEditable(false);

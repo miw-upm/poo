@@ -1,15 +1,14 @@
 package upm.app2.gui.fx.components.entries;
 
 import javafx.scene.control.Label;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-
+import javafx.scene.layout.Region;
 
 public class TitleLabel extends Label {
 
     public TitleLabel(String title) {
         super(formatTitle(title) + ":");
-        this.setFont(Font.font("Arial", FontWeight.BOLD, 11));
+        this.getStyleClass().add("title-label");
+        setMinWidth(Region.USE_PREF_SIZE);
     }
 
     private static String formatTitle(String text) {

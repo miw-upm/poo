@@ -25,6 +25,7 @@ public class EntityTableView<T> extends TableView<T> {
         if (content == null || content.isEmpty()) {
             return;
         }
+        getStyleClass().add("entity-table");
         Class<?> clazz = content.getFirst().getClass();
         this.addColumns(clazz.getSuperclass());
         this.addColumns(clazz);

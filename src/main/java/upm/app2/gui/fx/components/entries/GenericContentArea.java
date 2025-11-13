@@ -1,9 +1,7 @@
 package upm.app2.gui.fx.components.entries;
 
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import upm.app2.gui.fx.components.Status;
 
@@ -12,29 +10,25 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class GenericContentArea extends VBox {
-    private static final double ROOT_MARGIN = 12;
-    private static final double ROOT_GAP = 8;
     private static final double LABEL_COLUMN_WIDTH = 90;
-    private static final double BUTTON_SPACING = 8;
-    private static final Insets BUTTONS_PADDING = new Insets(5, 0, 0, 0);
     private final List<Entry> entries = new ArrayList<>();
     private final GridPane form = new GridPane();
 
     public GenericContentArea(Consumer<List<String>> consumer, Status status) {
-        setSpacing(ROOT_MARGIN);
-        setPadding(new Insets(ROOT_MARGIN));
+        getStyleClass().add("generic-content-area");
+        form.getStyleClass().add("form-grid");
         setFillWidth(true);
-        this.form.setHgap(ROOT_GAP);
-        this.form.setVgap(ROOT_GAP);
 
-        ColumnConstraints constraints0 = new ColumnConstraints();
-        constraints0.setPrefWidth(LABEL_COLUMN_WIDTH);
-        ColumnConstraints constraints1 = new ColumnConstraints();
-        constraints1.setHgrow(Priority.ALWAYS);
-        this.form.getColumnConstraints().addAll(constraints0, constraints1);
+        ColumnConstraints col0 = new ColumnConstraints();
+        col0.setPrefWidth(LABEL_COLUMN_WIDTH);
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setHgrow(Priority.ALWAYS);
+        this.form.getColumnConstraints().addAll(col0, col1);
 
         Button clear = new Button("Clear");
+        clear.getStyleClass().addAll("form-button", "form-button-secondary");
         Button submit = new Button("Submit");
+        submit.getStyleClass().addAll("form-button", "form-button-primary");
 
         submit.setOnAction(e -> {
             List<String> values = getValues();
@@ -47,16 +41,10 @@ public class GenericContentArea extends VBox {
 
         clear.setOnAction(e -> clearFields());
 
-        HBox buttons = new HBox(BUTTON_SPACING, submit, clear);
-        buttons.setPadding(BUTTONS_PADDING);
+        HBox buttons = new HBox(submit, clear);
+        buttons.getStyleClass().add("form-buttons");
 
         this.getChildren().addAll(this.form, buttons);
-    }
-
-    public void addTextFields(List<String> names) {
-        for (String name : names) {
-            addEntryField(name, new EntryTextField(name));
-        }
     }
 
     public void addTextFields(String... names) {
@@ -66,13 +54,9 @@ public class GenericContentArea extends VBox {
     }
 
     public void addEntryField(String title, EntryField field) {
-        Label label = new TitleLabel(title);
-        Node control = (Node) field;
-
         int row = entries.size();
-        form.add(label, 0, row);
-        form.add(control, 1, row);
-
+        form.add(new TitleLabel(title), 0, row);
+        form.add((Node) field, 1, row);
         entries.add(new Entry(title, field));
     }
 

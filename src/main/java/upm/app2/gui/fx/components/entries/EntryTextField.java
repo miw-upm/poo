@@ -6,6 +6,7 @@ public class EntryTextField extends TextField implements EntryField {
 
     public EntryTextField(String title) {
         this.setPromptText("Enter " + title);
+        this.getStyleClass().add("form-textfield");
     }
 
     @Override
