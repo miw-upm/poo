@@ -13,7 +13,7 @@ public class FindUserMobilesByCartGreater100 implements Command {
 
     @Override
     public String name() {
-        return "find-user-mobiles-by-cart-greater-100";
+        return "🔎 Mobiles By Cart >100";
     }
 
     @Override

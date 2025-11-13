@@ -32,7 +32,7 @@ public class AddShoppingCart implements Command {
 
     @Override
     public String name() {
-        return "add-cart";
+        return "🛒➕ Add to Cart";
     }
 
     @Override

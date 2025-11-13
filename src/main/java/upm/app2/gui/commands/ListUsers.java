@@ -13,7 +13,7 @@ public class ListUsers implements Command {
 
     @Override
     public String name() {
-        return "list-users";
+        return "👥 List Users";
     }
 
     @Override

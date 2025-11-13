@@ -13,7 +13,7 @@ public class ListShoppingCarts implements Command {
 
     @Override
     public String name() {
-        return "list-carts";
+        return "🛒 List Carts";
     }
 
     @Override

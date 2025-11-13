@@ -24,7 +24,7 @@ public class CreateUser implements Command {
 
     @Override
     public String name() {
-        return "create-user";
+        return "👤 New User";
     }
 
     @Override

@@ -35,7 +35,7 @@ public class CreateShoppingCart implements Command {
 
     @Override
     public String name() {
-        return "create-cart";
+        return "🛒 New Cart";
     }
 
     @Override
