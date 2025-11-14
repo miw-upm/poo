@@ -45,7 +45,7 @@ public class AddShoppingCart implements Command {
                 .toList();
 
         Consumer<List<String>> consumer = params -> {
-            ShoppingCart createdCart = this.shoppingCartService.create(Integer.valueOf(params.getFirst()),
+            ShoppingCart createdCart = this.shoppingCartService.add(Integer.valueOf(params.getFirst()),
                     new ArticleItemCreationDto(
                             Integer.valueOf(params.get(1)),
                             Integer.valueOf(params.get(2)),

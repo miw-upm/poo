@@ -92,13 +92,13 @@ public class GraphicalUserInterfaceFX extends Application {
                     Menu subMenu = new Menu(group);
                     GuiDependencyInjector.getInstance().getCommandsByGroup().get(group).stream()
                             .sorted(Comparator.comparing(Command::name))
-                            .forEach(getCommandConsumer(subMenu));
+                            .forEach(buildCommandConsumer(subMenu));
                     commandMenu.getItems().add(subMenu);
                 });
         return commandMenu;
     }
 
-    private Consumer<Command> getCommandConsumer(Menu subMenu) {
+    private Consumer<Command> buildCommandConsumer(Menu subMenu) {
         return cmd -> {
             MenuItem item = new MenuItem(cmd.name());
             item.setOnAction(e -> {
