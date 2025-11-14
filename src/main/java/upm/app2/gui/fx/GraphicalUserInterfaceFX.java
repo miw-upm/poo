@@ -15,6 +15,7 @@ import upm.app2.gui.fx.components.Status;
 
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class GraphicalUserInterfaceFX extends Application {
     private static final String CSS_PATH = "/styles/app.css";
@@ -26,6 +27,8 @@ public class GraphicalUserInterfaceFX extends Application {
     private static final double WINDOW_WIDTH = 600;
     private static final double WINDOW_HEIGHT = 400;
 
+    private Status status;
+
     public static void main(String[] args) {
         Application.launch(args);
     }
@@ -34,7 +37,7 @@ public class GraphicalUserInterfaceFX extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle(APP_TITLE);
 
-        Status status = new Status();
+        this.status = new Status();
         BorderPane root = new BorderPane();
         root.getStyleClass().add(CSS_ROOT_STYLE);
         root.setCenter(new VBox());
@@ -89,14 +92,25 @@ public class GraphicalUserInterfaceFX extends Application {
                     Menu subMenu = new Menu(group);
                     GuiDependencyInjector.getInstance().getCommandsByGroup().get(group).stream()
                             .sorted(Comparator.comparing(Command::name))
-                            .forEach(cmd -> {
-                                MenuItem item = new MenuItem(cmd.name());
-                                item.setOnAction(e -> cmd.prepareAndExecute());
-                                subMenu.getItems().add(item);
-                            });
+                            .forEach(getCommandConsumer(subMenu));
                     commandMenu.getItems().add(subMenu);
                 });
         return commandMenu;
     }
+
+    private Consumer<Command> getCommandConsumer(Menu subMenu) {
+        return cmd -> {
+            MenuItem item = new MenuItem(cmd.name());
+            item.setOnAction(e -> {
+                try {
+                    cmd.prepareAndExecute();
+                } catch (Exception ex) {
+                    this.status.error(ex.getMessage());
+                }
+            });
+            subMenu.getItems().add(item);
+        };
+    }
+
 
 }
