@@ -4,10 +4,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 
 public class TitleLabel extends Label {
+    private static final String TITLE_LABEL_STYLE = "title-label";
 
     public TitleLabel(String title) {
         super(formatTitle(title) + ":");
-        this.getStyleClass().add("title-label");
+        this.getStyleClass().add(TITLE_LABEL_STYLE);
         setMinWidth(Region.USE_PREF_SIZE);
     }
 

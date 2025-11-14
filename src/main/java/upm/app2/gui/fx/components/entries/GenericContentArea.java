@@ -10,13 +10,20 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class GenericContentArea extends VBox {
+    private static final String GENERIC_CONTENT_AREA_STYLE = "generic-content-area";
+    private static final String FORM_BUTTONS_STYLE = "form-buttons";
+    private static final String FORM_BUTTON_STYLE = "form-button";
+    private static final String FORM_BUTTON_PRIMARY_STYLE = "form-button-primary";
+    private static final String FORM_BUTTON_SECONDARY_STYLE = "form-button-secondary";
+    private static final String FORM_GRID_STYLE = "form-grid";
+
     private static final double LABEL_COLUMN_WIDTH = 90;
     private final List<Entry> entries = new ArrayList<>();
     private final GridPane form = new GridPane();
 
     public GenericContentArea(Consumer<List<String>> consumer, Status status) {
-        getStyleClass().add("generic-content-area");
-        form.getStyleClass().add("form-grid");
+        getStyleClass().add(GENERIC_CONTENT_AREA_STYLE);
+        form.getStyleClass().add(FORM_GRID_STYLE);
         setFillWidth(true);
 
         ColumnConstraints col0 = new ColumnConstraints();
@@ -26,9 +33,9 @@ public class GenericContentArea extends VBox {
         this.form.getColumnConstraints().addAll(col0, col1);
 
         Button clear = new Button("Clear");
-        clear.getStyleClass().addAll("form-button", "form-button-secondary");
+        clear.getStyleClass().addAll(FORM_BUTTON_STYLE, FORM_BUTTON_SECONDARY_STYLE);
         Button submit = new Button("Submit");
-        submit.getStyleClass().addAll("form-button", "form-button-primary");
+        submit.getStyleClass().addAll(FORM_BUTTON_STYLE, FORM_BUTTON_PRIMARY_STYLE);
 
         submit.setOnAction(e -> {
             List<String> values = getValues();
@@ -42,7 +49,7 @@ public class GenericContentArea extends VBox {
         clear.setOnAction(e -> clearFields());
 
         HBox buttons = new HBox(submit, clear);
-        buttons.getStyleClass().add("form-buttons");
+        buttons.getStyleClass().add(FORM_BUTTONS_STYLE);
 
         this.getChildren().addAll(this.form, buttons);
     }

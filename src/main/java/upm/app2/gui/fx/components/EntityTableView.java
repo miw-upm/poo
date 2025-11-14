@@ -15,17 +15,18 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class EntityTableView<T> extends TableView<T> {
+    private static final String TABLE_STYLE = "entity-table";
+
     private static final String IS = "is";
     private static final String GET = "get";
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
-
     public EntityTableView(List<T> content) {
         if (content == null || content.isEmpty()) {
             return;
         }
-        getStyleClass().add("entity-table");
+        getStyleClass().add(TABLE_STYLE);
         Class<?> clazz = content.getFirst().getClass();
         this.addColumns(clazz.getSuperclass());
         this.addColumns(clazz);

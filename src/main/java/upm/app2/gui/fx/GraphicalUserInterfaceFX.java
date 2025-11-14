@@ -17,10 +17,14 @@ import java.util.Comparator;
 import java.util.Objects;
 
 public class GraphicalUserInterfaceFX extends Application {
+    private static final String CSS_PATH = "/styles/app.css";
+    private static final String CSS_ROOT_STYLE = "app-root";
+
+    private static final String APP_TITLE = "UPM© Shop App";
+    private static final String APP_HELP = "POO. Curso 2025-26";
+
     private static final double WINDOW_WIDTH = 600;
     private static final double WINDOW_HEIGHT = 400;
-    private Status status;
-    private BorderPane root;
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -28,17 +32,15 @@ public class GraphicalUserInterfaceFX extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("UPM© Shop App");
+        primaryStage.setTitle(APP_TITLE);
 
-        this.root = new BorderPane();
-        this.root.getStyleClass().add("app-root");
+        Status status = new Status();
+        BorderPane root = new BorderPane();
+        root.getStyleClass().add(CSS_ROOT_STYLE);
+        root.setCenter(new VBox());
+        root.setBottom(status);
 
-        this.root.setCenter(new VBox());
-
-        this.status = new Status();
-        this.root.setBottom(status);
-
-        GuiDependencyInjector.createInstance(this.root, this.status);
+        this.initializeApp(root, status);
 
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().addAll(
@@ -46,19 +48,21 @@ public class GraphicalUserInterfaceFX extends Application {
                 this.prepareCommandMenu(),
                 this.prepareHelpMenu()
         );
-        this.root.setTop(menuBar);
+        root.setTop(menuBar);
 
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
-        scene.getStylesheets().add(
-                Objects.requireNonNull(getClass().getResource("/styles/app.css")).toExternalForm()
-        );
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(CSS_PATH)).toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
+    private void initializeApp(BorderPane root, Status status) {
+        GuiDependencyInjector.createInstance(root, status);
+    }
+
     private Menu prepareFileMenu(Stage primaryStage) {
         Menu fileMenu = new Menu("File");
-        MenuItem exitItem = new MenuItem("exit");
+        MenuItem exitItem = new MenuItem("Exit");
         exitItem.setOnAction(event -> primaryStage.close());
         fileMenu.getItems().add(exitItem);
         return fileMenu;
@@ -66,11 +70,11 @@ public class GraphicalUserInterfaceFX extends Application {
 
     private Menu prepareHelpMenu() {
         Menu helpMenu = new Menu("Help");
-        MenuItem aboutItem = new MenuItem("about");
+        MenuItem aboutItem = new MenuItem("About");
         aboutItem.setOnAction(event -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("UPM©");
-            alert.setHeaderText("POO. Curso 2025-26");
+            alert.setTitle(APP_TITLE);
+            alert.setHeaderText(APP_HELP);
             alert.showAndWait();
         });
         helpMenu.getItems().add(aboutItem);

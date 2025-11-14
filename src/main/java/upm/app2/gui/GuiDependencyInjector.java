@@ -24,9 +24,11 @@ public class GuiDependencyInjector {
     private static GuiDependencyInjector instance;
 
     private final Map<String, List<Command>> commandsByGroup = new HashMap<>();
+
     private final UserService userService;
     private final ArticleService articleService;
     private final ShoppingCartService shoppingCartService;
+
     private final ArticleRepository articleRepository;
     private final ShoppingCartRepository shoppingCartRepository;
     private final UserRepository userRepository;
@@ -37,7 +39,7 @@ public class GuiDependencyInjector {
         this.articleRepository = new ArticleRepositorySql(connection);
         this.shoppingCartRepository = new ShoppingCartRepositorySql(connection, (UserRepositorySql) this.userRepository, (ArticleRepositorySql) this.articleRepository);
 
-        new Seeder(this.userRepository, this.articleRepository, this.shoppingCartRepository).seed();
+        new Seeder(this.userRepository, this.articleRepository, this.shoppingCartRepository).seed();  //only DEVELOP
 
         this.userService = new UserService(this.userRepository, this.shoppingCartRepository);
         this.articleService = new ArticleService(this.articleRepository);
@@ -73,6 +75,14 @@ public class GuiDependencyInjector {
         return articleService;
     }
 
+    public ShoppingCartService getShoppingCartService() {
+        return shoppingCartService;
+    }
+
+    public Map<String, List<Command>> getCommandsByGroup() {
+        return commandsByGroup;
+    }
+
     public UserRepository getUserRepository() {
         return userRepository;
     }
@@ -85,11 +95,5 @@ public class GuiDependencyInjector {
         return shoppingCartRepository;
     }
 
-    public ShoppingCartService getShoppingCartService() {
-        return shoppingCartService;
-    }
 
-    public Map<String, List<Command>> getCommandsByGroup() {
-        return commandsByGroup;
-    }
 }

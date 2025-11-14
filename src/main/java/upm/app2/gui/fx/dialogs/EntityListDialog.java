@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Set;
 
 public class EntityListDialog extends Alert {
+    private static final String DIALOG_STYLE = "entity-dialog";
+
     private static final Set<Class<?>> WRAPPERS = Set.of(
             Boolean.class, Byte.class, Short.class, Integer.class, Long.class,
             Float.class, Double.class, Character.class, String.class
@@ -23,9 +25,10 @@ public class EntityListDialog extends Alert {
     private static final double TABLE_STAGE_WIDTH = TABLE_DIALOG_WIDTH + 50;
     private static final double TABLE_STAGE_HEIGHT = TABLE_DIALOG_HEIGHT + 50;
 
+
     public <T> EntityListDialog(String header, List<T> content) {
         super(AlertType.INFORMATION);
-        getDialogPane().getStyleClass().add("entity-dialog");
+        getDialogPane().getStyleClass().add(DIALOG_STYLE);
         this.setTitle("Information");
         this.setHeaderText(header);
         if (content == null || content.isEmpty()) {

@@ -5,38 +5,43 @@ import javafx.scene.control.Label;
 import javafx.util.Duration;
 
 public class Status extends Label {
-    private static final String STYLE_BAR = "status-bar";
-    private static final String STYLE_INFO = "status-info";
-    private static final String STYLE_SUCCESS = "status-success";
-    private static final String STYLE_ERROR = "status-error";
+    private static final String BAR_STYLE = "status-bar";
+    private static final String INFO_STYLE = "status-info";
+    private static final String SUCCESS_STYLE = "status-success";
+    private static final String ERROR_STYLE = "status-error";
+
     private static final int MESSAGE_DURATION_SECONDS = 10;
 
     public Status() {
-        getStyleClass().add(STYLE_BAR);
+        getStyleClass().add(BAR_STYLE);
         setMaxWidth(Double.MAX_VALUE);
-        updateStyle(STYLE_INFO);
-        info("Status");
+        updateStyle(INFO_STYLE);
+        info();
     }
 
     public void successful(String message) {
-        updateStyle(STYLE_SUCCESS);
+        updateStyle(SUCCESS_STYLE);
         setText("✔ " + message);
-        showTemporaryMessage(() -> info("Status"));
+        showTemporaryMessage(this::info);
     }
 
     public void info(String message) {
-        updateStyle(STYLE_INFO);
+        updateStyle(INFO_STYLE);
         setText("ⓘ " + message);
     }
 
+    public void info() {
+        this.info("");
+    }
+
     public void error(String message) {
-        updateStyle(STYLE_ERROR);
+        updateStyle(ERROR_STYLE);
         setText("✘ " + message);
-        showTemporaryMessage(() -> info("Status"));
+        showTemporaryMessage(this::info);
     }
 
     private void updateStyle(String newStyle) {
-        getStyleClass().removeAll(STYLE_INFO, STYLE_SUCCESS, STYLE_ERROR);
+        getStyleClass().removeAll(INFO_STYLE, SUCCESS_STYLE, ERROR_STYLE);
         if (!getStyleClass().contains(newStyle)) {
             getStyleClass().add(newStyle);
         }
