@@ -9,7 +9,6 @@ import java.util.*;
 public abstract class GenericRepositoryMap<T extends Entity> implements GenericRepository<T> {
 
     private final Map<Integer, T> map;
-
     private int id;
 
     GenericRepositoryMap() {

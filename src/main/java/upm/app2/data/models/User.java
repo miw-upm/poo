@@ -3,6 +3,8 @@ package upm.app2.data.models;
 import upm.app2.data.models.exceptions.InvalidAttributeException;
 
 public class User extends Entity {
+    public static final int MAX_MOBILE = 999_999_999;
+    public static final int MIN_MOBILE = 100_000_000;
     private Integer mobile;
     private String name;
     private String address;
@@ -22,11 +24,12 @@ public class User extends Entity {
     }
 
     public void setMobile(Integer mobile) {
-        if (mobile > 999_999_999 || mobile < 100_000_000) {
+        if (mobile > MAX_MOBILE || mobile < MIN_MOBILE) {
             throw new InvalidAttributeException("El móvil debe tener 9 digitos y debe ser positivo: " + mobile);
         }
         this.mobile = mobile;
     }
+
 
     public String getName() {
         return this.name;

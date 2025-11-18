@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCart extends Entity {
-    private final User user;
-    private final LocalDateTime creationDate;
+    private User user;
+    private LocalDateTime creationDate;
     private List<ArticleItem> articleItems;
 
     public ShoppingCart(User user, LocalDateTime creationDate) {
@@ -24,8 +24,20 @@ public class ShoppingCart extends Entity {
         return total;
     }
 
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public LocalDateTime getCreationDate() {
         return this.creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     public List<ArticleItem> getArticleItems() {
@@ -38,10 +50,6 @@ public class ShoppingCart extends Entity {
 
     public void add(ArticleItem articleItem) {
         this.articleItems.add(articleItem);
-    }
-
-    public User getUser() {
-        return this.user;
     }
 
     @Override

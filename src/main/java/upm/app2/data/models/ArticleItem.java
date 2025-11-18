@@ -1,5 +1,7 @@
 package upm.app2.data.models;
 
+import upm.app2.data.models.exceptions.InvalidAttributeException;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -11,7 +13,7 @@ public class ArticleItem {
 
     public ArticleItem(Article article, Integer amount, BigDecimal discount) {
         this.article = article;
-        this.amount = amount;
+        this.setAmount(amount);
         this.discount = discount;
     }
 
@@ -40,6 +42,9 @@ public class ArticleItem {
     }
 
     public void setAmount(Integer amount) {
+        if (amount <= 0) {
+            throw new InvalidAttributeException("La cantidad no puede ser negativa o cero: " + amount);
+        }
         this.amount = amount;
     }
 
