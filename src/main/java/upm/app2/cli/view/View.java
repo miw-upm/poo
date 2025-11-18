@@ -1,8 +1,8 @@
-package upm.app2.presentation.view;
+package upm.app2.cli.view;
 
 import java.util.List;
 
-import static upm.app2.presentation.view.AnsiCode.*;
+import static upm.app2.cli.view.AnsiCode.*;
 
 public class View {
 

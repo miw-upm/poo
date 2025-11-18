@@ -1,4 +1,4 @@
-package upm.app2.presentation.cli.exceptions;
+package upm.app2.cli.controller.exceptions;
 
 public class CommandException extends RuntimeException {
     private static final String DESCRIPTION = "Comando incorrecta";

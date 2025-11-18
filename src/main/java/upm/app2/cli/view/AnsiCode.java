@@ -1,4 +1,4 @@
-package upm.app2.presentation.view;
+package upm.app2.cli.view;
 
 public enum AnsiCode {
     RESET("\u001B[0m"),

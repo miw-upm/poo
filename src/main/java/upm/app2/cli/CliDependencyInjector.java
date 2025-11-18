@@ -1,4 +1,4 @@
-package upm.app2.presentation;
+package upm.app2.cli;
 
 import upm.app2.data.repositories.ArticleRepository;
 import upm.app2.data.repositories.Seeder;
@@ -8,10 +8,10 @@ import upm.app2.data.repositories.mysql.ArticleRepositorySql;
 import upm.app2.data.repositories.mysql.RepositoryMysql;
 import upm.app2.data.repositories.mysql.ShoppingCartRepositorySql;
 import upm.app2.data.repositories.mysql.UserRepositorySql;
-import upm.app2.presentation.cli.CommandLineInterface;
-import upm.app2.presentation.cli.ErrorHandler;
-import upm.app2.presentation.cli.commands.*;
-import upm.app2.presentation.view.View;
+import upm.app2.cli.controller.CommandLineInterface;
+import upm.app2.cli.controller.ErrorHandler;
+import upm.app2.cli.controller.commands.*;
+import upm.app2.cli.view.View;
 import upm.app2.services.ShoppingCartService;
 import upm.app2.services.UserService;
 

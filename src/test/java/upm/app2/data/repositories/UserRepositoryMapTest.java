@@ -2,7 +2,7 @@ package upm.app2.data.repositories;
 
 import org.junit.jupiter.api.Test;
 import upm.app2.data.models.User;
-import upm.app2.presentation.CliDependencyInjector;
+import upm.app2.cli.CliDependencyInjector;
 
 import java.util.List;
 import java.util.Optional;

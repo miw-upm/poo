@@ -1,8 +1,8 @@
-package upm.app2.presentation.cli;
+package upm.app2.cli.controller;
 
-import upm.app2.presentation.cli.exceptions.BadRequestException;
-import upm.app2.presentation.cli.exceptions.CommandException;
-import upm.app2.presentation.view.View;
+import upm.app2.cli.controller.exceptions.BadRequestException;
+import upm.app2.cli.controller.exceptions.CommandException;
+import upm.app2.cli.view.View;
 
 import java.util.*;
 

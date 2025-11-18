@@ -1,4 +1,4 @@
-package upm.app2.presentation.cli.exceptions;
+package upm.app2.cli.controller.exceptions;
 
 public class BadRequestException extends RuntimeException {
     private static final String DESCRIPTION = "Petición incorrecta";

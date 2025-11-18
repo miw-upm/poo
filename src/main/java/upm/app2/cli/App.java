@@ -1,4 +1,4 @@
-package upm.app2.presentation;
+package upm.app2.cli;
 
 public class App {
 

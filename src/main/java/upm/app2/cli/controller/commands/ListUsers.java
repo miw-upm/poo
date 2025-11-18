@@ -1,7 +1,7 @@
-package upm.app2.presentation.cli.commands;
+package upm.app2.cli.controller.commands;
 
-import upm.app2.presentation.cli.Command;
-import upm.app2.presentation.view.View;
+import upm.app2.cli.controller.Command;
+import upm.app2.cli.view.View;
 import upm.app2.services.UserService;
 
 import java.util.List;
