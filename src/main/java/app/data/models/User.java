@@ -3,10 +3,10 @@ import java.util.Objects;
 
 public class User {
     private static final int MIN_AGE = 0;
-    private Long id;      // El servicio-repositorio asigna la id
-    private String email; // Obligatorio y único
-    private String name;  // Obligatorio
-    private Integer age;  // Opcional
+    private Long id;       // El servicio-repositorio asigna la id
+    private String email;  // Obligatorio y único
+    private String name;   // Obligatorio
+    private Integer age;   // Opcional
 
     public User(String email, String name) {
         this(email, name, null);

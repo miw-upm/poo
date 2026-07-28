@@ -61,6 +61,10 @@ Superar estos límites obliga a revisar el diseño, pero no implica necesariamen
 * NO DEBE utilizar comentarios para explicar APIs no públicas, código interno o decisiones que puedan expresarse mediante el propio código.
 * (b) El mensaje de la excepción DEBE indicar el valor que causó el error.
 
+## logs (b)
+* NO DEBE utilizarse System.out.println.
+* DEBIERA utilizarse `LogManager.getLogger().*` (debug, info, warn, error) dependiendo del tipo de mensaje.
+
 ## Entity (`models`)
 
 Una entity es una clase de dominio con identidad propia y ciclo de vida.
