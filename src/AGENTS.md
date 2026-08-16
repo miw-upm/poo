@@ -52,6 +52,7 @@ Son umbrales de revisión, no reglas absolutas. El criterio principal es la resp
 * DEBERIA mantener un máximo de 250 líneas por clase.
 * DEBERIA mantener un máximo de 120 caracteres por línea.
 * DEBERIA mantener entre 2 y 20 clases por paquete.
+* DEBERIA mantener un máximo de 8 atributos por clase.
 
 Superar estos límites obliga a revisar el diseño, pero no implica necesariamente que sea incorrecto.
 
@@ -70,9 +71,9 @@ Superar estos límites obliga a revisar el diseño, pero no implica necesariamen
 Una entity es una clase de dominio con identidad propia y ciclo de vida.
 
 * (e) DEBE ser mutable.
-* (e) DEBE tener una identidad única.
+* (e) DEBE tener una identidad única (id única).
 * (f) DEBE pertenecer al dominio puro.
-* (g-j) NO DEBE conocer la CLI, los servicios de aplicación, ni los repositorios ni ninguno otra capa.
+* (g-h) NO DEBE conocer la CLI, los servicios de aplicación, ni los repositorios ni ninguno otra capa.
 
 ### Identidad (f)
 
@@ -80,8 +81,8 @@ Una entity es una clase de dominio con identidad propia y ciclo de vida.
 * El `id` DEBE ser único
 * El `id` NO DEBE tener significado de negocio.
 * NO DEBE usar una clave natural (`email`, `cif`, etc.) como identidad, porque puede cambiar.
-* (c-e) El `id` NO DEBE recibirse como parámetro del constructor.
-* El `id` DEBE permanecer `null` mientras la entity es transitoria; la infraestructura lo asigna al persistirla.
+* (d-e) El `id` NO DEBE recibirse como parámetro del constructor.
+* (d-e) El `id` DEBE permanecer `null` mientras la entity es transitoria; la infraestructura lo asigna al persistirla.
 
 ### Constructores (c-d)
 
@@ -94,14 +95,14 @@ Una entity es una clase de dominio con identidad propia y ciclo de vida.
 
 * Los atributos obligatorios DEBEN recibirse en el constructor.
 * Los atributos opcionales DEBEN quedar fuera del constructor.
-* En un atributo opcional, `null` DEBE considerarse un estado válido que significa "no informado".
-* Los atributos opcionales numéricos o booleanos DEBEN usar wrappers (`Integer`, `Long`, `Boolean`), nunca tipos primitivos.
+* En un atributo opcional, `null` DEBE considerarse un estado válido que significa "no existe".
+* Los atributos DEBEN usar wrappers (`Integer`, `Long`, `Boolean`), nunca tipos primitivos.
 * (f) La entity solo DEBE aplicar las reglas de negocio que pueda garantizar por sí misma.
 * (f) Las reglas que requieren consultar otros datos, como la unicidad de un email, DEBEN comprobarse en el servicio correspondiente.
 
 ### Validación (c-d)
 
-* DEBE validar cada atributo en un único punto, preferentemente en su setter.
+* DEBE validar cada atributo en un único punto, en su setter.
 * El constructor DEBE reutilizar esa validación.
 * DEBE aplicar fail-fast y lanzar `IllegalArgumentException` ante valores inválidos.
 * (f) DEBE validar los invariantes de dominio, como campos obligatorios, formatos y rangos.
