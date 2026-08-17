@@ -97,8 +97,9 @@ Una entity es una clase de dominio con identidad propia y ciclo de vida.
 * Los atributos opcionales DEBEN quedar fuera del constructor.
 * En un atributo opcional, `null` DEBE considerarse un estado válido que significa "no existe".
 * Los atributos DEBEN usar wrappers (`Integer`, `Long`, `Boolean`), nunca tipos primitivos.
-* (f) La entity solo DEBE aplicar las reglas de negocio que pueda garantizar por sí misma.
+* (f) La entity solo DEBE aplicar las reglas que pueda garantizar por sí misma.
 * (f) Las reglas que requieren consultar otros datos, como la unicidad de un email, DEBEN comprobarse en el servicio correspondiente.
+* (f) Las reglas de negocio, por ejemplo poner un rol por defecto, se deben situar en el servicio.
 
 ### Validación (c-d)
 
@@ -117,3 +118,25 @@ Una entity es una clase de dominio con identidad propia y ciclo de vida.
 * Dos entities distintas con `id == null` NO DEBEN considerarse iguales.
 * DEBE implementar `equals` y `hashCode` conjuntamente y de forma coherente.
 * La implementación PUEDE generarse con IntelliJ, Lombok o una herramienta equivalente, pero DEBE revisarse para comprobar que cumple estas reglas.
+
+### Relaciones entre clases (k)
+
+* Las clases DEBEN relacionarse con otras clases del dominio, no con sus `id`.
+
+## Diagramas PlantUML (`docs`) (c-d)
+
+Los diagramas PlantUML DEBEN representar el modelo de dominio de forma clara y coherente con el código.
+
+* DEBE usarse PlantUML para documentar las relaciones entre modelos cuando se represente el dominio.
+* DEBE indicarse siempre la multiplicidad en ambos extremos de cada relación (`"1"`, `"0..1"`, `"*"`, `"1..*"`, etc.).
+* DEBE indicarse el tipo de relación PlantUML que corresponda:
+    * Asociación: `-->`
+    * Agregación: `o-->`
+    * Composición: `*-->`
+    * Herencia: `<|--`
+
+* DEBE respetarse la dirección de la dependencia: la flecha DEBE apuntar hacia la clase de la que se depende.
+* (k) Las clases del modelo DEBEN relacionarse con otras clases, no con sus `id`.
+* NO DEBE representarse una relación de dominio mediante atributos como `userId`, `roleId`, `productId`, etc.
+* En las clases del diagrama DEBEN aparecer solo los nombres de los atributos.
+* NO DEBE incluirse visibilidad, tipos, anotaciones, restricciones ni detalles técnicos dentro de los atributos del modelo.

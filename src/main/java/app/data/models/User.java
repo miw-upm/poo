@@ -4,16 +4,15 @@ import java.util.Objects;
 public class User {
     private static final int MIN_AGE = 0;
     private Long id;       // El servicio-repositorio asigna la id
-    private String email;  // Obligatorio y único
     private String name;   // Obligatorio
+    private String email;  // Opcional y único
     private Integer age;   // Opcional
-    private Role role;     // Opcional, por defecto Role.OPERATOR
 
-    public User(String email, String name) {
-        this(email, name, null, null);
+    public User(String name) {
+        this(name, null, null);
     }
 
-    public User(String email, String name, Integer age, Role role) {
+    public User(String name, String email, Integer age) {
         this.setEmail(email);
         this.setName(name);
         this.setAge(age);
@@ -60,14 +59,6 @@ public class User {
         this.age = age;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
     @Override
     public boolean equals(Object o) {
         // TODO: igualdad por id, se genera automaticamente por IntelliJ o IA
@@ -81,6 +72,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{id=" + this.id + ", email=" + this.email + ", name=" + this.name + ", age=" + this.age + ", role=" + this.role + '}';
+        return "User{id=" + this.id + ", email=" + this.email + ", name=" + this.name + ", age=" + this.age +  '}';
     }
 }

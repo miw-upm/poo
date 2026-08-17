@@ -8,4 +8,6 @@ public class Consent {
     private String source;
     private LocalDateTime revokedAt;
     private ConsentPurpose purpose;
+    private User user;
+
 }

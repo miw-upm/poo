@@ -1,0 +1,22 @@
+@startuml
+package data.models {
+  class User <<entity>> {
+    - {key} id: Long
+    - {unique & nullable} email: String
+    - {not nullable} name: String
+    - {nullable} age: Integer
+  }
+  class Consent <<entity>> {
+    - id: Long
+    - grantedAt: LocalDateTime
+    - source: String
+    - revokedAt: LocalDateTime
+  }
+  enum ConsentPurpose {
+    BASIC, MARKETING
+  }
+  Consent "0..1" o--> "1" User
+  Consent "0..*" --> "1" ConsentPurpose
+
+}
+@enduml
