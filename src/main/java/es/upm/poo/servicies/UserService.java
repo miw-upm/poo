@@ -3,6 +3,8 @@ package es.upm.poo.servicies;
 import es.upm.poo.data.models.User;
 import es.upm.poo.data.repositories.UserRepository;
 
+import java.util.List;
+
 public class UserService {
     private final UserRepository userRepository;
 
@@ -18,6 +20,10 @@ public class UserService {
     public User read(Long id) {
         return this.userRepository.read(id)
                 .orElseThrow(() -> new IllegalArgumentException("user id not found: " + id));
+    }
+
+    public List<User> findAll() {
+        return this.userRepository.findAll();
     }
 
     private void assertUniqueEmail(String  email) {
