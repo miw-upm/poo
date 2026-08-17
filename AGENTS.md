@@ -183,3 +183,50 @@ Un service resuelve funcionalidades de aplicacion coordinando modelos y reposito
 * DEBE asociarse con uno o varios repositorios mediante sus interfaces.
 * NO DEBE depender de implementaciones concretas ni detalles de infraestructura como `Map`, SQL, `Connection`, ficheros, CLI o GUI.
 * Las reglas que requieren consultar otros datos o coordinar repositorios, como comprobar que un email es unico, DEBEN situarse en el service.
+
+## CLI (`cli`) (e-f)
+
+La CLI es la capa de entrada y salida por consola. Su responsabilidad es interpretar comandos, recoger parámetros, invocar servicios y mostrar resultados.
+
+* DEBE estar en el paquete `app.cli`.
+* Los comandos concretos DEBEN estar en `app.cli.commands`.
+* La salida por consola DEBE estar en `app.cli.view`.
+* La CLI DEBE depender de servicios, no de repositorios.
+* La CLI PUEDE usar modelos para construir entradas hacia los servicios o mostrar resultados.
+* La CLI NO DEBE contener reglas de negocio.
+* Cada comando DEBE llamar a un solo servicio.
+* La CLI NO DEBE modificar el estado de los modelos salvo para construirlos con los datos introducidos por el usuario.
+* La CLI DEBE delegar la gestión de errores de ejecución en un `ErrorHandler`.
+### Command (`cli.Command`) (d-e)
+
+Un `Command` representa una acción ejecutable desde consola.
+
+* DEBE declarar su nombre mediante `name()`.
+* DEBE declarar sus parámetros obligatorios mediante `obligatoryParams()`.
+* DEBE declarar sus parámetros opcionales mediante `optionalParams()`.
+* Los parámetros opcionales DEBEN indicarse después de los obligatorios.
+* Los parámetros opcionales DEBEN interpretarse por posición: si no se informa un opcional, tampoco DEBEN informarse los posteriores.
+* DEBE declarar su mensaje de ayuda mediante `helpMessage()`.
+* DEBE ejecutar la acción mediante `execute(String[] params)`.
+* DEBE usar `View` para mostrar resultados.
+
+### CommandLineInterface (`cli.CommandLineInterface`) (e)
+
+`CommandLineInterface` coordina el ciclo de lectura y ejecución de comandos.
+
+* DEBE registrar comandos por su `name()`.
+* DEBE comprobar que el comando existe antes de ejecutarlo.
+* DEBE validar el número de parámetros recibidos.
+* DEBE aceptar como mínimo los parámetros obligatorios.
+* DEBE aceptar como máximo los parámetros obligatorios más los opcionales.
+* NO DEBE validar reglas de negocio.
+* NO DEBE construir lógica específica de un comando concreto.
+* DEBE delegar la ejecución en el `Command` correspondiente.
+
+### View (`cli.view`) (d-e)
+
+`View` centraliza la salida por consola.
+
+* Toda escritura por consola DEBE hacerse desde `View`.
+* Las clases de comando NO DEBEN usar `System.out.println` directamente.
+* `View` DEBE limitarse a mostrar información; NO DEBE ejecutar lógica de aplicación.
