@@ -1,4 +1,4 @@
-package app.cli.view;
+package es.upm.poo.cli.view;
 
 public enum AnsiCode {
     RESET("\u001B[0m"),

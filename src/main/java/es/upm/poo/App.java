@@ -1,4 +1,4 @@
-package app;
+package es.upm.poo;
 
 public class App {
 

@@ -1,6 +1,6 @@
-package app.data.repositories;
+package es.upm.poo.data.repositories;
 
-import app.data.models.User;
+import es.upm.poo.data.models.User;
 
 import java.util.List;
 

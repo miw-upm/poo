@@ -1,8 +1,8 @@
-package app.cli.view;
+package es.upm.poo.cli.view;
 
 import java.util.List;
 
-import static app.cli.view.AnsiCode.*;
+import static es.upm.poo.cli.view.AnsiCode.*;
 
 public class View {
 

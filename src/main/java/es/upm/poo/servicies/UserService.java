@@ -1,7 +1,7 @@
-package app.servicies;
+package es.upm.poo.servicies;
 
-import app.data.models.User;
-import app.data.repositories.UserRepository;
+import es.upm.poo.data.models.User;
+import es.upm.poo.data.repositories.UserRepository;
 
 public class UserService {
     private final UserRepository userRepository;

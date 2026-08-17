@@ -1,7 +1,7 @@
-package app.cli.commands;
+package es.upm.poo.cli.commands;
 
-import app.cli.Command;
-import app.cli.CommandLineInterface;
+import es.upm.poo.cli.Command;
+import es.upm.poo.cli.CommandLineInterface;
 
 import java.util.List;
 

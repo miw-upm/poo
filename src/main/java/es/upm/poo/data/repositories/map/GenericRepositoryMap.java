@@ -1,7 +1,7 @@
-package app.data.repositories.map;
+package es.upm.poo.data.repositories.map;
 
 
-import app.data.repositories.GenericRepository;
+import es.upm.poo.data.repositories.GenericRepository;
 
 import java.util.HashMap;
 import java.util.List;

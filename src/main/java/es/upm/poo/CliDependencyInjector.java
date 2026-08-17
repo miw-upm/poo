@@ -1,14 +1,14 @@
-package app;
+package es.upm.poo;
 
-import app.cli.commands.CreateUser;
-import app.cli.commands.Exit;
-import app.cli.commands.Help;
-import app.data.repositories.UserRepository;
-import app.cli.CommandLineInterface;
-import app.cli.ErrorHandler;
-import app.cli.view.View;
-import app.data.repositories.map.UserRepositoryMap;
-import app.servicies.UserService;
+import es.upm.poo.cli.commands.CreateUser;
+import es.upm.poo.cli.commands.Exit;
+import es.upm.poo.cli.commands.Help;
+import es.upm.poo.data.repositories.UserRepository;
+import es.upm.poo.cli.CommandLineInterface;
+import es.upm.poo.cli.ErrorHandler;
+import es.upm.poo.cli.view.View;
+import es.upm.poo.data.repositories.map.UserRepositoryMap;
+import es.upm.poo.servicies.UserService;
 
 public class CliDependencyInjector {
     private static final CliDependencyInjector instance = new CliDependencyInjector();

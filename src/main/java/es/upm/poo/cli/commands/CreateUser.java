@@ -1,9 +1,9 @@
-package app.cli.commands;
+package es.upm.poo.cli.commands;
 
-import app.cli.Command;
-import app.cli.view.View;
-import app.data.models.User;
-import app.servicies.UserService;
+import es.upm.poo.cli.Command;
+import es.upm.poo.cli.view.View;
+import es.upm.poo.data.models.User;
+import es.upm.poo.servicies.UserService;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package app.cli;
+package es.upm.poo.cli;
 
-import app.cli.view.View;
+import es.upm.poo.cli.view.View;
 
 public class ErrorHandler {
 
