@@ -5,6 +5,7 @@ package data.models {
     - {unique & nullable} email: String
     - {not nullable} name: String
     - {nullable} age: Integer
+    - {default true} active: Boolean
   }
   class Consent <<entity>> {
     - id: Long

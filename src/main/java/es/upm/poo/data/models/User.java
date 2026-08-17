@@ -6,11 +6,11 @@ public class User {
     private static final int MIN_AGE = 0;
     private static final Boolean DEFAULT_ACTIVE = true;
 
-    private Long id;       // El servicio-repositorio asigna la id
-    private String name;   // Obligatorio
-    private String email;  // Opcional y único
-    private Integer age;   // Opcional
-    private Boolean active;// Opcional y true por defecto
+    private Long id;
+    private String name;
+    private String email;
+    private Integer age;
+    private Boolean active;
 
     public User(String name, String email, Integer age, Boolean active) {
         this.setEmail(email);
