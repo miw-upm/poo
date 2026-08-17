@@ -172,3 +172,14 @@ Un repository es una abstracción de persistencia para entities del dominio.
 * `create` DEBE garantizar un id único, y debe ser generado en la implementación, no se realizan comprobaciones de reglas de negocio.
 * `create` DEBE ignorar el valor de id que tenga la `entity`.
 
+## Service (`services`) (e-f)
+
+Un service resuelve funcionalidades de aplicacion coordinando modelos y repositorios.
+
+* DEBE implementar casos de uso de la aplicacion.
+* DEBE ser una clase sin estado propio de negocio.
+* DEBE comprobar solo las reglas de negocio que el modelo no pueda garantizar por si mismo.
+* DEBE usar modelos para recibir datos, devolver resultados o ejecutar comportamiento de dominio.
+* DEBE asociarse con uno o varios repositorios mediante sus interfaces.
+* NO DEBE depender de implementaciones concretas ni detalles de infraestructura como `Map`, SQL, `Connection`, ficheros, CLI o GUI.
+* Las reglas que requieren consultar otros datos o coordinar repositorios, como comprobar que un email es unico, DEBEN situarse en el service.
