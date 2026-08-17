@@ -4,11 +4,12 @@ import java.util.Objects;
 public class User {
     private static final int MIN_AGE = 0;
     private static final Boolean DEFAULT_ACTIVE = true;
+
     private Long id;       // El servicio-repositorio asigna la id
     private String name;   // Obligatorio
     private String email;  // Opcional y único
     private Integer age;   // Opcional
-    private Boolean active; // Opcional y true por defecto
+    private Boolean active;// Opcional y true por defecto
 
     public User(String name) {
         this(name, null, null, null);
@@ -34,7 +35,7 @@ public class User {
     }
 
     public void setEmail(String email) {
-        if (email == null || !email.contains("@")) {
+        if (email != null && !email.contains("@")) {
             throw new IllegalArgumentException("email inválido: " + email);
         }
         this.email = email;
@@ -67,10 +68,7 @@ public class User {
     }
 
     public void setActive(Boolean active) {
-        if (Objects.isNull(active)){
-            this.setActive(DEFAULT_ACTIVE);
-        }
-        this.active = active;
+        this.active = Objects.requireNonNullElse(active, DEFAULT_ACTIVE);
     }
 
     @Override

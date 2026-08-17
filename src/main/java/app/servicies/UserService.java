@@ -3,8 +3,6 @@ package app.servicies;
 import app.data.models.User;
 import app.data.repositories.UserRepository;
 
-import java.util.Objects;
-
 public class UserService {
     private final UserRepository userRepository;
 
@@ -13,9 +11,13 @@ public class UserService {
     }
 
     public User create(User user) {
-        if (user.getEmail() != null && !this.userRepository.findByEmail(user.getEmail()).isEmpty()) {
-            throw new IllegalArgumentException("El email ya existe, y debiera ser único: " + user.getEmail());
-        }
+        this.assertUniqueEmail(user.getEmail());
         return this.userRepository.create(user);
+    }
+
+    private void assertUniqueEmail(String  email) {
+        if (email != null && !this.userRepository.findByEmail(email).isEmpty()) {
+            throw new IllegalArgumentException("email already exists: " + email);
+        }
     }
 }

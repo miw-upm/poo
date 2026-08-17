@@ -98,9 +98,8 @@ Una entity es una clase de dominio con identidad propia y ciclo de vida.
 * Los atributos opcionales DEBEN quedar fuera del constructor.
 * En un atributo opcional, `null` DEBE considerarse un estado válido que significa "no existe".
 * Los atributos DEBEN usar wrappers (`Integer`, `Long`, `Boolean`), nunca tipos primitivos.
-* (f) La entity solo DEBE aplicar las reglas que pueda garantizar por sí misma.
+* (f) La entity DEBE aplicar las reglas de negocio que pueda garantizar por sí misma.
 * (f) Las reglas que requieren consultar otros datos, como la unicidad de un email, DEBEN comprobarse en el servicio correspondiente.
-* (f) Las reglas de negocio, por ejemplo poner active por defecto, se deben situar en el servicio.
 
 ### Validación (c-d)
 
