@@ -10,5 +10,7 @@ public interface GenericRepository<T> {
 
     T update(Long id, T entity);
 
+    void deleteById(Long id);
+
     List<T> findAll();
 }

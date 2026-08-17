@@ -39,6 +39,11 @@ public abstract class GenericRepositoryMap<T> implements GenericRepository<T> {
     }
 
     @Override
+    public void deleteById(Long id) {
+        this.map.remove(id);
+    }
+
+    @Override
     public List<T> findAll() {
         return this.map.values().stream().toList();
     }
