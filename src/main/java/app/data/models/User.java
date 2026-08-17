@@ -3,6 +3,7 @@ import java.util.Objects;
 
 public class User {
     private static final int MIN_AGE = 0;
+    private static final Boolean DEFAULT_ACTIVE = true;
     private Long id;       // El servicio-repositorio asigna la id
     private String name;   // Obligatorio
     private String email;  // Opcional y único
@@ -66,6 +67,9 @@ public class User {
     }
 
     public void setActive(Boolean active) {
+        if (Objects.isNull(active)){
+            this.setActive(DEFAULT_ACTIVE);
+        }
         this.active = active;
     }
 

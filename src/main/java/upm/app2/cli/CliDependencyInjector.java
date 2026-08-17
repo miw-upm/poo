@@ -13,7 +13,7 @@ import upm.app2.cli.controller.ErrorHandler;
 import upm.app2.cli.controller.commands.*;
 import upm.app2.cli.view.View;
 import upm.app2.services.ShoppingCartService;
-import upm.app2.services.UserService;
+import app.servicies.UserService;
 
 import java.sql.Connection;
 

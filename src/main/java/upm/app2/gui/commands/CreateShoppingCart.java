@@ -11,7 +11,7 @@ import upm.app2.gui.fx.components.entries.GenericContentArea;
 import upm.app2.gui.fx.components.entries.KeyValue;
 import upm.app2.services.ArticleService;
 import upm.app2.services.ShoppingCartService;
-import upm.app2.services.UserService;
+import app.servicies.UserService;
 
 import java.math.BigDecimal;
 import java.util.List;

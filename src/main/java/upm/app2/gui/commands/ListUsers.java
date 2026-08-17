@@ -2,7 +2,7 @@ package upm.app2.gui.commands;
 
 import upm.app2.gui.Command;
 import upm.app2.gui.fx.dialogs.EntityListDialog;
-import upm.app2.services.UserService;
+import app.servicies.UserService;
 
 public class ListUsers implements Command {
     private final UserService userService;

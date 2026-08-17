@@ -5,7 +5,7 @@ import upm.app2.data.models.User;
 import upm.app2.gui.Command;
 import upm.app2.gui.fx.components.Status;
 import upm.app2.gui.fx.components.entries.GenericContentArea;
-import upm.app2.services.UserService;
+import app.servicies.UserService;
 
 import java.util.List;
 import java.util.function.Consumer;

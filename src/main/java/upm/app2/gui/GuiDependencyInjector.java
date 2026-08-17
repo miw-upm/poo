@@ -13,7 +13,7 @@ import upm.app2.gui.commands.*;
 import upm.app2.gui.fx.components.Status;
 import upm.app2.services.ArticleService;
 import upm.app2.services.ShoppingCartService;
-import upm.app2.services.UserService;
+import app.servicies.UserService;
 
 import java.sql.Connection;
 import java.util.HashMap;
