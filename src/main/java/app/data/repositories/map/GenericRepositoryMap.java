@@ -3,7 +3,9 @@ package app.data.repositories.map;
 
 import app.data.repositories.GenericRepository;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public abstract class GenericRepositoryMap<T> implements GenericRepository<T> {
 
@@ -21,6 +23,10 @@ public abstract class GenericRepositoryMap<T> implements GenericRepository<T> {
         this.map.put(this.id, entity);
         this.id++;
         return entity;
+    }
+
+    public List<T> findAll() {
+        return this.map.values().stream().toList();
     }
 
     public abstract void setId(T entity, long id);
