@@ -26,6 +26,14 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
+    public User update(Long id, User user) {
+        User userDb = this.read(id);
+        if (user.getEmail()!= null && !user.getEmail().equals(userDb.getEmail())){
+            this.assertUniqueEmail(user.getEmail());
+        }
+        return this.userRepository.update(id, user);
+    }
+
     private void assertUniqueEmail(String  email) {
         if (email != null && !this.userRepository.findByEmail(email).isEmpty()) {
             throw new IllegalArgumentException("email already exists: " + email);

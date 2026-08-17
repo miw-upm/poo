@@ -8,5 +8,7 @@ public interface GenericRepository<T> {
 
     Optional<T> read(Long id);
 
+    T update(Long id, T entity);
+
     List<T> findAll();
 }

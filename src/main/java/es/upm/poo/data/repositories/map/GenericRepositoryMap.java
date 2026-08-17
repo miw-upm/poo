@@ -32,6 +32,13 @@ public abstract class GenericRepositoryMap<T> implements GenericRepository<T> {
     }
 
     @Override
+    public T update(Long id, T entity) {
+        this.setId(entity, id);
+        this.map.put(id, entity);
+        return entity;
+    }
+
+    @Override
     public List<T> findAll() {
         return this.map.values().stream().toList();
     }
