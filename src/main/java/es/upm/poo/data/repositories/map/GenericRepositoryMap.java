@@ -6,13 +6,14 @@ import es.upm.poo.data.repositories.GenericRepository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public abstract class GenericRepositoryMap<T> implements GenericRepository<T> {
 
     private final Map<Long, T> map;
     private long id;
 
-    GenericRepositoryMap() {
+    protected GenericRepositoryMap() {
         this.map = new HashMap<>();
         this.id = 1;
     }
@@ -23,6 +24,11 @@ public abstract class GenericRepositoryMap<T> implements GenericRepository<T> {
         this.map.put(this.id, entity);
         this.id++;
         return entity;
+    }
+
+    @Override
+    public Optional<T> read(Long id) {
+        return Optional.ofNullable(this.map.get(id));
     }
 
     public List<T> findAll() {
