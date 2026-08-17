@@ -1,4 +1,4 @@
-package es.upm.poo.servicies.exceptions;
+package es.upm.poo.services.exceptions;
 
 public class NotFoundException extends RuntimeException {
     private static final String DESCRIPTION = "Objeto no encontrado";

@@ -6,7 +6,7 @@ import es.upm.poo.cli.commands.*;
 import es.upm.poo.cli.view.View;
 import es.upm.poo.data.repositories.UserRepository;
 import es.upm.poo.data.repositories.map.UserRepositoryMap;
-import es.upm.poo.servicies.UserService;
+import es.upm.poo.services.UserService;
 
 public class CliDependencyInjector {
     private static final CliDependencyInjector instance = new CliDependencyInjector();

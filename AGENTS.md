@@ -64,7 +64,7 @@ Superar estos límites obliga a revisar el diseño, pero no implica necesariamen
 * (b) NO DEBE utilizarse comentarios en el código.
 
 ## logs (b)
-* NO DEBE utilizarse System.out.println.
+* NO DEBE utilizarse `System.out.print` ni `System.out.println`, salvo dentro de `cli.view.View`.
 * DEBIERA utilizarse `LogManager.getLogger().*` (debug, info, warn, error) dependiendo del tipo de mensaje.
 
 ## Entity (`models`)
@@ -228,5 +228,6 @@ Un `Command` representa una acción ejecutable desde consola.
 `View` centraliza la salida por consola.
 
 * Toda escritura por consola DEBE hacerse desde `View`.
-* Las clases de comando NO DEBEN usar `System.out.println` directamente.
+* `View` PUEDE usar `System.out.print` y `System.out.println` para escribir en consola.
+* Las clases de comando NO DEBEN usar `System.out.print` ni `System.out.println` directamente.
 * `View` DEBE limitarse a mostrar información; NO DEBE ejecutar lógica de aplicación.

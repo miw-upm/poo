@@ -65,7 +65,7 @@ public class User {
     }
 
     public Boolean getActive() {
-        return active;
+        return this.active;
     }
 
     public void setActive(Boolean active) {
@@ -90,6 +90,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{id=" + this.id + ", email=" + this.email + ", name=" + this.name + ", age=" + this.age + '}';
+        return "User{id=" + this.id + ", email=" + this.email + ", name=" + this.name + ", age=" + this.age + ", active=" + this.active + '}';
     }
 }

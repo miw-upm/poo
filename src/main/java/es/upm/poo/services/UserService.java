@@ -1,9 +1,9 @@
-package es.upm.poo.servicies;
+package es.upm.poo.services;
 
 import es.upm.poo.data.models.User;
 import es.upm.poo.data.repositories.UserRepository;
-import es.upm.poo.servicies.exceptions.ConflictException;
-import es.upm.poo.servicies.exceptions.NotFoundException;
+import es.upm.poo.services.exceptions.ConflictException;
+import es.upm.poo.services.exceptions.NotFoundException;
 
 import java.util.List;
 

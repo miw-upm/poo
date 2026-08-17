@@ -3,7 +3,7 @@ package es.upm.poo.cli.commands;
 import es.upm.poo.cli.Command;
 import es.upm.poo.cli.view.View;
 import es.upm.poo.data.models.User;
-import es.upm.poo.servicies.UserService;
+import es.upm.poo.services.UserService;
 
 import java.util.List;
 
