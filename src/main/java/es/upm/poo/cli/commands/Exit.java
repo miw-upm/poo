@@ -2,6 +2,7 @@ package es.upm.poo.cli.commands;
 
 import es.upm.poo.cli.Command;
 import es.upm.poo.cli.CommandLineInterface;
+import es.upm.poo.cli.CommandParams;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Exit implements Command {
     }
 
     @Override
-    public void execute(String[] values) {
+    public void execute(CommandParams params) {
         // Nothing to do, it never gets executed
     }
 

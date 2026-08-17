@@ -87,15 +87,16 @@ Una entity es una clase de dominio con identidad propia y ciclo de vida.
 
 ### Constructores (c-d)
 
-* DEBE recibir únicamente los atributos de dominio obligatorios.
+* PUEDE recibir todos los atributos de dominio necesarios para construir la entity de forma normalizada.
 * NO DEBE incluir el `id`.
-* NO DEBE incluir atributos opcionales.
+* PUEDE incluir atributos opcionales.
+* Los atributos opcionales recibidos en el constructor PUEDEN ser `null`.
 * DEBE reutilizar los setters o métodos de validación para evitar duplicar lógica.
 
 ### Atributos (c-d)
 
 * Los atributos obligatorios DEBEN recibirse en el constructor.
-* Los atributos opcionales DEBEN quedar fuera del constructor.
+* Los atributos opcionales PUEDEN recibirse en el constructor o asignarse después mediante setters.
 * En un atributo opcional, `null` DEBE considerarse un estado válido que significa "no existe".
 * Los atributos DEBEN usar wrappers (`Integer`, `Long`, `Boolean`), nunca tipos primitivos.
 * (f) La entity DEBE aplicar las reglas de negocio que pueda garantizar por sí misma.

@@ -40,7 +40,7 @@ public class CommandLineInterface {
         if (EXIT.equals(command)) {
             return true;
         } else {
-            this.commands.get(command).execute(params);
+            this.commands.get(command).execute(new CommandParams(params));
         }
         return false;
     }

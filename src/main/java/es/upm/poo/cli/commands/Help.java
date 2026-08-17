@@ -2,6 +2,7 @@ package es.upm.poo.cli.commands;
 
 import es.upm.poo.cli.Command;
 import es.upm.poo.cli.CommandLineInterface;
+import es.upm.poo.cli.CommandParams;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class Help implements Command {
     }
 
     @Override
-    public void execute(String[] params) {
+    public void execute(CommandParams params) {
         this.commandLineInterface.help();
     }
 }

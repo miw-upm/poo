@@ -1,6 +1,7 @@
 package es.upm.poo.cli.commands;
 
 import es.upm.poo.cli.Command;
+import es.upm.poo.cli.CommandParams;
 import es.upm.poo.cli.view.View;
 import es.upm.poo.data.models.User;
 import es.upm.poo.services.UserService;
@@ -37,8 +38,8 @@ public class ReadUser implements Command {
     }
 
     @Override
-    public void execute(String[] params) {
-        User user = this.userService.read(Long.valueOf(params[0]));
+    public void execute(CommandParams params) {
+        User user = this.userService.read(params.getLong(0));
         this.view.showItem(user);
     }
 }

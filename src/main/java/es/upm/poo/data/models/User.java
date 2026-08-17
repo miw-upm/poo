@@ -12,10 +12,6 @@ public class User {
     private Integer age;   // Opcional
     private Boolean active;// Opcional y true por defecto
 
-    public User(String name) {
-        this(name, null, null, null);
-    }
-
     public User(String name, String email, Integer age, Boolean active) {
         this.setEmail(email);
         this.setName(name);

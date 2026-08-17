@@ -1,6 +1,7 @@
 package es.upm.poo.cli.commands;
 
 import es.upm.poo.cli.Command;
+import es.upm.poo.cli.CommandParams;
 import es.upm.poo.cli.view.View;
 import es.upm.poo.data.models.User;
 import es.upm.poo.services.UserService;
@@ -37,33 +38,12 @@ public class UpdateUser implements Command {
     }
 
     @Override
-    public void execute(String[] params) {
-        User updatedUser = this.userService.update(Long.valueOf(params[0]),
-                new User(params[1],
-                        this.optionalParam(params, 2),
-                        this.optionalIntegerParam(params, 3),
-                        this.optionalBooleanParam(params, 4)));
+    public void execute(CommandParams params) {
+        User updatedUser = this.userService.update(params.getLong(0),
+                new User(params.getString(1),
+                        params.getString(2),
+                        params.getInteger(3),
+                        params.getBoolean(4)));
         this.view.showItem(updatedUser);
-    }
-
-    private String optionalParam(String[] params, int index) {
-        if (params.length <= index) {
-            return null;
-        }
-        return params[index];
-    }
-
-    private Integer optionalIntegerParam(String[] params, int index) {
-        if (params.length <= index) {
-            return null;
-        }
-        return Integer.valueOf(params[index]);
-    }
-
-    private Boolean optionalBooleanParam(String[] params, int index) {
-        if (params.length <= index) {
-            return null;
-        }
-        return Boolean.valueOf(params[index]);
     }
 }

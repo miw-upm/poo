@@ -1,6 +1,7 @@
 package es.upm.poo.cli.commands;
 
 import es.upm.poo.cli.Command;
+import es.upm.poo.cli.CommandParams;
 import es.upm.poo.cli.view.View;
 import es.upm.poo.data.models.User;
 import es.upm.poo.services.UserService;
@@ -37,7 +38,7 @@ public class FindAllUser implements Command {
     }
 
     @Override
-    public void execute(String[] params) {
+    public void execute(CommandParams params) {
         List<User> users = this.userService.findAll();
         this.view.showList("Users", users);
     }

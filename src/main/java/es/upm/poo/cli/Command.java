@@ -15,7 +15,7 @@ public interface Command {
 
     String helpMessage();
 
-    void execute(String[] params);
+    void execute(CommandParams params);
 
     default String help() {
         StringBuilder result = new StringBuilder(this.name());
