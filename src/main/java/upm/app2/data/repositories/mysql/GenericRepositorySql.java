@@ -3,7 +3,7 @@ package upm.app2.data.repositories.mysql;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import upm.app2.data.models.Entity;
-import upm.app2.data.repositories.GenericRepository;
+import app.data.repositories.GenericRepository;
 
 import java.sql.*;
 import java.util.ArrayList;

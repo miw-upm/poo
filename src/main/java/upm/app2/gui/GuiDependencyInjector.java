@@ -4,7 +4,7 @@ import javafx.scene.layout.BorderPane;
 import upm.app2.data.repositories.ArticleRepository;
 import upm.app2.data.repositories.Seeder;
 import upm.app2.data.repositories.ShoppingCartRepository;
-import upm.app2.data.repositories.UserRepository;
+import app.data.repositories.UserRepository;
 import upm.app2.data.repositories.mysql.ArticleRepositorySql;
 import upm.app2.data.repositories.mysql.RepositoryMysql;
 import upm.app2.data.repositories.mysql.ShoppingCartRepositorySql;

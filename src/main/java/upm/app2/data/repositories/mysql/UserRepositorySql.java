@@ -1,7 +1,7 @@
 package upm.app2.data.repositories.mysql;
 
 import upm.app2.data.models.User;
-import upm.app2.data.repositories.UserRepository;
+import app.data.repositories.UserRepository;
 import upm.app2.data.repositories.exceptions.RepositoryOperationException;
 
 import java.sql.Connection;

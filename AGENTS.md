@@ -61,6 +61,7 @@ Superar estos límites obliga a revisar el diseño, pero no implica necesariamen
 * DEBE usar `this.` explícitamente en todos los accesos a atributos y métodos propios de la instancia.
 * NO DEBE utilizar comentarios para explicar APIs no públicas, código interno o decisiones que puedan expresarse mediante el propio código.
 * (b) El mensaje de la excepción DEBE indicar el valor que causó el error.
+* (b) NO DEBE utilizarse comentarios en el código.
 
 ## logs (b)
 * NO DEBE utilizarse System.out.println.
@@ -99,7 +100,7 @@ Una entity es una clase de dominio con identidad propia y ciclo de vida.
 * Los atributos DEBEN usar wrappers (`Integer`, `Long`, `Boolean`), nunca tipos primitivos.
 * (f) La entity solo DEBE aplicar las reglas que pueda garantizar por sí misma.
 * (f) Las reglas que requieren consultar otros datos, como la unicidad de un email, DEBEN comprobarse en el servicio correspondiente.
-* (f) Las reglas de negocio, por ejemplo poner un rol por defecto, se deben situar en el servicio.
+* (f) Las reglas de negocio, por ejemplo poner active por defecto, se deben situar en el servicio.
 
 ### Validación (c-d)
 
@@ -140,3 +141,35 @@ Los diagramas PlantUML DEBEN representar el modelo de dominio de forma clara y c
 * NO DEBE representarse una relación de dominio mediante atributos como `userId`, `roleId`, `productId`, etc.
 * En las clases del diagrama DEBEN aparecer solo los nombres de los atributos.
 * NO DEBE incluirse visibilidad, tipos, anotaciones, restricciones ni detalles técnicos dentro de los atributos del modelo.
+
+## Repository (`data.repositories`) (e-f)
+
+Un repository es una abstracción de persistencia para entities del dominio.
+
+* DEBE definirse una interfaz de repositorio en `data.repositories`.
+* Las implementaciones concretas DEBEN estar en subpaquetes de infraestructura (`data.repositories.map`, `data.repositories.mysql`, etc.).
+* Los modelos NO DEBEN depender de repositorios.
+* Los repositorios DEBEN tener una relación de uso con los modelos.
+* Los servicios DEBEN depender de interfaces de repositorio, no de implementaciones concretas.
+* Las interfaces de repositorio NO DEBEN depender de detalles de infraestructura como `Map`, SQL.
+* Las implementaciones de repositorio DEBEN implementar una interfaz de repositorio.
+
+### Convenciones de repositorio (b-c)
+
+* La interfaz genérica DEBE llamarse `GenericRepository<T>`.
+* Un repositorio específico DEBE llamarse `{Entity}Repository` (`UserRepository`, `ConsentRepository`).
+* Una implementación en memoria DEBE llamarse `{Entity}RepositoryMap`.
+* Una implementación SQL DEBE llamarse `{Entity}RepositorySql`.
+* Una implementación concreta DEBE extender la implementación genérica cuando exista (`GenericRepositoryMap<T>`, `GenericRepositorySql<T>`).
+* NO DEBE filtrarse fuera del repositorio la estructura interna de persistencia (`Map`, tablas SQL, nombres de columnas, claves generadas).
+
+### Asignación de identidad (f)
+
+* La asignación de `id` DEBE ser un detalle interno del repositorio o de la infraestructura.
+* NO DEBE exponerse en la interfaz pública del repositorio un método cuyo único propósito sea asignar el `id`.
+* Las entities DEBEN mantener `setId` disponible solo para infraestructura; el código de aplicación NO DEBE usarlo para crear identidad manualmente.
+
+### Funciones CRUD (e)
+* `create` DEBE garantizar un id único, y debe ser generado en la implementación, no se realizan comprobaciones de reglas de negocio.
+* `create` DEBE ignorar el valor de id que tenga la `entity`.
+

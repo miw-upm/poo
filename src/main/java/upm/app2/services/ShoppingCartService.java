@@ -3,7 +3,7 @@ package upm.app2.services;
 import upm.app2.data.models.*;
 import upm.app2.data.repositories.ArticleRepository;
 import upm.app2.data.repositories.ShoppingCartRepository;
-import upm.app2.data.repositories.UserRepository;
+import app.data.repositories.UserRepository;
 import upm.app2.services.exceptions.NotFoundException;
 
 import java.time.LocalDateTime;

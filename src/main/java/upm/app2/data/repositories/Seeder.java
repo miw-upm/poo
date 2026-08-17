@@ -1,5 +1,6 @@
 package upm.app2.data.repositories;
 
+import app.data.repositories.UserRepository;
 import upm.app2.data.models.Article;
 import upm.app2.data.models.ArticleItem;
 import upm.app2.data.models.ShoppingCart;

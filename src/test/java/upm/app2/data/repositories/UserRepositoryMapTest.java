@@ -1,5 +1,6 @@
 package upm.app2.data.repositories;
 
+import app.data.repositories.UserRepository;
 import org.junit.jupiter.api.Test;
 import upm.app2.data.models.User;
 import upm.app2.cli.CliDependencyInjector;

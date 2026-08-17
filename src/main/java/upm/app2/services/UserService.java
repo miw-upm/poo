@@ -3,7 +3,7 @@ package upm.app2.services;
 import upm.app2.data.models.ShoppingCart;
 import upm.app2.data.models.User;
 import upm.app2.data.repositories.ShoppingCartRepository;
-import upm.app2.data.repositories.UserRepository;
+import app.data.repositories.UserRepository;
 import upm.app2.services.exceptions.DuplicateException;
 
 import java.math.BigDecimal;

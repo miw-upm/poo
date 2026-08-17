@@ -7,15 +7,17 @@ public class User {
     private String name;   // Obligatorio
     private String email;  // Opcional y único
     private Integer age;   // Opcional
+    private Boolean active; // Opcional y true por defecto
 
     public User(String name) {
-        this(name, null, null);
+        this(name, null, null, null);
     }
 
-    public User(String name, String email, Integer age) {
+    public User(String name, String email, Integer age, Boolean active) {
         this.setEmail(email);
         this.setName(name);
         this.setAge(age);
+        this.setActive(active);
     }
 
     public Long getId() {
@@ -57,6 +59,14 @@ public class User {
             throw new IllegalArgumentException("edad negativa: " + age);
         }
         this.age = age;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     @Override
