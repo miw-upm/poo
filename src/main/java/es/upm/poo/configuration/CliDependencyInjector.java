@@ -1,15 +1,10 @@
 package es.upm.poo.configuration;
 
-import es.upm.poo.cli.commands.CreateUser;
-import es.upm.poo.cli.commands.Exit;
-import es.upm.poo.cli.commands.FindAllUser;
-import es.upm.poo.cli.commands.Help;
-import es.upm.poo.cli.commands.ReadUser;
-import es.upm.poo.cli.commands.UpdateUser;
-import es.upm.poo.data.repositories.UserRepository;
 import es.upm.poo.cli.CommandLineInterface;
 import es.upm.poo.cli.ErrorHandler;
+import es.upm.poo.cli.commands.*;
 import es.upm.poo.cli.view.View;
+import es.upm.poo.data.repositories.UserRepository;
 import es.upm.poo.data.repositories.map.UserRepositoryMap;
 import es.upm.poo.servicies.UserService;
 

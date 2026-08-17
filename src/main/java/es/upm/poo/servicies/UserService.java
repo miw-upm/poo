@@ -2,6 +2,8 @@ package es.upm.poo.servicies;
 
 import es.upm.poo.data.models.User;
 import es.upm.poo.data.repositories.UserRepository;
+import es.upm.poo.servicies.exceptions.ConflictException;
+import es.upm.poo.servicies.exceptions.NotFoundException;
 
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class UserService {
 
     public User read(Long id) {
         return this.userRepository.read(id)
-                .orElseThrow(() -> new IllegalArgumentException("user id not found: " + id));
+                .orElseThrow(() -> new NotFoundException("user id not found: " + id));
     }
 
     public List<User> findAll() {
@@ -28,15 +30,15 @@ public class UserService {
 
     public User update(Long id, User user) {
         User userDb = this.read(id);
-        if (user.getEmail()!= null && !user.getEmail().equals(userDb.getEmail())){
+        if (user.getEmail() != null && !user.getEmail().equals(userDb.getEmail())) {
             this.assertUniqueEmail(user.getEmail());
         }
         return this.userRepository.update(id, user);
     }
 
-    private void assertUniqueEmail(String  email) {
+    private void assertUniqueEmail(String email) {
         if (email != null && !this.userRepository.findByEmail(email).isEmpty()) {
-            throw new IllegalArgumentException("email already exists: " + email);
+            throw new ConflictException("email already exists: " + email);
         }
     }
 }

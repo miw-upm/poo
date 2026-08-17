@@ -9,7 +9,7 @@ public class UserRepositoryMap extends GenericRepositoryMap<User> implements Use
 
     @Override
     public void setId(User entity, long id) {
-       entity.setId(id);
+        entity.setId(id);
     }
 
     @Override

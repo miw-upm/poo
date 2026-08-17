@@ -1,5 +1,7 @@
 package es.upm.poo.cli;
 
+import es.upm.poo.cli.exceptions.BadRequestException;
+import es.upm.poo.cli.exceptions.CommandException;
 import es.upm.poo.cli.view.View;
 
 import java.util.*;
@@ -32,7 +34,7 @@ public class CommandLineInterface {
         this.view.showCommandPrompt();
         String command = scanner.next();
         if (!this.commands.containsKey(command)) {
-            throw new RuntimeException("Comando '" + command + "' no existe.");
+            throw new CommandException("Comando '" + command + "' no existe.");
         }
         String[] params = this.scanParamsIfNeededAssured(scanner, command);
         if (EXIT.equals(command)) {
@@ -53,7 +55,7 @@ public class CommandLineInterface {
         String[] foundParams = scanner.next().split(Command.PARAM_SEPARATOR);
         int maxParams = obligatoryParams.size() + optionalParams.size();
         if (foundParams.length < obligatoryParams.size() || foundParams.length > maxParams) {
-            throw new RuntimeException("Parámetros obligatorios: " + obligatoryParams +
+            throw new BadRequestException("Parámetros obligatorios: " + obligatoryParams +
                     ", parámetros opcionales: " + optionalParams +
                     ", encontrados " + Arrays.toString(foundParams));
         }

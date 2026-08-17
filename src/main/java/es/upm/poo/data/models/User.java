@@ -1,4 +1,5 @@
 package es.upm.poo.data.models;
+
 import java.util.Objects;
 
 public class User {
@@ -89,6 +90,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{id=" + this.id + ", email=" + this.email + ", name=" + this.name + ", age=" + this.age +  '}';
+        return "User{id=" + this.id + ", email=" + this.email + ", name=" + this.name + ", age=" + this.age + '}';
     }
 }
