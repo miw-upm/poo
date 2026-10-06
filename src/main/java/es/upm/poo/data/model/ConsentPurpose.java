@@ -1,4 +1,4 @@
-package es.upm.poo.data.models;
+package es.upm.poo.data.model;
 
 public enum ConsentPurpose {
     BASIC, MARKETING

@@ -1,7 +1,7 @@
 package es.upm.poo.data.repositories;
 
 import es.upm.poo.configuration.CliDependencyInjector;
-import es.upm.poo.data.models.User;
+import es.upm.poo.data.model.User;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

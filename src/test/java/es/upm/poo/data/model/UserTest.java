@@ -1,4 +1,4 @@
-package es.upm.poo.data.models;
+package es.upm.poo.data.model;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +20,6 @@ class UserTest {
     @Test
     void testDefaultActive() {
         User user = new User("Alice Johnson", null, null, null);
-
         assertTrue(user.getActive());
     }
 

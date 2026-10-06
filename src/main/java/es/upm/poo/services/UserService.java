@@ -1,6 +1,6 @@
 package es.upm.poo.services;
 
-import es.upm.poo.data.models.User;
+import es.upm.poo.data.model.User;
 import es.upm.poo.data.repositories.UserRepository;
 import es.upm.poo.services.exceptions.ConflictException;
 

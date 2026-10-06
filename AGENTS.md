@@ -71,7 +71,7 @@ Superar estos límites obliga a revisar el diseño, pero no implica necesariamen
 
 Una entity es una clase de dominio con identidad propia y ciclo de vida.
 
-* (e) DEBE ser mutable.
+* (e) DEBE ser mutable, tienen estado, tienen atributos de instancia.
 * (e) DEBE tener una identidad única (id única).
 * (f) DEBE pertenecer al dominio puro.
 * (g-h) NO DEBE conocer la CLI, los servicios de aplicación, ni los repositorios ni ninguno otra capa.

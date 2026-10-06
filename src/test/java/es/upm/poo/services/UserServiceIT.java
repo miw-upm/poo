@@ -1,7 +1,7 @@
 package es.upm.poo.services;
 
 import es.upm.poo.configuration.CliDependencyInjector;
-import es.upm.poo.data.models.User;
+import es.upm.poo.data.model.User;
 import es.upm.poo.services.exceptions.ConflictException;
 import org.junit.jupiter.api.Test;
 

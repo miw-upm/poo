@@ -1,6 +1,6 @@
 package es.upm.poo.configuration;
 
-import es.upm.poo.data.models.User;
+import es.upm.poo.data.model.User;
 import es.upm.poo.services.UserService;
 
 public class Seeder {
