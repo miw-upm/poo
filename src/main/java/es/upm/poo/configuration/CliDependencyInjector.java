@@ -17,6 +17,7 @@ public class CliDependencyInjector {
     private final ErrorHandler errorHandler;
     private final View view;
     private final CommandLineInterface commandLineInterface;
+
     private final UserService userService;
     private final UserRepository userRepository;
 
@@ -28,8 +29,10 @@ public class CliDependencyInjector {
         this.commandLineInterface = new CommandLineInterface(this.view);
         this.commandLineInterface.add(new Help(this.commandLineInterface));
         this.commandLineInterface.add(new Exit());
+
         this.commandLineInterface.add(new CreateUser(this.view, this.userService));
         this.commandLineInterface.add(new FindAllUser(this.view, this.userService));
+
         this.errorHandler = new ErrorHandler();
     }
 

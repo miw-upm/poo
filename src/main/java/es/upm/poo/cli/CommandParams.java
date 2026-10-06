@@ -1,5 +1,7 @@
 package es.upm.poo.cli;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.function.Function;
 
 public class CommandParams {
@@ -19,6 +21,18 @@ public class CommandParams {
 
     public Long getLong(Integer index) {
         return this.getParam(index, Long::valueOf);
+    }
+
+    public Double getDouble(Integer index) {
+        return this.getParam(index, Double::valueOf);
+    }
+
+    public BigDecimal getBigDecimal(Integer index) {
+        return this.getParam(index, BigDecimal::new);
+    }
+
+    public LocalDate getLocalDate(Integer index) {
+        return this.getParam(index, LocalDate::parse); //yyyy-MM-dd
     }
 
     public Boolean getBoolean(Integer index) {
