@@ -4,6 +4,7 @@ import es.upm.poo.data.model.User;
 import es.upm.poo.data.repositories.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserRepositoryMap extends GenericRepositoryMap<User> implements UserRepository {
 
@@ -13,9 +14,12 @@ public class UserRepositoryMap extends GenericRepositoryMap<User> implements Use
     }
 
     @Override
-    public List<User> findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
+        if (email == null) {
+            return Optional.empty();
+        }
         return this.findAll().stream()
-                .filter(user -> email != null && email.equals(user.getEmail()))
-                .toList();
+                .filter(user -> email.equals(user.getEmail()))
+                .findFirst();
     }
 }

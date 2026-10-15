@@ -4,7 +4,7 @@ import es.upm.poo.configuration.CliDependencyInjector;
 import es.upm.poo.data.model.User;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,24 +14,24 @@ class UserRepositoryIT {
 
     @Test
     void testFindByEmail() {
-        List<User> users = this.userRepository.findByEmail("alice.johnson@upm.es");
+        Optional<User> user = this.userRepository.findByEmail("alice.johnson@upm.es");
 
-        assertEquals(1, users.size());
-        assertEquals("Alice Johnson", users.getFirst().getName());
-        assertEquals("alice.johnson@upm.es", users.getFirst().getEmail());
+        assertTrue(user.isPresent());
+        assertEquals("Alice Johnson", user.get().getName());
+        assertEquals("alice.johnson@upm.es", user.get().getEmail());
     }
 
     @Test
     void testFindByEmailNotFound() {
-        List<User> users = this.userRepository.findByEmail("unknown@upm.es");
+        Optional<User> user = this.userRepository.findByEmail("unknown@upm.es");
 
-        assertTrue(users.isEmpty());
+        assertTrue(user.isEmpty());
     }
 
     @Test
     void testFindByEmailNull() {
-        List<User> users = this.userRepository.findByEmail(null);
+        Optional<User> user = this.userRepository.findByEmail(null);
 
-        assertTrue(users.isEmpty());
+        assertTrue(user.isEmpty());
     }
 }
