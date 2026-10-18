@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class FindAllUserTest extends CommandIntegrationTestSupport {
+class FindAllUsersTest extends CommandIntegrationTestSupport {
 
     @Test
     void testFindAllSeededUsers() {

@@ -39,11 +39,9 @@ public class CreateUser implements Command {
 
     @Override
     public void execute(CommandParams params) {
-        User createdUser = this.userService.create(
-                new User(params.getString(0),
-                        params.getString(1),
-                        params.getInteger(2),
-                        params.getBoolean(3)));
+        User newUser = new User(params.getString(0),
+                params.getString(1), params.getInteger(2), params.getBoolean(3));
+        User createdUser = this.userService.create(newUser);
         this.view.showItem(createdUser);
     }
 }

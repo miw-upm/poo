@@ -4,7 +4,7 @@ import es.upm.poo.cli.CommandLineInterface;
 import es.upm.poo.cli.ErrorHandler;
 import es.upm.poo.cli.commands.CreateUser;
 import es.upm.poo.cli.commands.Exit;
-import es.upm.poo.cli.commands.FindAllUser;
+import es.upm.poo.cli.commands.FindAllUsers;
 import es.upm.poo.cli.commands.Help;
 import es.upm.poo.cli.view.View;
 import es.upm.poo.data.repositories.UserRepository;
@@ -31,7 +31,7 @@ public class CliDependencyInjector {
         this.commandLineInterface.add(new Exit());
 
         this.commandLineInterface.add(new CreateUser(this.view, this.userService));
-        this.commandLineInterface.add(new FindAllUser(this.view, this.userService));
+        this.commandLineInterface.add(new FindAllUsers(this.view, this.userService));
 
         this.errorHandler = new ErrorHandler();
     }

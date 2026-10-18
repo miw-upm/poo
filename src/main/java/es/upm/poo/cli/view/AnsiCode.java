@@ -33,10 +33,10 @@ public enum AnsiCode {
     RETURN("\r"),
     INDENT("\t"),
 
-    WARNING("\u26A0"),    // ⚠
+    WARNING("⚠"),
     FIRE("\uD83D\uDD25"), // 🔥
 
-    COPY_RIGHT("\u00A9");
+    COPY_RIGHT("©");
 
     private final String code;
 

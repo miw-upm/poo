@@ -8,18 +8,18 @@ import es.upm.poo.services.UserService;
 
 import java.util.List;
 
-public class FindAllUser implements Command {
+public class FindAllUsers implements Command {
     private final View view;
     private final UserService userService;
 
-    public FindAllUser(View view, UserService userService) {
+    public FindAllUsers(View view, UserService userService) {
         this.view = view;
         this.userService = userService;
     }
 
     @Override
     public String name() {
-        return "find-all-user";
+        return "find-all-users";
     }
 
     @Override
