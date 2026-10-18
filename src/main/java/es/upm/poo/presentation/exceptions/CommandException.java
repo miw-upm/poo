@@ -1,4 +1,4 @@
-package es.upm.poo.cli.exceptions;
+package es.upm.poo.presentation.exceptions;
 
 public class CommandException extends RuntimeException {
     private static final String DESCRIPTION = "Comando incorrecto";

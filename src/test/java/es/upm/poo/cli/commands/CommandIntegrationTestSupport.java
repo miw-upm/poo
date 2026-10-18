@@ -1,6 +1,6 @@
 package es.upm.poo.cli.commands;
 
-import es.upm.poo.cli.CommandLineInterface;
+import es.upm.poo.presentation.cli.CommandLineInterface;
 import es.upm.poo.configuration.CliDependencyInjector;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

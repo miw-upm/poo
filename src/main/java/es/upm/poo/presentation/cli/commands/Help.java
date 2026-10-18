@@ -1,8 +1,8 @@
-package es.upm.poo.cli.commands;
+package es.upm.poo.presentation.cli.commands;
 
-import es.upm.poo.cli.Command;
-import es.upm.poo.cli.CommandLineInterface;
-import es.upm.poo.cli.CommandParams;
+import es.upm.poo.presentation.cli.Command;
+import es.upm.poo.presentation.cli.CommandLineInterface;
+import es.upm.poo.presentation.cli.CommandParams;
 
 import java.util.List;
 

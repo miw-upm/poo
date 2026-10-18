@@ -1,6 +1,7 @@
-package es.upm.poo.cli;
+package es.upm.poo.presentation;
 
-import es.upm.poo.cli.view.View;
+import es.upm.poo.presentation.cli.CommandLineInterface;
+import es.upm.poo.presentation.view.View;
 
 public class ErrorHandler {
 

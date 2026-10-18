@@ -1,8 +1,8 @@
-package es.upm.poo.cli;
+package es.upm.poo.presentation.cli;
 
-import es.upm.poo.cli.exceptions.BadRequestException;
-import es.upm.poo.cli.exceptions.CommandException;
-import es.upm.poo.cli.view.View;
+import es.upm.poo.presentation.exceptions.BadRequestException;
+import es.upm.poo.presentation.exceptions.CommandException;
+import es.upm.poo.presentation.view.View;
 
 import java.util.*;
 

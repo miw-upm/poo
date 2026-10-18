@@ -1,12 +1,12 @@
 package es.upm.poo.configuration;
 
-import es.upm.poo.cli.CommandLineInterface;
-import es.upm.poo.cli.ErrorHandler;
-import es.upm.poo.cli.commands.CreateUser;
-import es.upm.poo.cli.commands.Exit;
-import es.upm.poo.cli.commands.FindAllUsers;
-import es.upm.poo.cli.commands.Help;
-import es.upm.poo.cli.view.View;
+import es.upm.poo.presentation.cli.CommandLineInterface;
+import es.upm.poo.presentation.ErrorHandler;
+import es.upm.poo.presentation.cli.commands.CreateUser;
+import es.upm.poo.presentation.cli.commands.Exit;
+import es.upm.poo.presentation.cli.commands.FindAllUsers;
+import es.upm.poo.presentation.cli.commands.Help;
+import es.upm.poo.presentation.view.View;
 import es.upm.poo.data.repositories.UserRepository;
 import es.upm.poo.data.repositories.map.UserRepositoryMap;
 import es.upm.poo.services.UserService;
