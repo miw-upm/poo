@@ -1,7 +1,7 @@
 package es.upm.poo.cli.commands;
 
 import es.upm.poo.presentation.cli.CommandLineInterface;
-import es.upm.poo.configuration.CliDependencyInjector;
+import es.upm.poo.configuration.DependencyInjector;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 abstract class CommandIntegrationTestSupport {
-    protected final CliDependencyInjector dependencyInjector = CliDependencyInjector.getInstance();
+    protected final DependencyInjector dependencyInjector = DependencyInjector.getInstance();
     protected final CommandLineInterface commandLineInterface = this.dependencyInjector.getCommandLineInterface();
 
     private final PrintStream standardOutput = System.out;

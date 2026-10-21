@@ -11,8 +11,8 @@ import es.upm.poo.data.repositories.UserRepository;
 import es.upm.poo.data.repositories.map.UserRepositoryMap;
 import es.upm.poo.services.UserService;
 
-public class CliDependencyInjector {
-    private static final CliDependencyInjector instance = new CliDependencyInjector();
+public class DependencyInjector {
+    private static final DependencyInjector instance = new DependencyInjector();
 
     private final ErrorHandler errorHandler;
     private final View view;
@@ -21,7 +21,7 @@ public class CliDependencyInjector {
     private final UserService userService;
     private final UserRepository userRepository;
 
-    private CliDependencyInjector() {
+    private DependencyInjector() {
         this.userRepository = new UserRepositoryMap();
         this.userService = new UserService(this.userRepository);
         new Seeder(this.userService).seed();
@@ -36,8 +36,8 @@ public class CliDependencyInjector {
         this.errorHandler = new ErrorHandler();
     }
 
-    public static CliDependencyInjector getInstance() {
-        return CliDependencyInjector.instance;
+    public static DependencyInjector getInstance() {
+        return DependencyInjector.instance;
     }
 
     public void run() {

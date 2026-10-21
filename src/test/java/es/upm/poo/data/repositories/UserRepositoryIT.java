@@ -1,6 +1,6 @@
 package es.upm.poo.data.repositories;
 
-import es.upm.poo.configuration.CliDependencyInjector;
+import es.upm.poo.configuration.DependencyInjector;
 import es.upm.poo.data.model.User;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UserRepositoryIT {
-    private final UserRepository userRepository = CliDependencyInjector.getInstance().getUserRepository();
+    private final UserRepository userRepository = DependencyInjector.getInstance().getUserRepository();
 
     @Test
     void testFindByEmail() {

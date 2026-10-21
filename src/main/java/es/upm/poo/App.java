@@ -1,10 +1,10 @@
 package es.upm.poo;
 
-import es.upm.poo.configuration.CliDependencyInjector;
+import es.upm.poo.configuration.DependencyInjector;
 
 public class App {
 
     public static void main(String[] args) {
-        CliDependencyInjector.getInstance().run();
+        DependencyInjector.getInstance().run();
     }
 }

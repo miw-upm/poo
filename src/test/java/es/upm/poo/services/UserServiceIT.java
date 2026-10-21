@@ -1,6 +1,6 @@
 package es.upm.poo.services;
 
-import es.upm.poo.configuration.CliDependencyInjector;
+import es.upm.poo.configuration.DependencyInjector;
 import es.upm.poo.data.model.User;
 import es.upm.poo.services.exceptions.ConflictException;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserServiceTest {
-    private final UserService userService = CliDependencyInjector.getInstance().getUserService();
+    private final UserService userService = DependencyInjector.getInstance().getUserService();
 
     @Test
     void testFindAllSeededUsers() {
